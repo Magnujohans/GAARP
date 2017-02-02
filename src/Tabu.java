@@ -259,6 +259,7 @@ public class Tabu {
 
         while (System.currentTimeMillis() - startTime < 0.5*60*1000){
             Q.solve();
+            System.out.println("Jadda!");
         }
         System.out.println(Q.solutions.size());
     }
