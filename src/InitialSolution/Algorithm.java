@@ -185,9 +185,9 @@ public class Algorithm {
         System.out.println("Løsningsverdien fra Konstruksjonen er: " + getMakeSpan(vehicles));
         //Here, we do the localSearch from the paper. the arguments are the vehicles, alpha, beta and theta.
 
-        vehicles = localWaitSearch(vehicles, 100, 100, 10);
+        //vehicles = localWaitSearch(vehicles, 100, 100, 10);
         //Simulate the best solution
-        resetPlowingtimes();
+        /*resetPlowingtimes();
         Collections.sort(vehicles, new TypeComparator());
 
 
@@ -202,7 +202,7 @@ public class Algorithm {
         System.out.println("Løsningsverdien etter lokalsøket er: "+ getMakeSpan(vehicles));
 
         System.out.println("Er løsningen lovlig? " + feasibileSolution());
-
+        */
 
     }
     //We dont need the depots in this implementation. They are always the first and the last node.

@@ -1,6 +1,5 @@
 package evolutionaryAlgorithm;
 
-import generalUtilities.FileSaving;
 import graph.Graph;
 
 import java.util.ArrayList;
@@ -117,12 +116,12 @@ public class EvolutionaryAlgorithm {
 			/*Give regular output so human can track interestingness of progress*/
 			if(generationNumber % 16 == 0){
 				System.out.println("Generation:\t" + generationNumber + "\t" + "best fitness:\t" + bestIndividual.getFitness() + "\t" + "Population size:\t" + adults.size());
-				FileSaving.appendGenerationStats(generationalStats(adults, bestIndividual, generationNumber), startTime); //Not really needed outside of testing either?
+				//FileSaving.appendGenerationStats(generationalStats(adults, bestIndividual, generationNumber), startTime); //Not really needed outside of testing either?
 			}
 			/*Save regularly so that crashes are less catastrophic*/
 			if(generationNumber % EvolutionaryAlgorithmParams.GENERATION_LOGGING_FREQUENCY == 0){
 				timeTaken = System.currentTimeMillis() - startTime;
-				FileSaving.writeEntireRun(makeOutputString(adults, bestIndividual, timeTaken, generationNumber), bestIndividual.getFitness(), startTime);
+				//FileSaving.writeEntireRun(makeOutputString(adults, bestIndividual, timeTaken, generationNumber), bestIndividual.getFitness(), startTime);
 				System.out.println("Run saved");
 			}
 			if( (generationNumber - lastGenerationFitnessWasUpdated > EvolutionaryAlgorithmParams.MAX_GENERATIONS_WITHOUT_CHANGE) || generationNumber > EvolutionaryAlgorithmParams.MAX_GENERATIONS){
@@ -133,7 +132,7 @@ public class EvolutionaryAlgorithm {
 		
 		timeTaken = System.currentTimeMillis() - startTime;
 		
-		FileSaving.writeEntireRun(makeOutputString(adults, bestIndividual, timeTaken, generationNumber), bestIndividual.getFitness(), startTime);
+		//FileSaving.writeEntireRun(makeOutputString(adults, bestIndividual, timeTaken, generationNumber), bestIndividual.getFitness(), startTime);
 	}
 	
 	String generationalStats(ArrayList<Genotype> population, Genotype bestIndividual, long generationNumber){
