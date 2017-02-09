@@ -3,7 +3,7 @@
  */
 package InitialSolution;
 
-final class ArcNodeIdentifier {
+public final class ArcNodeIdentifier {
 
     private final Integer start, end;
 

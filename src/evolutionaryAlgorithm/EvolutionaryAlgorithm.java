@@ -1,6 +1,11 @@
 package evolutionaryAlgorithm;
 
 import graph.Graph;
+import InitialSolution.Algorithm;
+import InitialSolution.Vehicle;
+import InitialSolution.Arc;
+import InitialSolution.ArcNodeIdentifier;
+import InitialSolution.Node;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,6 +15,17 @@ import parameterFiles.EvolutionaryAlgorithmParams;
 import parameterFiles.EvolutionaryAlgorithmParams.AdultSelection;
 
 public class EvolutionaryAlgorithm {
+
+	public Algorithm initial;
+	public ArrayList<Vehicle> vehicles;
+	public ArrayList<Arc> arcs;
+	public ArrayList<Arc> sideWalkArcs;
+
+	public EvolutionaryAlgorithm(int[][] inputGraph, int[][] inputSWGraph, int depot, int vehichles, int swVehicles){
+		initial = new Algorithm(inputGraph, inputSWGraph, depot, vehichles, swVehicles);
+		vehicles = initial.vehicles;
+	}
+
 
 	/*TODO:
 	 * initialize population
@@ -24,7 +40,6 @@ public class EvolutionaryAlgorithm {
 	 * 		kill some at random
 	 * 		make new population and all that stuff
 	 * 	output logging data*/
-
 	@SuppressWarnings("unused")
 	public void run(){
 		if(EvolutionaryAlgorithmParams.ADULT_SELECTION == AdultSelection.FULL_REPLACEMENT && (EvolutionaryAlgorithmParams.NUMBER_OF_CROSSOVER_PAIRS + 0.0) != (EvolutionaryAlgorithmParams.POPULATION_SIZE + 0.0) / 2.0){

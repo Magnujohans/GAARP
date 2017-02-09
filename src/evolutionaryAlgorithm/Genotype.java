@@ -5,13 +5,22 @@ import java.util.ArrayList;
 import parameterFiles.EvolutionaryAlgorithmParams;
 import graph.FloydWarshall;
 import graph.Graph;
+import InitialSolution.Algorithm;
+import InitialSolution.Vehicle;
+import InitialSolution.Arc;
+import InitialSolution.ArcNodeIdentifier;
+import InitialSolution.Node;
 
 public class Genotype implements Comparable<Genotype>{
 	
 	public Genotype(){
 		initializeRandomly();
 	}
-	
+
+	public Genotype(ArrayList<Vehicle> initialVehicles){
+		for
+	}
+
 	public Genotype(Genotype genotype){
 		this.genome = genotype.getGenome().clone();
 		this.calculateFitness();
