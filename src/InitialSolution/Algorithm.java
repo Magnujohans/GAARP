@@ -1,5 +1,7 @@
 package InitialSolution;
 
+
+
 import java.util.*;
 
 /**
@@ -30,6 +32,8 @@ public class Algorithm {
     public int nrVehicles;
     public int nrSWVehicles;
     public int capacity;
+
+    public ArrayList<Vehicle> vehicles;
 
     public GiantTourGenerator G;
 
@@ -80,7 +84,7 @@ public class Algorithm {
                     nodes.get(y).inComing.add(tempArc);
 
                     //If the Sidewalk matrix has a higher value, we have a sidewalk that needs to be serviced, with
-                    //Precedens constraints.
+                    //Precedence constraints.
                     if (swMatrix[x][y] > graph[x][y]) {
                         Arc tempSW = new Arc(nodes.get(x), nodes.get(y), swMatrix[x][y], 2, counter);
                         arcMap.put(counter, tempSW);
@@ -180,6 +184,8 @@ public class Algorithm {
         else{
             vehicles.add(new Vehicle(-1,BestSequence, getTourFromTasks(BestSequence)));
         }
+
+        this.vehicles = vehicles;
         System.out.println("Konstruksjonen tar: " + ((System.currentTimeMillis()-startConstruction)) + " tusendelssekunder");
 
         System.out.println("Løsningsverdien fra Konstruksjonen er: " + getMakeSpan(vehicles));
