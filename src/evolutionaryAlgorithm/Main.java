@@ -17,7 +17,7 @@ public class Main {
 		}
 		FloydWarshall.doFloydWarshall();
 		Utilities.init();
-		EvolutionaryAlgorithm ea = new EvolutionaryAlgorithm();
-		ea.run();
+		//EvolutionaryAlgorithm ea = new EvolutionaryAlgorithm();
+		//ea.run();
 	}
 }

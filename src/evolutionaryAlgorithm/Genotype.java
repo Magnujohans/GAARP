@@ -17,9 +17,9 @@ public class Genotype implements Comparable<Genotype>{
 		initializeRandomly();
 	}
 
-	public Genotype(ArrayList<Vehicle> initialVehicles){
-		for
-	}
+//	public Genotype(ArrayList<Vehicle> initialVehicles){
+//		for
+//	}
 
 	public Genotype(Genotype genotype){
 		this.genome = genotype.getGenome().clone();
