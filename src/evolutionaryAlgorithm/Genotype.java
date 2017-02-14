@@ -12,26 +12,36 @@ import InitialSolution.ArcNodeIdentifier;
 import InitialSolution.Node;
 
 public class Genotype implements Comparable<Genotype>{
+	int[] laneGenome;
+	int[] sidewalkGenome;
+	double fitness = -1.0;
+	ArrayList<Arc> arcs;
+
 	
 	public Genotype(){
 		initializeRandomly();
 	}
 
-	public Genotype(ArrayList<Vehicle> initialVehicles){
-		for
+	public Genotype(ArrayList<Vehicle> initialVehicles, ArrayList<Arc> arcs){
+		this.arcs = arcs;
+	}
+
+	public Genotype(ArrayList<Arc> arcs){
+		this.arcs = arcs;
 	}
 
 	public Genotype(Genotype genotype){
-		this.genome = genotype.getGenome().clone();
+		this.laneGenome = genotype.getLaneGenome().clone();
+		this.sidewalkGenome = genotype.getSidewalkGenome().clone();
 		this.calculateFitness();
 	}
-	public Genotype(int[] genome){
-		this.genome = genome.clone();
+	public Genotype(int[] laneGenome, int[] sidewalkGenome) {
+		this.laneGenome = laneGenome.clone();
+		this.sidewalkGenome = sidewalkGenome.clone();
 	}
 	
 	/**The indexes of the (required) graph-elements of the trip this genome encodes in the order they are in the tour.*/
-	int[] genome;
-	double fitness = -1.0;
+
 	
 	/**Returns the fitness of this genome. If it hasn't
 	 * been calculated already it calculates and sets it
@@ -48,7 +58,8 @@ public class Genotype implements Comparable<Genotype>{
 	 * in EA-params*/
 	public void calculateFitness(){
 		if(EvolutionaryAlgorithmParams.FINTESS_TYPE == EvolutionaryAlgorithmParams.fitnessType.GRAND_TOUR){
-			this.fitness = FitnessModule.tripCost(genome);
+			this.fitness = FitnessModule.tripCost(laneGenome);
+			this.fitness = FitnessModule.
 		}else if(EvolutionaryAlgorithmParams.FINTESS_TYPE == EvolutionaryAlgorithmParams.fitnessType.SPLITTED){
 			FitnessModule.split(this, false);
 		}
@@ -59,12 +70,12 @@ public class Genotype implements Comparable<Genotype>{
 	public void setFitness(double fitness){
 		this.fitness = fitness;
 	}
-	
+	/*
 	public void mutate(){
 		if(!EvolutionaryAlgorithmParams.RANDOM_MUTATION){
 			double genomeProperFitness = FitnessModule.tripCost(genome);	//In case fitness has been changed by fitness scaling selection
 			for (int i = 0; i < genome.length; i++) {
-				/*j = i because no need to check swaps already checked*/
+				j = i because no need to check swaps already checked
 				for (int j = i; j < genome.length - i; j++) {
 					Utilities.swap(genome, i, j);
 					if(FitnessModule.tripCost(genome) < genomeProperFitness){	//Less fitness is better
@@ -80,11 +91,16 @@ public class Genotype implements Comparable<Genotype>{
 		Utilities.swap(genome, randomPoints[0], randomPoints[1]);
 		calculateFitness();
 	}
+	*/
 	
-	public int[] getGenome(){
-		return this.genome.clone();
+	public int[] getLaneGenome(){
+		return this.laneGenome.clone();
 	}
-	
+
+	public int[] getSidewalkGenome(){
+		return this.sidewalkGenome.clone();
+	}
+
 	public String getEntireTripGenomeEncodes(){
 		ArrayList<Integer> trip = FloydWarshall.completePathThroughElementsUsingDepotNode(genome);
 

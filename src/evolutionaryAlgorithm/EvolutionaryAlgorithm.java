@@ -24,6 +24,8 @@ public class EvolutionaryAlgorithm {
 	public EvolutionaryAlgorithm(int[][] inputGraph, int[][] inputSWGraph, int depot, int vehichles, int swVehicles){
 		initial = new Algorithm(inputGraph, inputSWGraph, depot, vehichles, swVehicles);
 		vehicles = initial.vehicles;
+		arcs = initial.arcs;
+		sideWalkArcs = initial.sideWalkArcs;
 	}
 
 
