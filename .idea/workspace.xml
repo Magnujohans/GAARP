@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="24646202-a84a-47bd-ae41-835db1a7ee66" name="Default" comment="Testing">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/InitialSolution/Algorithm.java" afterPath="$PROJECT_DIR$/src/InitialSolution/Algorithm.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/InitialSolution/ArcNodeIdentifier.java" afterPath="$PROJECT_DIR$/src/InitialSolution/ArcNodeIdentifier.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/evolutionaryAlgorithm/EvolutionaryAlgorithm.java" afterPath="$PROJECT_DIR$/src/evolutionaryAlgorithm/EvolutionaryAlgorithm.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/evolutionaryAlgorithm/FMXCrossover.java" afterPath="$PROJECT_DIR$/src/evolutionaryAlgorithm/FMXCrossover.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/evolutionaryAlgorithm/Genotype.java" afterPath="$PROJECT_DIR$/src/evolutionaryAlgorithm/Genotype.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -555,8 +549,8 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
