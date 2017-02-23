@@ -1,6 +1,8 @@
 package evolutionaryAlgorithm;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import parameterFiles.EvolutionaryAlgorithmParams;
 import graph.FloydWarshall;
@@ -10,63 +12,38 @@ import InitialSolution.Vehicle;
 import InitialSolution.Arc;
 import InitialSolution.ArcNodeIdentifier;
 import InitialSolution.Node;
+import InitialSolution.TypeComparator;
 
 public class Genotype implements Comparable<Genotype>{
 	int[] laneGenome;
 	int[] sidewalkGenome;
+	Fenotype fenotype;
 	double fitness = -1.0;
-	ArrayList<Arc> arcs;
 
-	
+
+	/*
 	public Genotype(){
 		initializeRandomly();
-	}
+	}*/
 
-	public Genotype(ArrayList<Vehicle> initialVehicles, ArrayList<Arc> arcs){
-		this.arcs = arcs;
-	}
 
-	public Genotype(ArrayList<Arc> arcs){
-		this.arcs = arcs;
+	public Genotype(ArrayList<Arc> arcs, ArrayList<Arc> sidewalks){
 	}
 
 	public Genotype(Genotype genotype){
 		this.laneGenome = genotype.getLaneGenome().clone();
 		this.sidewalkGenome = genotype.getSidewalkGenome().clone();
-		this.calculateFitness();
 	}
-	public Genotype(int[] laneGenome, int[] sidewalkGenome) {
+	public Genotype(int[] laneGenome, int[] sidewalkGenome, int fitness) {
 		this.laneGenome = laneGenome.clone();
 		this.sidewalkGenome = sidewalkGenome.clone();
+		this.fitness = fitness;
 	}
+
 	
 	/**The indexes of the (required) graph-elements of the trip this genome encodes in the order they are in the tour.*/
 
 	
-	/**Returns the fitness of this genome. If it hasn't
-	 * been calculated already it calculates and sets it
-	 * before it returns it.*/
-	public double getFitness(){
-		if(fitness == -1.0){
-			calculateFitness();
-		}
-		return fitness;
-	}
-	
-	/**Calculates the fitness of this genome. Chooses how
-	 * to calculate it based on the FITNESS_TYPE variable
-	 * in EA-params*/
-	public void calculateFitness(){
-		if(EvolutionaryAlgorithmParams.FINTESS_TYPE == EvolutionaryAlgorithmParams.fitnessType.GRAND_TOUR){
-			this.fitness = FitnessModule.tripCost(laneGenome);
-			this.fitness = FitnessModule.
-		}else if(EvolutionaryAlgorithmParams.FINTESS_TYPE == EvolutionaryAlgorithmParams.fitnessType.SPLITTED){
-			FitnessModule.split(this, false);
-		}
-	}
-	
-	/**Sets this genomes fitness to the given value.
-	 * Useful for normalizing fitnesses*/
 	public void setFitness(double fitness){
 		this.fitness = fitness;
 	}
@@ -97,10 +74,12 @@ public class Genotype implements Comparable<Genotype>{
 		return this.laneGenome.clone();
 	}
 
+
 	public int[] getSidewalkGenome(){
 		return this.sidewalkGenome.clone();
 	}
 
+/*
 	public String getEntireTripGenomeEncodes(){
 		ArrayList<Integer> trip = FloydWarshall.completePathThroughElementsUsingDepotNode(genome);
 
@@ -135,7 +114,7 @@ public class Genotype implements Comparable<Genotype>{
 		}
 		return output;
 	}
-
+*/
 
 	@Override
 	public int compareTo(Genotype otherGenotype) {

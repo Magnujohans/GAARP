@@ -10,16 +10,23 @@ import InitialSolution.Node;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Random;
 
 import parameterFiles.EvolutionaryAlgorithmParams;
 import parameterFiles.EvolutionaryAlgorithmParams.AdultSelection;
 
 public class EvolutionaryAlgorithm {
 
+	Random rng = new Random();
 	public Algorithm initial;
 	public ArrayList<Vehicle> vehicles;
 	public ArrayList<Arc> arcs;
 	public ArrayList<Arc> sideWalkArcs;
+
+	ArrayList<Genotype> adults;
+	ArrayList<Genotype> selectedParents;
+	ArrayList<Genotype> children;
+
 
 	public EvolutionaryAlgorithm(int[][] inputGraph, int[][] inputSWGraph, int depot, int vehichles, int swVehicles){
 		initial = new Algorithm(inputGraph, inputSWGraph, depot, vehichles, swVehicles);
@@ -58,23 +65,23 @@ public class EvolutionaryAlgorithm {
 		Genotype copyOfBestIndividual;
 		Genotype currentGenerationsCandidate;
 		
-		ArrayList<Genotype> adults = new ArrayList<>();
-		ArrayList<Genotype> selectedParents = new ArrayList<>();
-		ArrayList<Genotype> children = new ArrayList<>();
+		adults = new ArrayList<>();
+		selectedParents = new ArrayList<>();
+		children = new ArrayList<>();
 		
 		while(adults.size() < EvolutionaryAlgorithmParams.POPULATION_SIZE){
 			adults.add(new Genotype());
 		}
 		for (Genotype individual : adults) {
-			individual.calculateFitness();
+			individual.
 		}
 		bestIndividual = new Genotype(Collections.max(adults));
 		
 		while(true){
-//			System.out.println("Starting EA main loop");
+			System.out.println("Starting EA main loop");
 			
 			selectedParents.clear();
-			selectedParents = Selection.selectParents(adults);
+			//selectedParents = Selection.selectParents(adults);
 			
 //			System.out.println("Parent selection complete");
 			
@@ -87,10 +94,10 @@ public class EvolutionaryAlgorithm {
 			}
 			
 //			System.out.println("Parent selection complete");
-			
+
 			for (Genotype child : children) {
-				child.mutate();
-				child.calculateFitness();
+//				child.mutate();
+//				child.calculateFitness();
 			}
 			
 //			System.out.println("Mutation complete");
@@ -150,6 +157,37 @@ public class EvolutionaryAlgorithm {
 		timeTaken = System.currentTimeMillis() - startTime;
 		
 		//FileSaving.writeEntireRun(makeOutputString(adults, bestIndividual, timeTaken, generationNumber), bestIndividual.getFitness(), startTime);
+	}
+
+
+	public Genotype tournamentSelection(){
+		ArrayList<Integer> chosenIndices = new ArrayList<>();
+		ArrayList<Genotype> chosenGenotypes = new ArrayList<>();
+		double prob;
+		int temp;
+		while(chosenGenotypes.size() < tournamentSize){
+			temp = rng.nextInt(population.size());
+			if(!chosenGenotypes.contains(adults.get(temp))){
+				chosenChromosomes.add(population.get(temp));
+			}
+
+			//chosenChromosomes.add(population.get(temp));
+		}
+
+		Collections.sort(chosenChromosomes);
+		prob = rng.nextDouble();
+		for(int i = 0; i < tournamentSize; i++){
+			if (prob > selectionProb){
+				prob = prob + (prob*(1-prob));
+			}
+			else{
+				return chosenChromosomes.get(i);
+			}
+		}
+		return chosenChromosomes.get(chosenChromosomes.size()-1);
+
+
+
 	}
 	
 	String generationalStats(ArrayList<Genotype> population, Genotype bestIndividual, long generationNumber){
@@ -216,7 +254,6 @@ public class EvolutionaryAlgorithm {
 	}
 
 }
-
 
 
 

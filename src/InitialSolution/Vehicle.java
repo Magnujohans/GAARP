@@ -8,11 +8,11 @@ import java.util.ArrayList;
 
 //The Vehicle class. Has a task sequence and a route. A positive ID is a plowing truck. A negative ID is a smaller vehicle.
 public class Vehicle{
-    int id;
-    ArrayList<Arc> route;
-    ArrayList<Integer> StartTimeForArcs;
-    ArrayList<Arc> tasks;
-    int totalLength;
+    public int id;
+    public ArrayList<Arc> route;
+    public ArrayList<Integer> StartTimeForArcs;
+    public ArrayList<Arc> tasks;
+    public int totalLength;
 
 
     public Vehicle(int id, ArrayList<Arc> tasks, ArrayList<Arc> route){
