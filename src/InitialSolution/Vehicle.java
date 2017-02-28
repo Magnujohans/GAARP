@@ -19,7 +19,7 @@ public class Vehicle{
         this.id = id;
         this.tasks = tasks;
         this.route = route;
-        getStartTimesAndTotalCost();
+        //getStartTimesAndTotalCost();
     }
     //This is basically the simulating algorithm. Checks when the vehicle arrives at at arc, if it is the earliest plowing truck, the earliest time is set
     // to this. If it is a smaller vehicle, it cannot continue until it has waited.

@@ -21,12 +21,6 @@ public class Genotype implements Comparable<Genotype>{
 	double fitness = -1.0;
 
 
-	/*
-	public Genotype(){
-		initializeRandomly();
-	}*/
-
-
 	public Genotype(ArrayList<Arc> arcs, ArrayList<Arc> sidewalks){
 	}
 

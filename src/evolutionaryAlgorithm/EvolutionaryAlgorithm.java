@@ -17,6 +17,7 @@ import parameterFiles.EvolutionaryAlgorithmParams.AdultSelection;
 
 public class EvolutionaryAlgorithm {
 
+	Fenotype fenotype;
 	Random rng = new Random();
 	public Algorithm initial;
 	public ArrayList<Vehicle> vehicles;
@@ -33,6 +34,7 @@ public class EvolutionaryAlgorithm {
 		vehicles = initial.vehicles;
 		arcs = initial.arcs;
 		sideWalkArcs = initial.sideWalkArcs;
+		this.fenotype = new Fenotype(arcs, sideWalkArcs, initial.arcMap, initial.fwGraph, initial.fwPath, initial.fwGraphSW, initial.fwPathSW, depot, vehichles, swVehicles);
 	}
 
 
@@ -51,11 +53,11 @@ public class EvolutionaryAlgorithm {
 	 * 	output logging data*/
 	@SuppressWarnings("unused")
 	public void run(){
-		if(EvolutionaryAlgorithmParams.ADULT_SELECTION == AdultSelection.FULL_REPLACEMENT && (EvolutionaryAlgorithmParams.NUMBER_OF_CROSSOVER_PAIRS + 0.0) != (EvolutionaryAlgorithmParams.POPULATION_SIZE + 0.0) / 2.0){
+		/*if(EvolutionaryAlgorithmParams.ADULT_SELECTION == AdultSelection.FULL_REPLACEMENT && (EvolutionaryAlgorithmParams.NUMBER_OF_CROSSOVER_PAIRS + 0.0) != (EvolutionaryAlgorithmParams.POPULATION_SIZE + 0.0) / 2.0){
 			System.out.println("Full generational replacement requires that there are exactly as many new children as there are spots in the population. " +
 					"Aborting because number of crossoverpair is not equal to half the population size.");
 			return;
-		}
+		}*/
 		
 		long generationNumber = 0;
 		long startTime = System.currentTimeMillis();
@@ -70,29 +72,24 @@ public class EvolutionaryAlgorithm {
 		children = new ArrayList<>();
 		
 		while(adults.size() < EvolutionaryAlgorithmParams.POPULATION_SIZE){
-			adults.add(new Genotype());
-		}
-		for (Genotype individual : adults) {
-			individual.
+			adults.add(fenotype.createRandomGenotype());
 		}
 		bestIndividual = new Genotype(Collections.max(adults));
 		
 		while(true){
 			System.out.println("Starting EA main loop");
-			
-			selectedParents.clear();
-			//selectedParents = Selection.selectParents(adults);
-			
-//			System.out.println("Parent selection complete");
-			
+
+			selectedParents = Selecting.holdTournament(adults);
+
 			children.clear();
-			for (int i = 0; i < selectedParents.size(); i += 2) {
+			
+			/*for (int i = 0; i < selectedParents.size(); i += 2) {
 				int[] crossoverPoints = Utilities.getRandomCrossoverPoints();
 				Genotype[] generatedChildren = Utilities.crossover(selectedParents.get(i), selectedParents.get(i + 1), crossoverPoints[0], crossoverPoints[1]); 
 				children.add(generatedChildren[0]);
 				children.add(generatedChildren[1]);
 			}
-			
+			*/
 //			System.out.println("Parent selection complete");
 
 			for (Genotype child : children) {

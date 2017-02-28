@@ -5,10 +5,7 @@ import InitialSolution.ArcNodeIdentifier;
 import InitialSolution.Vehicle;
 import InitialSolution.TypeComparator;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 
 
 /**
@@ -16,6 +13,7 @@ import java.util.Iterator;
  */
 public class Fenotype {
 
+    Random rng;
     private final ArrayList<Arc> lanes;
     private final ArrayList<Arc> sidewalks;
     private final int plowtrucks;
@@ -23,6 +21,7 @@ public class Fenotype {
 
     public int[] originalLaneGeno;
     public int[] originalSidewalkGeno;
+
     public HashMap<Integer, Arc> arcNodeMap;
     public int[][] FWLaneGraph;
     public int[][] FWSidewalkGraph;
@@ -46,6 +45,7 @@ public class Fenotype {
 
         this.originalLaneGeno = getAscendingLanes();
         this.originalSidewalkGeno = getAscendingSidewalks();
+        rng = new Random();
     }
 
     public ArrayList<Arc> getLanes(){
@@ -57,7 +57,14 @@ public class Fenotype {
     }
 
     public Genotype createRandomGenotype(){
-
+        int[] tempLane = this.originalLaneGeno.clone();
+        int[] tempSideWalk = this.originalSidewalkGeno.clone();
+        int bound = rng.nextInt(10);
+        for(int x = 0; x< bound;x++) {
+            swap(tempLane,rng.nextInt(tempLane.length), rng.nextInt(tempLane.length));
+            swap(tempSideWalk,rng.nextInt(tempSideWalk.length), rng.nextInt(tempSideWalk.length));
+        }
+        return new Genotype(tempLane,tempSideWalk, calculateFitness(tempLane,tempSideWalk));
     }
 
 
@@ -87,6 +94,11 @@ public class Fenotype {
             vehicles.get(vehicles.size() - 1).tasks.add(arcNodeMap.get(lanesGenotype[x]));
         }
 
+        for (int i = 0; i < vehicles.size(); i++) {
+            vehicles.get(i).route = getTourFromTasks(vehicles.get(i).tasks);
+
+        }
+
 
         return vehicles;
     }
@@ -105,6 +117,9 @@ public class Fenotype {
             }
             vehicles.get(vehicles.size() - 1).tasks.add(arcNodeMap.get(lanesGenotype[x]));
         }
+
+        temp = new Vehicle(-1, new ArrayList<Arc>(), new ArrayList<Arc>());
+        vehicles.add(temp);
         newVehicleId = -1;
         int[] sidewalkGenotype = sideWalkGenome.clone();
         for (int x = 0; x < sidewalkGenotype.length; x++) {
@@ -116,11 +131,16 @@ public class Fenotype {
             vehicles.get(vehicles.size() - 1).tasks.add(arcNodeMap.get(lanesGenotype[x]));
         }
 
+        for (int i = 0; i < vehicles.size(); i++) {
+            vehicles.get(i).route = getTourFromTasks(vehicles.get(i).tasks);
+
+        }
+
 
         return vehicles;
     }
 
-    public Genotype Genotype(ArrayList<Vehicle> initialVehicles){
+    public Genotype InitialGenotype(ArrayList<Vehicle> initialVehicles){
         int[] laneGenome = new int[plowtrucks-1 + this.getLanes().size()];
         int z = 0;
         Collections.sort(initialVehicles, new TypeComparator());
@@ -236,20 +256,39 @@ public class Fenotype {
     }
 
     public int[] getAscendingLanes(){
-        int[] ascendingLanes = new int[lanes.size()+plowtrucks-1];
-
+        int[] ascendingLanes = new int[lanes.size()+ plowtrucks-1];
+        int counter = 0;
+        int extra = 0;
+        int counter2 = 0;
         for (int i = 0; i < ascendingLanes.length; i++) {
-            ascendingLanes[i] = lanes.get(i).identifier;
+            if (counter >= ((lanes.size()-1)/plowtrucks) && extra < (plowtrucks-1)){
+                ascendingLanes[i] = -1;
+                counter = 0;
+                extra++;
+                continue;
+            }
+            ascendingLanes[i] = sidewalks.get(counter2).identifier;
+            counter++;
+            counter2++;
         }
-
         return ascendingLanes;
-
     }
 
     public int[] getAscendingSidewalks(){
         int[] ascendingSidewalks = new int[sidewalks.size()+ smallervehicles-1];
-        for (int i = sidewalks.size(); i < ascendingSidewalks.length; i++) {
-            ascendingSidewalks[i] = sidewalks.get(i).identifier;
+        int counter = 0;
+        int extra = 0;
+        int counter2 = 0;
+        for (int i = 0; i < ascendingSidewalks.length; i++) {
+            if (counter >= ((sidewalks.size()-1)/smallervehicles) && extra < (smallervehicles-1)){
+                ascendingSidewalks[i] = -1;
+                counter = 0;
+                extra++;
+                continue;
+            }
+            ascendingSidewalks[i] = sidewalks.get(counter2).identifier;
+            counter++;
+            counter2++;
         }
         return ascendingSidewalks;
     }
