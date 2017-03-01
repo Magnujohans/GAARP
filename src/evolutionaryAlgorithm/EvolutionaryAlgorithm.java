@@ -82,7 +82,7 @@ public class EvolutionaryAlgorithm {
 			selectedParents = Selecting.holdTournament(adults);
 
 			children.clear();
-			
+
 			/*for (int i = 0; i < selectedParents.size(); i += 2) {
 				int[] crossoverPoints = Utilities.getRandomCrossoverPoints();
 				Genotype[] generatedChildren = Utilities.crossover(selectedParents.get(i), selectedParents.get(i + 1), crossoverPoints[0], crossoverPoints[1]); 

@@ -86,6 +86,72 @@ public class FMXCrossover
 
     }
 
+    public FMXCrossover(int[] parent1Lane, int[] parent1Sidewalk, int[] parent2Lane, int[] parent2Sidewalk){
+        int depotCounter = 0;
+        for(int x = 0; x< parent1.length; x++){
+            if(parent1[x] == -1){
+                depotCounter++;
+            }
+        }
+        this.parent1 = new int[parent1Lane.length];
+        this.parent2 = new int[parent2.length];
+        this.parent1nd = new int[parent1.length - depotCounter];
+        this.parent2nd = new int[parent2.length - depotCounter];
+
+        depots = new int[depotCounter];
+        int taskCounter1 = 0;
+        int taskCounter2 = 0;
+        int depotCounter1 = 0;
+        int depotCounter2 = 0;
+        for(int x = 0; x< parent1.length; x++){
+            if(parent1[x] == -1){
+                depots[depotCounter1] = x;
+                depotCounter1++;
+            }
+            else{
+                parent1nd[taskCounter1] = parent1[x];
+                taskCounter1++;
+            }
+            if(parent2[x] == -1){
+                depotCounter2++;
+            }
+            else{
+                parent2nd[taskCounter2] = parent2[x];
+                taskCounter2++;
+            }
+        }
+
+        for(int index = 0; index < parent1.length; index ++){
+            this.parent1[index] = parent1[index];
+            this.parent2[index] = parent2[index];
+        }
+        Random firstRNum  = new Random();
+        Random secondRNum = new Random();
+
+
+        /**
+         * Here we define the cutpoints for the Swath
+         */
+
+        int randomNo_Boundary = (parent1nd.length) - 1;
+        offspring1nd = new int[parent1nd.length];
+        offspring2nd = new int[parent2nd.length];
+        cutPoint1 = firstRNum.nextInt(randomNo_Boundary);
+        cutPoint2 = secondRNum.nextInt(randomNo_Boundary);
+        while(cutPoint1 == cutPoint2){
+            cutPoint2 = secondRNum.nextInt(randomNo_Boundary);
+        }
+        if(cutPoint1 > cutPoint2){
+            int temp = cutPoint1;    // Make sure CutPoint1 is greater than
+            cutPoint1 = cutPoint2;    // cutPoint2 //
+            cutPoint2 = temp;
+        }
+        create_Segments(cutPoint1, cutPoint2);
+        crossOver(offspring1nd, parent1nd, parent2nd);
+        crossOver(offspring2nd, parent2nd, parent1nd);
+
+    }
+
 
     /**
      * For an Element given by its index check that it doesn't appear twice
@@ -185,11 +251,23 @@ public class FMXCrossover
 
         return offspring1;
     }
-/*
-    public int[] getOffspring2() {
+    public int[] getOffspring2()
+    {
+        int[] offspring2 = new int[offspring2nd.length + depots.length];
+        for (int x = 0; x <depots.length;x++){
+            offspring2[depots[x]] = -1;
+        }
+        int x = 0;
+        for (int y = 0; y <offspring2nd.length;y++){
+            if(offspring2[x] == -1){
+                x++;
+            }
+            offspring2[x] = offspring2nd[y];
+            x++;
+        }
+
         return offspring2;
     }
-    */
 
     public void printOffspring(int [] offspring1, int [] offspring2){
         System.out.println(" ");
@@ -229,6 +307,7 @@ public class FMXCrossover
         FMXCrossover cross = new FMXCrossover(parent1,parent2);
         for(int x = 0; x<parent1.length;x++){
             System.out.print(cross.getOffspring1()[x] + " ");
+            System.out.print(cross.getOffspring2()[x] + " ");
         }
     }
 }

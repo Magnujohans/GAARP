@@ -65,6 +65,11 @@ public class Vehicle{
         return temp;
     }
 
+    public Vehicle copyVehicle(){
+        Vehicle copy = new Vehicle(this.id, (ArrayList<Arc>) this.tasks.clone(), (ArrayList<Arc>) this.route.clone());
+        return copy;
+    }
+
     //The output does not say whether the vehicle waits or not.
     @Override
     public String toString(){

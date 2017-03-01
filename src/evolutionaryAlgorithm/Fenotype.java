@@ -179,6 +179,15 @@ public class Fenotype {
         return getMakeSpan(vehicles);
     }
 
+    public int calculateFitness(ArrayList<Vehicle> vehicles) {;
+        resetPlowingtimes();
+        Collections.sort(vehicles, new TypeComparator());
+        for (int x = 0; x < vehicles.size(); x++) {
+            vehicles.get(x).reRoute();
+        }
+        return getMakeSpan(vehicles);
+    }
+
     public int calculateFitness(int[] laneGenome, int[] sidewalkGenome) {
         ArrayList<Vehicle> vehicles = getFenotypefromGenome(laneGenome,sidewalkGenome);
         resetPlowingtimes();
@@ -299,4 +308,3 @@ public class Fenotype {
         arr[j] = t;
         }
     }
-}
