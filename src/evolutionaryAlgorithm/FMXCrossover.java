@@ -307,7 +307,11 @@ public class FMXCrossover
         FMXCrossover cross = new FMXCrossover(parent1,parent2);
         for(int x = 0; x<parent1.length;x++){
             System.out.print(cross.getOffspring1()[x] + " ");
+        }
+        System.out.println("FMXCrossover.main");
+        for(int x = 0; x<parent1.length;x++){
             System.out.print(cross.getOffspring2()[x] + " ");
         }
+
     }
 }

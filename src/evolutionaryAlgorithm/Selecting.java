@@ -60,7 +60,7 @@ public class Selecting {
 
     }
 
-    public ArrayList<Genotype> Mating(ArrayList<Genotype> population, Fenotype fenotype){
+    public static ArrayList<Genotype> Mating(ArrayList<Genotype> population, Fenotype fenotype){
         ArrayList<Genotype> parents = Selecting.holdTournament(population);
         ArrayList<Genotype> offspring = new ArrayList<>();
         FMXCrossover tempLane;
@@ -80,4 +80,14 @@ public class Selecting {
         }
         return offspring;
     }
+
 }
+/*
+for (int i = 0; i < selectedParents.size(); i += 2) {
+        FMXCrossover tempLaneX = new FMXCrossover(selectedParents.get(i).getLaneGenome(),selectedParents.get(i+1).getLaneGenome());
+        FMXCrossover tempSidewalkX = new FMXCrossover(selectedParents.get(i).getSidewalkGenome(),selectedParents.get(i+1).getSidewalkGenome());
+        Genotype offspring1 = new Genotype(tempLaneX.getOffspring1(), tempSidewalkX.getOffspring1(), fenotype.calculateFitness(tempLaneX.getOffspring1(), tempSidewalkX.getOffspring1()));
+        Genotype offspring2 = new Genotype(tempLaneX.getOffspring2(), tempSidewalkX.getOffspring2(), fenotype.calculateFitness(tempLaneX.getOffspring2(), tempSidewalkX.getOffspring2()));
+        children.add(offspring1);
+        children.add(offspring2);
+        }*/

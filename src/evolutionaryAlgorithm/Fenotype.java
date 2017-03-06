@@ -16,8 +16,8 @@ public class Fenotype {
     Random rng;
     private final ArrayList<Arc> lanes;
     private final ArrayList<Arc> sidewalks;
-    private final int plowtrucks;
-    private final int smallervehicles;
+    public final int plowtrucks;
+    public final int smallervehicles;
 
     public int[] originalLaneGeno;
     public int[] originalSidewalkGeno;
@@ -140,6 +140,35 @@ public class Fenotype {
         return vehicles;
     }
 
+    public Genotype createGenotype(ArrayList<Vehicle> initialVehicles, int fitness){
+        int[] laneGenome = new int[plowtrucks-1 + this.getLanes().size()];
+        int z = 0;
+        Collections.sort(initialVehicles, new TypeComparator());
+        for(int x = 0; x<plowtrucks;x++){
+            if(x>0){
+                laneGenome[z] = -1;
+                z++;
+            }
+            for (int y = 0; y<initialVehicles.get(x).tasks.size(); y++){
+                laneGenome[z] = initialVehicles.get(x).tasks.get(y).identifier;
+                z++;
+            }
+        }
+        int[] sidewalkGenome = new int[plowtrucks-1 + this.getSidewalks().size()];
+        z = 0;
+        for(int x = plowtrucks; x<(plowtrucks + smallervehicles);x++){
+            if(x>plowtrucks){
+                sidewalkGenome[z] = -1;
+                z++;
+            }
+            for (int y = 0; y<initialVehicles.get(x).tasks.size(); y++){
+                sidewalkGenome[z] = initialVehicles.get(x).tasks.get(y).identifier;
+                z++;
+            }
+        }
+        return new Genotype(laneGenome, sidewalkGenome, fitness);
+    }
+
     public Genotype InitialGenotype(ArrayList<Vehicle> initialVehicles){
         int[] laneGenome = new int[plowtrucks-1 + this.getLanes().size()];
         int z = 0;
@@ -179,13 +208,22 @@ public class Fenotype {
         return getMakeSpan(vehicles);
     }
 
-    public int calculateFitness(ArrayList<Vehicle> vehicles) {;
+    public int calculateFitness(ArrayList<Vehicle> vehicles) {
         resetPlowingtimes();
         Collections.sort(vehicles, new TypeComparator());
         for (int x = 0; x < vehicles.size(); x++) {
             vehicles.get(x).reRoute();
         }
         return getMakeSpan(vehicles);
+    }
+
+    public int[] calculateFitnessParameters(ArrayList<Vehicle> vehicles) {
+        resetPlowingtimes();
+        Collections.sort(vehicles, new TypeComparator());
+        for (int x = 0; x < vehicles.size(); x++) {
+            vehicles.get(x).reRoute();
+        }
+        return getMakeSpanParameters(vehicles);
     }
 
     public int calculateFitness(int[] laneGenome, int[] sidewalkGenome) {
@@ -197,6 +235,7 @@ public class Fenotype {
         }
         return getMakeSpan(vehicles);
     }
+
 
     public ArrayList<Arc> getTourFromTasks(ArrayList<Arc> tasks) {
         ArrayList<Arc> route = new ArrayList<>();
@@ -283,6 +322,24 @@ public class Fenotype {
         return ascendingLanes;
     }
 
+    public int[] getMakeSpanParameters(ArrayList<Vehicle> vehicles) {
+        int[] makespanParam = new int[3];
+        int max = 0;
+        int type = 0;
+        int index = 0;
+        for (int x = 0; x < vehicles.size(); x++) {
+            if (vehicles.get(x).totalLength > max) {
+                max = vehicles.get(x).totalLength;
+                type = ((vehicles.get(x).id > 0) ? 1 : -1);
+                index = x;
+            }
+        }
+        makespanParam[0] = max;
+        makespanParam[1] = type;
+        makespanParam[2] = index;
+        return makespanParam;
+    }
+
     public int[] getAscendingSidewalks(){
         int[] ascendingSidewalks = new int[sidewalks.size()+ smallervehicles-1];
         int counter = 0;
@@ -307,4 +364,6 @@ public class Fenotype {
         arr[i] = arr[j];
         arr[j] = t;
         }
+
+
     }

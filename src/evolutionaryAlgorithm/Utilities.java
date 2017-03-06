@@ -10,7 +10,7 @@ public class Utilities {
 		seed = System.currentTimeMillis();
 		random = new Random(seed);
 	}
-	
+
 	static long seed;
 	static Random random;
 	
@@ -36,7 +36,7 @@ public class Utilities {
 		array[j] = temp;
 	}
 	
-	
+	/*
 	public static int[] getRandomCrossoverPoints(){
 		int point1 = getRandom().nextInt(Graph.numberOfRequiredElements);
 		int point2 = getRandom().nextInt(Graph.numberOfRequiredElements);
@@ -115,7 +115,7 @@ public class Utilities {
 	
 	
 	
-	
+	*/
 	
 }
 
