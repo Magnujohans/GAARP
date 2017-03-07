@@ -22,7 +22,8 @@ public class Fenotype {
     public int[] originalLaneGeno;
     public int[] originalSidewalkGeno;
 
-    public HashMap<Integer, Arc> arcNodeMap;
+    public HashMap<Integer, Arc> arcMap;
+    public HashMap<ArcNodeIdentifier, Arc> arcNodeMap;
     public int[][] FWLaneGraph;
     public int[][] FWSidewalkGraph;
     public int[][] FWLanePath;
@@ -30,11 +31,12 @@ public class Fenotype {
     public int depot;
 
 
-    public Fenotype(ArrayList<Arc> lanes, ArrayList<Arc> sidewalks, HashMap<Integer, Arc> arcMap, int[][] FWlaneGraph, int[][] FWlanePath,
+    public Fenotype(ArrayList<Arc> lanes, ArrayList<Arc> sidewalks, HashMap<Integer, Arc> arcMap, HashMap<ArcNodeIdentifier, Arc> arcNodeMap, int[][] FWlaneGraph, int[][] FWlanePath,
                     int[][] FWsidewalkGraph, int[][] FWsidewalkPath, int depot, int plowtrucks, int smallervehicles) {
         this.lanes = lanes;
         this.sidewalks = sidewalks;
-        this.arcNodeMap = arcMap;
+        this.arcNodeMap = arcNodeMap;
+        this.arcMap = arcMap;
         this.FWLaneGraph = FWlaneGraph;
         this.FWSidewalkGraph = FWsidewalkGraph;
         this.FWLanePath = FWlanePath;
@@ -46,6 +48,7 @@ public class Fenotype {
         this.originalLaneGeno = getAscendingLanes();
         this.originalSidewalkGeno = getAscendingSidewalks();
         rng = new Random();
+
     }
 
     public ArrayList<Arc> getLanes(){
@@ -60,10 +63,19 @@ public class Fenotype {
         int[] tempLane = this.originalLaneGeno.clone();
         int[] tempSideWalk = this.originalSidewalkGeno.clone();
         int bound = rng.nextInt(10);
-        for(int x = 0; x< bound;x++) {
-            swap(tempLane,rng.nextInt(tempLane.length), rng.nextInt(tempLane.length));
-            swap(tempSideWalk,rng.nextInt(tempSideWalk.length), rng.nextInt(tempSideWalk.length));
+        int indexLane1 = rng.nextInt(tempLane.length);
+        int indexLane2 = rng.nextInt(tempLane.length);
+        int indexSW1 = rng.nextInt(tempSideWalk.length);
+        int indexSW2 = rng.nextInt(tempSideWalk.length);
+        while(tempLane[indexLane1] != -1 || tempLane[indexLane2] != -1 || tempSideWalk[indexSW1] != -1 || tempSideWalk[indexSW2] != -1 ){
+            indexLane1 = rng.nextInt(tempLane.length);
+            indexLane2 = rng.nextInt(tempLane.length);
+            indexSW1 = rng.nextInt(tempSideWalk.length);
+            indexSW2 = rng.nextInt(tempSideWalk.length);
         }
+
+        swap(tempLane,indexLane1, indexLane2);
+        swap(tempSideWalk,indexSW1, indexSW2);
         return new Genotype(tempLane,tempSideWalk, calculateFitness(tempLane,tempSideWalk));
     }
 
@@ -81,7 +93,7 @@ public class Fenotype {
                 vehicles.add(new Vehicle(newVehicleId, new ArrayList<Arc>(), new ArrayList<Arc>()));
                 continue;
             }
-            vehicles.get(vehicles.size() - 1).tasks.add(arcNodeMap.get(lanesGenotype[x]));
+            vehicles.get(vehicles.size() - 1).tasks.add(arcMap.get(lanesGenotype[x]));
         }
         newVehicleId = -1;
         int[] sidewalkGenotype = genotype.getSidewalkGenome();
@@ -91,7 +103,7 @@ public class Fenotype {
                 vehicles.add(new Vehicle(newVehicleId, new ArrayList<Arc>(), new ArrayList<Arc>()));
                 continue;
             }
-            vehicles.get(vehicles.size() - 1).tasks.add(arcNodeMap.get(lanesGenotype[x]));
+            vehicles.get(vehicles.size() - 1).tasks.add(arcMap.get(sidewalkGenotype[x]));
         }
 
         for (int i = 0; i < vehicles.size(); i++) {
@@ -115,7 +127,8 @@ public class Fenotype {
                 vehicles.add(new Vehicle(newVehicleId, new ArrayList<Arc>(), new ArrayList<Arc>()));
                 continue;
             }
-            vehicles.get(vehicles.size() - 1).tasks.add(arcNodeMap.get(lanesGenotype[x]));
+            vehicles.get(vehicles.size() - 1).tasks.add(arcMap.get(lanesGenotype[x]));
+            //System.out.println(arcNodeMap.get(lanesGenotype[x]));
         }
 
         temp = new Vehicle(-1, new ArrayList<Arc>(), new ArrayList<Arc>());
@@ -128,11 +141,13 @@ public class Fenotype {
                 vehicles.add(new Vehicle(newVehicleId, new ArrayList<Arc>(), new ArrayList<Arc>()));
                 continue;
             }
-            vehicles.get(vehicles.size() - 1).tasks.add(arcNodeMap.get(lanesGenotype[x]));
+            vehicles.get(vehicles.size() - 1).tasks.add(arcMap.get(sidewalkGenotype[x]));
+            //System.out.println(arcNodeMap.get(sidewalkGenotype[x]));
         }
 
         for (int i = 0; i < vehicles.size(); i++) {
-            vehicles.get(i).route = getTourFromTasks(vehicles.get(i).tasks);
+            //System.out.println(vehicles.get(i).tasks.size());
+            vehicles.get(i).setRoute(getTourFromTasks(vehicles.get(i).tasks));
 
         }
 
@@ -239,11 +254,15 @@ public class Fenotype {
 
     public ArrayList<Arc> getTourFromTasks(ArrayList<Arc> tasks) {
         ArrayList<Arc> route = new ArrayList<>();
+        if(tasks.size() == 0){
+            System.out.println(tasks);
+        }
         if (depot != tasks.get(0).from.nr) {
             route.addAll(getArcsFromPath(depot, tasks.get(0).from.nr));
         }
         for (int x = 0; x < tasks.size() - 1; x++) {
             route.add(tasks.get(x));
+            //System.out.println(tasks.get(x+1));
             if (tasks.get(x).to.nr != tasks.get(x + 1).from.nr) {
                 route.addAll(getArcsFromPath(tasks.get(x).to.nr, tasks.get(x + 1).from.nr));
             }
@@ -261,6 +280,7 @@ public class Fenotype {
 
         for (int x = 0; x < path.size() - 1; x++) {
             arcPath.add(arcNodeMap.get(new ArcNodeIdentifier(path.get(x), path.get(x + 1))));
+            //System.out.println(arcPath.get(x));
         }
         return arcPath;
     }
@@ -315,7 +335,7 @@ public class Fenotype {
                 extra++;
                 continue;
             }
-            ascendingLanes[i] = sidewalks.get(counter2).identifier;
+            ascendingLanes[i] = lanes.get(counter2).identifier;
             counter++;
             counter2++;
         }

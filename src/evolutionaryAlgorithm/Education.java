@@ -69,8 +69,8 @@ public class Education {
             }
         }
         Object[] best = new Object[2];
-        best[1] = bestVehicles;
-        best[2] = bestFitness;
+        best[0] = bestVehicles;
+        best[1] = bestFitness;
         return best;
     }
 

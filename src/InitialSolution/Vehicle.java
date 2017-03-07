@@ -53,6 +53,10 @@ public class Vehicle{
         getStartTimesAndTotalCost();
     }
 
+    public void setRoute(ArrayList<Arc> route){
+        this.route = route;
+    }
+
     public Arc getArcWithHighestInverseWaitingTime(){
         int min = 0;
         Arc temp = tasks.get(tasks.size()-1);

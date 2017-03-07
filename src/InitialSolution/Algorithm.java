@@ -521,6 +521,7 @@ public class Algorithm {
 
         for(int x = 0; x < path.size()-1; x++){
             arcPath.add(arcNodeMap.get(new ArcNodeIdentifier(path.get(x),path.get(x+1))));
+            //System.out.println(arcPath.get(x));
         }
         return arcPath;
     }

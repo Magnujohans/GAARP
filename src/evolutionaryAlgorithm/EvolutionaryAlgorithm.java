@@ -1,5 +1,6 @@
 package evolutionaryAlgorithm;
 
+import com.sun.org.apache.xpath.internal.SourceTreeManager;
 import graph.Graph;
 import InitialSolution.Algorithm;
 import InitialSolution.Vehicle;
@@ -35,8 +36,8 @@ public class EvolutionaryAlgorithm {
 		vehicles = initial.vehicles;
 		arcs = initial.arcs;
 		sideWalkArcs = initial.sideWalkArcs;
-		this.fenotype = new Fenotype(arcs, sideWalkArcs, initial.arcMap, initial.fwGraph, initial.fwPath, initial.fwGraphSW, initial.fwPathSW, depot, vehichles, swVehicles);
-		Education education = new Education(fenotype);
+		this.fenotype = new Fenotype(arcs, sideWalkArcs, initial.arcMap, initial.arcNodeMap, initial.fwGraph, initial.fwPath, initial.fwGraphSW, initial.fwPathSW, depot, vehichles, swVehicles);
+		education = new Education(fenotype);
 	}
 
 
@@ -73,15 +74,17 @@ public class EvolutionaryAlgorithm {
 		selectedParents = new ArrayList<>();
 		children = new ArrayList<>();
 
+		int counter = 0;
 		while (adults.size() < EvolutionaryAlgorithmParams.POPULATION_SIZE) {
 			adults.add(fenotype.createRandomGenotype());
+			counter++;
+			System.out.println("Creating Random offspring" + counter);
 		}
 		bestIndividual = new Genotype(Collections.max(adults));
 
 		while (true) {
 			System.out.println("Starting EA main loop");
 
-			selectedParents = Selecting.holdTournament(adults);
 			ArrayList<Genotype> offspring = Selecting.Mating(adults, fenotype);
 			children = education.educateChildren(offspring);
 			adults.addAll(children);

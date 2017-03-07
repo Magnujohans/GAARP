@@ -68,5 +68,6 @@ public class Main {
 	public static void main(String[] args) {
 		Main main = new Main();
 		EvolutionaryAlgorithm ea = new EvolutionaryAlgorithm(main.graph30, main.sw30,0,3,2);
+		ea.run();
 	}
 }
