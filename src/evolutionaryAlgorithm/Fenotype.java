@@ -96,6 +96,7 @@ public class Fenotype {
             vehicles.get(vehicles.size() - 1).tasks.add(arcMap.get(lanesGenotype[x]));
         }
         newVehicleId = -1;
+        vehicles.add(new Vehicle(newVehicleId, new ArrayList<Arc>(), new ArrayList<Arc>()));
         int[] sidewalkGenotype = genotype.getSidewalkGenome();
         for (int x = 0; x < sidewalkGenotype.length; x++) {
             if (sidewalkGenotype[x] == -1) {
@@ -169,7 +170,7 @@ public class Fenotype {
                 z++;
             }
         }
-        int[] sidewalkGenome = new int[plowtrucks-1 + this.getSidewalks().size()];
+        int[] sidewalkGenome = new int[smallervehicles-1 + this.getSidewalks().size()];
         z = 0;
         for(int x = plowtrucks; x<(plowtrucks + smallervehicles);x++){
             if(x>plowtrucks){
@@ -350,7 +351,7 @@ public class Fenotype {
         for (int x = 0; x < vehicles.size(); x++) {
             if (vehicles.get(x).totalLength > max) {
                 max = vehicles.get(x).totalLength;
-                type = ((vehicles.get(x).id > 0) ? 1 : -1);
+                type = vehicles.get(x).id;
                 index = x;
             }
         }

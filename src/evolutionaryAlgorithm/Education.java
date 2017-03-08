@@ -44,22 +44,31 @@ public class Education {
             for (int i = 0; i < bestVehicles.size(); i++) {
                 tempVehicles.add(bestVehicles.get(i).copyVehicle());
             }
+            //int vehiclesFitness = fenotype.calculateFitness(bestVehicles);
 
-            int[] makeSpanParameters = fenotype.calculateFitnessParameters(vehicles);
+            int[] makeSpanParameters = fenotype.calculateFitnessParameters(bestVehicles);
             if(makeSpanParameters[1] > 0){
-                int one = rng.nextInt(fenotype.plowtrucks);
+                Vehicle tempOne = tempVehicles.get(makeSpanParameters[2]);
                 int two = rng.nextInt(fenotype.plowtrucks);
-                Vehicle tempOne = tempVehicles.get(one);
                 Vehicle tempTwo = tempVehicles.get(two);
                 result = Insert(tempVehicles,tempOne,tempOne.tasks.get(rng.nextInt(tempOne.tasks.size())),tempTwo, rng.nextInt(tempTwo.tasks.size()) );
             }
             else{
-                Vehicle tempOne = tempVehicles.get(makeSpanParameters[2]);
-                int two = fenotype.plowtrucks + rng.nextInt(fenotype.smallervehicles);
-                Vehicle tempTwo = tempVehicles.get(two);
-                result = Insert(tempVehicles,tempOne,tempOne.tasks.get(rng.nextInt(tempOne.tasks.size())),tempTwo, rng.nextInt(tempTwo.tasks.size()) );
+                if(rng.nextDouble() > 0.5){
+                    Vehicle tempOne = tempVehicles.get(makeSpanParameters[2]);
+                    int two = fenotype.plowtrucks + rng.nextInt(fenotype.smallervehicles);
+                    Vehicle tempTwo = tempVehicles.get(two);
+                    result = Insert(tempVehicles,tempOne,tempOne.tasks.get(rng.nextInt(tempOne.tasks.size())),tempTwo, rng.nextInt(tempTwo.tasks.size()) );
+                }
+                else{
+                    int one = rng.nextInt(fenotype.plowtrucks);
+                    int two = rng.nextInt(fenotype.plowtrucks);
+                    Vehicle tempOne = tempVehicles.get(one);
+                    Vehicle tempTwo = tempVehicles.get(two);
+                    result = Insert(tempVehicles,tempOne,tempOne.tasks.get(rng.nextInt(tempOne.tasks.size())),tempTwo, rng.nextInt(tempTwo.tasks.size()) );
+                }
             }
-            if(((Integer) result[1]) > bestFitness){
+            if(((Integer) result[1]) < bestFitness){
                 bestVehicles = (ArrayList<Vehicle>) result[0];
                 bestFitness = (Integer) result[1];
                 counter = 0;

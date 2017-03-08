@@ -116,9 +116,9 @@ public class Genotype implements Comparable<Genotype>{
 		 * because in some other places (selection) we
 		 * rely on that the best values are found at the far right.*/
 		if(this.fitness < otherGenotype.fitness){
-			return 1;
-		}else if(this.fitness > otherGenotype.fitness){
 			return -1;
+		}else if(this.fitness > otherGenotype.fitness){
+			return 1;
 		}else{
 			return 0;			
 		}

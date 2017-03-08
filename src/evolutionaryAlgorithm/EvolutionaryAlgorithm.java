@@ -75,22 +75,27 @@ public class EvolutionaryAlgorithm {
 		children = new ArrayList<>();
 
 		int counter = 0;
-		while (adults.size() < EvolutionaryAlgorithmParams.POPULATION_SIZE) {
+		while (adults.size() < 100) {
 			adults.add(fenotype.createRandomGenotype());
 			counter++;
 			System.out.println("Creating Random offspring" + counter);
 		}
 		bestIndividual = new Genotype(Collections.max(adults));
-
+		double bestSolution = Collections.min(adults).fitness;
+		double tempBestSolution = 0;
 		while (true) {
-			System.out.println("Starting EA main loop");
-
+			//System.out.println("Starting EA main loop");
 			ArrayList<Genotype> offspring = Selecting.Mating(adults, fenotype);
 			children = education.educateChildren(offspring);
 			adults.addAll(children);
 			updatePopulation();
-			System.out.println(Collections.max(adults).fitness);
-			System.out.println(Collections.min(adults).fitness);
+			tempBestSolution = Collections.min(adults).fitness;
+
+			if (tempBestSolution< bestSolution){
+				bestIndividual = new Genotype(Collections.max(adults));
+				bestSolution = tempBestSolution;
+				System.out.println(bestSolution);
+			}
 		}
 	}
 
@@ -99,8 +104,8 @@ public class EvolutionaryAlgorithm {
 	public void updatePopulation() {
 		Collections.sort(adults);
 		int remove = 1;
-		while(adults.size() > 200){
-			if(rng.nextDouble() >= 0.7){
+		while(adults.size() > 100){
+			if(rng.nextDouble() >= 0.1){
 				if(remove >= adults.size()){
 					remove = 1;
 				}
