@@ -19,6 +19,7 @@ public class Vehicle{
         this.id = id;
         this.tasks = tasks;
         this.route = route;
+        this.StartTimeForArcs = new ArrayList<>();
         //getStartTimesAndTotalCost();
     }
     //This is basically the simulating algorithm. Checks when the vehicle arrives at at arc, if it is the earliest plowing truck, the earliest time is set
@@ -46,6 +47,7 @@ public class Vehicle{
         }
         totalLength = cost;
         StartTimeForArcs = startTimes;
+        //System.out.println("Halla");
     }
 
     //Simulates the plowing of the vehicles.
@@ -78,11 +80,22 @@ public class Vehicle{
     @Override
     public String toString(){
         String s = "";
+        if(route.size() == 0){
+            s += "Vehicle " + id + " stays in depot";
+            return s;
+        }
+
+
         for(int x = 0; x<route.size(); x++){
             s += "Vehicle " + id + " Takes arc " + route.get(x).identifier + " from " + route.get(x).from.nr + " to " + route.get(x).to.nr
-                    + ". This takes " + route.get(x).length +" , .and it starts plowing the arc at time " + StartTimeForArcs.get(x)+ "\n";
+                    + ". This takes " + route.get(x).length + " time units";
+            if(x> 0 && (StartTimeForArcs.get(x) -  (StartTimeForArcs.get(x-1) + route.get(x-1).length) > 0)){
+                s += " And it has to wait for " + (StartTimeForArcs.get(x) -  (StartTimeForArcs.get(x-1) + route.get(x).length)) + " time units";
+            }
+            s +=". It starts plowing the arc at time " + StartTimeForArcs.get(x)+ "\n";
         }
         s += ". Total time of route is " + (StartTimeForArcs.get(StartTimeForArcs.size()-1) + route.get(route.size()-1).length);
+        s += " Total time is " + totalLength;
         return s;
     }
 

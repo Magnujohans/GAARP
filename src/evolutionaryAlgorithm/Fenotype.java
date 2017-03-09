@@ -28,19 +28,23 @@ public class Fenotype {
     public int[][] FWSidewalkGraph;
     public int[][] FWLanePath;
     public int[][] FWSidewalkPath;
+    public int[][] FWBestGraph;
+    public int[][] FWBestPath;
     public int depot;
 
 
     public Fenotype(ArrayList<Arc> lanes, ArrayList<Arc> sidewalks, HashMap<Integer, Arc> arcMap, HashMap<ArcNodeIdentifier, Arc> arcNodeMap, int[][] FWlaneGraph, int[][] FWlanePath,
-                    int[][] FWsidewalkGraph, int[][] FWsidewalkPath, int depot, int plowtrucks, int smallervehicles) {
+                    int[][] FWsidewalkGraph, int[][] FWsidewalkPath, int[][] FWBestGraph, int[][] FWBestPath, int depot, int plowtrucks, int smallervehicles) {
         this.lanes = lanes;
         this.sidewalks = sidewalks;
         this.arcNodeMap = arcNodeMap;
         this.arcMap = arcMap;
         this.FWLaneGraph = FWlaneGraph;
         this.FWSidewalkGraph = FWsidewalkGraph;
+        this.FWBestGraph = FWBestGraph;
         this.FWLanePath = FWlanePath;
         this.FWSidewalkPath = FWsidewalkPath;
+        this.FWBestPath = FWBestPath;
         this.depot = depot;
         this.plowtrucks = plowtrucks;
         this.smallervehicles = smallervehicles;
@@ -67,12 +71,12 @@ public class Fenotype {
         int indexLane2 = rng.nextInt(tempLane.length);
         int indexSW1 = rng.nextInt(tempSideWalk.length);
         int indexSW2 = rng.nextInt(tempSideWalk.length);
-        while(tempLane[indexLane1] != -1 || tempLane[indexLane2] != -1 || tempSideWalk[indexSW1] != -1 || tempSideWalk[indexSW2] != -1 ){
+        /*while(tempLane[indexLane1] != -1 || tempLane[indexLane2] != -1 || tempSideWalk[indexSW1] != -1 || tempSideWalk[indexSW2] != -1 ){
             indexLane1 = rng.nextInt(tempLane.length);
             indexLane2 = rng.nextInt(tempLane.length);
             indexSW1 = rng.nextInt(tempSideWalk.length);
             indexSW2 = rng.nextInt(tempSideWalk.length);
-        }
+        }*/
 
         swap(tempLane,indexLane1, indexLane2);
         swap(tempSideWalk,indexSW1, indexSW2);
@@ -256,7 +260,7 @@ public class Fenotype {
     public ArrayList<Arc> getTourFromTasks(ArrayList<Arc> tasks) {
         ArrayList<Arc> route = new ArrayList<>();
         if(tasks.size() == 0){
-            System.out.println(tasks);
+            return route;
         }
         if (depot != tasks.get(0).from.nr) {
             route.addAll(getArcsFromPath(depot, tasks.get(0).from.nr));

@@ -20,11 +20,15 @@ public class Algorithm {
     public int[][] graph;
     public int[][] swMatrix;
     public int[][] originalGraphClone;
+    public int[][] bestMatrix;
 
     public int[][] fwGraph;
     public int[][] fwPath;
     public int[][] fwGraphSW;
     public int[][] fwPathSW;
+    public int[][] fwBestGraph;
+    public int[][] fwBestPath;
+
     public ArrayList<Integer> GiantTour;
     public ArrayList<Integer> GiantTourNoDuplicates;
     public ArrayList<Integer> GiantTourNoDuplicatesSW;
@@ -58,10 +62,28 @@ public class Algorithm {
         originalGraphClone = graph.clone();
         floydWarshall fw1 = new floydWarshall();
         floydWarshall fw2 = new floydWarshall();
+        floydWarshall fw3 = new floydWarshall();
         fwGraph = fw1.Algorithm(originalGraphClone);
         fwPath = fw1.path;
         fwGraphSW = fw2.Algorithm(swMatrix);
         fwPathSW = fw2.path;
+
+        bestMatrix = new int[originalGraphClone.length][originalGraphClone.length];
+        for(int x = 0; x < originalGraphClone.length; x++){
+            for(int y = 0; y < originalGraphClone.length; y++){
+                if (swMatrix[x][y] > originalGraphClone[x][y] && originalGraphClone[x][y] != -1){
+                    bestMatrix[x][y] = originalGraphClone[x][y];
+                }
+                else if(swMatrix[x][y] > originalGraphClone[x][y] && originalGraphClone[x][y] == -1){
+                    bestMatrix[x][y] = swMatrix[x][y];
+                }
+                else{
+                    bestMatrix[x][y] = originalGraphClone[x][y];
+                }
+            }
+        }
+        fwBestGraph = fw2.Algorithm(bestMatrix);
+        fwBestPath = fw2.path;
 
 
         for (int x = 0; x < graph.length; x++) {
