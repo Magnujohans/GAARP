@@ -1,6 +1,8 @@
 package evolutionaryAlgorithm; /**
  * Created by Magnu on 22.09.2016.
  */
+import com.sun.org.apache.xpath.internal.SourceTree;
+
 import java.util.Random;
 
 public class FMXCrossover
@@ -248,6 +250,13 @@ public class FMXCrossover
             offspring1[x] = offspring1nd[y];
             x++;
         }
+        /*
+        for(int y = 0; y<parent1.length;y++){
+            System.out.print(offspring1[y] + " ");
+        }
+        System.out.println(" - - - - - - - -");
+        */
+        //swap(offspring1);
 
         return offspring1;
     }
@@ -265,8 +274,19 @@ public class FMXCrossover
             offspring2[x] = offspring2nd[y];
             x++;
         }
+        //swap(offspring2);
 
         return offspring2;
+    }
+
+    private void swap(int[] arr) {
+        Random rng = new Random();
+        int i = rng.nextInt(arr.length);
+        int j = rng.nextInt(arr.length);
+
+        int t = arr[i];
+        arr[i] = arr[j];
+        arr[j] = t;
     }
 
     public void printOffspring(int [] offspring1, int [] offspring2){
@@ -308,7 +328,7 @@ public class FMXCrossover
         for(int x = 0; x<parent1.length;x++){
             System.out.print(cross.getOffspring1()[x] + " ");
         }
-        System.out.println("FMXCrossover.main");
+        System.out.println(" - - - - - - - -");
         for(int x = 0; x<parent1.length;x++){
             System.out.print(cross.getOffspring2()[x] + " ");
         }

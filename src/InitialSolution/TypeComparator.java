@@ -8,7 +8,13 @@ import java.util.Comparator;
     //Plowing trucks are simulated before the smaller vehicles.
 public class TypeComparator implements Comparator<Vehicle> {
     @Override
-    public int compare(Vehicle a, Vehicle b) {
-        return b.id - a.id;
+    public int compare(Vehicle a, Vehicle b)
+    {
+        if(b.id > 0 && a.id > 0){
+            return a.id - b.id;
+        }
+        else{
+            return b.id - a.id;
+        }
     }
 }

@@ -15,7 +15,9 @@ public class Algorithm {
     public ArrayList<Arc> sideWalkArcs;
     public ArrayList<Arc> onlySideWalkArcs;
     public HashMap<Integer, Arc> arcMap;
+    public HashMap<Integer, Arc> SWarcMap;
     public HashMap<ArcNodeIdentifier, Arc> arcNodeMap;
+    public HashMap<SWArcNodeIdentifier, Arc> SWarcNodeMap;
 
     public int[][] graph;
     public int[][] swMatrix;
@@ -52,6 +54,7 @@ public class Algorithm {
         onlySideWalkArcs = new ArrayList<>();
         arcMap = new HashMap<>();
         arcNodeMap = new HashMap<>();
+        SWarcNodeMap = new HashMap<>();
 
         this.depot = depot;
         this.nrVehicles = nrVehicles;
@@ -110,6 +113,7 @@ public class Algorithm {
                     if (swMatrix[x][y] > graph[x][y]) {
                         Arc tempSW = new Arc(nodes.get(x), nodes.get(y), swMatrix[x][y], 2, counter);
                         arcMap.put(counter, tempSW);
+                        SWarcNodeMap.put(new SWArcNodeIdentifier(nodes.get(x).nr, nodes.get(y).nr), tempSW);
                         sideWalkArcs.add(tempSW);
                         tempSW.addPrecedingArc(tempArc);
                         tempArc.addSuccedingArc(tempSW);
@@ -124,6 +128,7 @@ public class Algorithm {
                     Arc tempSW = new Arc(nodes.get(x), nodes.get(y), swMatrix[x][y], 2, counter);
                     arcMap.put(counter, tempSW);
                     arcNodeMap.put(new ArcNodeIdentifier(nodes.get(x).nr, nodes.get(y).nr), tempSW);
+                    SWarcNodeMap.put(new SWArcNodeIdentifier(nodes.get(x).nr, nodes.get(y).nr), tempSW);
                     sideWalkArcs.add(tempSW);
                     onlySideWalkArcs.add(tempSW);
                     nodes.get(x).outGoingSW.add(tempSW);
@@ -209,6 +214,10 @@ public class Algorithm {
 
         this.vehicles = vehicles;
         System.out.println("Konstruksjonen tar: " + ((System.currentTimeMillis()-startConstruction)) + " tusendelssekunder");
+        resetPlowingtimes();
+        for (int x = 0; x < vehicles.size(); x++) {
+            vehicles.get(x).reRoute();
+        }
 
         System.out.println("Løsningsverdien fra Konstruksjonen er: " + getMakeSpan(vehicles));
         //Here, we do the localSearch from the paper. the arguments are the vehicles, alpha, beta and theta.
@@ -569,7 +578,7 @@ public class Algorithm {
         for(int x = 0; x< sideWalkArcs.size(); x++){
             if(!sideWalkArcs.get(x).serviced || sideWalkArcs.get(x).startOfService< sideWalkArcs.get(x).getEarliestStartingTimeForThisArc()){
                 feasible = false;
-                System.out.println(sideWalkArcs.get(x).serviced);
+                System.out.println(sideWalkArcs.get(x).from.nr + " to " + sideWalkArcs.get(x).to.nr);
 
             }
         }

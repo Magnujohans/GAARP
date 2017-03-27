@@ -12,7 +12,7 @@ public class Selecting {
     public static Random rng = new Random();
     public static final int tournamentSize = 5;
     public static final double selectionProb = 0.5;
-    public static final double offSpringPerEpoch = 10;
+    public static final double offSpringPerEpoch = 20;
 
     public static Genotype tournamentSelection(ArrayList<Genotype> population){
         ArrayList<Integer> chosenIndices = new ArrayList<>();
@@ -70,8 +70,8 @@ public class Selecting {
         for(int i = 0; i < (parents.size()-1); i = i+2){
             tempLane = new FMXCrossover(parents.get(i).getLaneGenome(),parents.get(i+1).getLaneGenome());
             tempSidewalk = new FMXCrossover(parents.get(i).getSidewalkGenome(),parents.get(i+1).getSidewalkGenome());
-            tempOffspring1 = new Genotype(tempLane.getOffspring1(), tempSidewalk.getOffspring1(), fenotype.calculateFitness(tempLane.getOffspring1(), tempSidewalk.getOffspring2()));
-            tempOffspring2 = new Genotype(tempLane.getOffspring2(), tempSidewalk.getOffspring2(), fenotype.calculateFitness(tempLane.getOffspring1(), tempSidewalk.getOffspring2()));
+            tempOffspring1 = new Genotype(tempLane.getOffspring1(), tempSidewalk.getOffspring1(), fenotype.calculateFitness(tempLane.getOffspring1(), tempSidewalk.getOffspring1()));
+            tempOffspring2 = new Genotype(tempLane.getOffspring2(), tempSidewalk.getOffspring2(), fenotype.calculateFitness(tempLane.getOffspring2(), tempSidewalk.getOffspring2()));
             /*if(rng.nextDouble() <= mutationRate){
                 tempOffspring1 = Mutation(tempOffspring1);
             }*/

@@ -17,6 +17,7 @@ public class Arc implements Comparable<Arc>{
     public int startOfServiceGT;
     public int waitingTime;
     public boolean serviced;
+    public ArrayList<Arc> neighbours;
     public ArrayList<Arc> haveToPreceed;
     public ArrayList<Arc> haveToSucced;
 
@@ -32,6 +33,7 @@ public class Arc implements Comparable<Arc>{
         this.haveToPreceed = new ArrayList<>();
         this.haveToSucced = new ArrayList<>();
         this.waitingTime = 0;
+        neighbours = new ArrayList<>();
     }
     public void setStartOfService(int time){
         if(startOfService < 0 || startOfService > time){

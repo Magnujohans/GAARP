@@ -39,9 +39,15 @@ public class Vehicle{
                     }
                 }
             }
+            if(this.id > 0 && route.get(x).type == 1){
+                route.get(x).setStartOfService(cost);
+                route.get(x).serveArc();
+            }
+            if(this.id < 0 && route.get(x).type == 2){
+                route.get(x).setStartOfService(cost);
+                route.get(x).serveArc();
+            }
             startTimes.add(cost);
-            route.get(x).setStartOfService(cost);
-            route.get(x).serveArc();
             cost += route.get(x).length;
 
         }
@@ -86,13 +92,23 @@ public class Vehicle{
         }
 
 
-        for(int x = 0; x<route.size(); x++){
-            s += "Vehicle " + id + " Takes arc " + route.get(x).identifier + " from " + route.get(x).from.nr + " to " + route.get(x).to.nr
-                    + ". This takes " + route.get(x).length + " time units";
-            if(x> 0 && (StartTimeForArcs.get(x) -  (StartTimeForArcs.get(x-1) + route.get(x-1).length) > 0)){
-                s += " And it has to wait for " + (StartTimeForArcs.get(x) -  (StartTimeForArcs.get(x-1) + route.get(x).length)) + " time units";
+        for(int x = 0; x<route.size()-1; x++){
+            if(route.get(x).startOfService == StartTimeForArcs.get(x)){
+                s += "Vehicle " + id + " plows arc " + route.get(x).identifier + " from " + (route.get(x).from.nr+2) + " to " + (route.get(x).to.nr+2)
+                        + ". This takes " + route.get(x).length + " time units";
             }
-            s +=". It starts plowing the arc at time " + StartTimeForArcs.get(x)+ "\n";
+            else{
+                s += "Vehicle " + id + " takes arc " + route.get(x).identifier + " from " + (route.get(x).from.nr+2) + " to " + (route.get(x).to.nr+2)
+                        + ". This takes " + route.get(x).length + " time units";
+            }
+            if(route.get(x).type == 2){
+                s += ". This is a Sidewalk";
+            }
+            if(x> 0 && (StartTimeForArcs.get(x+1) -  (StartTimeForArcs.get(x) + route.get(x).length) > 0)){
+                s += " And it has to wait for " + (StartTimeForArcs.get(x+1) -  (StartTimeForArcs.get(x) + route.get(x).length)) + " time units";
+            }
+            //s +=". It starts plowing the arc at time " + StartTimeForArcs.get(x)+ "\n";
+            s +=". It is done at time " + StartTimeForArcs.get(x+1)+ "\n";
         }
         s += ". Total time of route is " + (StartTimeForArcs.get(StartTimeForArcs.size()-1) + route.get(route.size()-1).length);
         s += " Total time is " + totalLength;
