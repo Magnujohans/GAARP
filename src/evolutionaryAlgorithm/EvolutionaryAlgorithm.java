@@ -21,6 +21,7 @@ public class EvolutionaryAlgorithm {
 	public ArrayList<Vehicle> vehicles;
 	public ArrayList<Arc> arcs;
 	public ArrayList<Arc> sideWalkArcs;
+	public ArrayList<Arc> allArcs;
 
 	ArrayList<Genotype> adults;
 	ArrayList<Genotype> selectedParents;
@@ -38,8 +39,10 @@ public class EvolutionaryAlgorithm {
 		education = new Education(fenotype);
 
 		population = 200;
+		allArcs = getAllArcs();
 
 		getNeighbours();
+		//printNeighbours();
 	}
 
 
@@ -90,7 +93,12 @@ public class EvolutionaryAlgorithm {
 			//System.out.println("Starting EA main loop");
 			ArrayList<Genotype> offspring = Selecting.Mating(adults, fenotype);
 			//children = education.educateChildren(offspring, newBestSolutionCounter, 0.0000);
-			children = education.educateChildren2(arcs, offspring);
+			children = education.educateChildren2(allArcs, offspring, 10000, 0);
+			for (int x = 0; x <children.size(); x++){
+				if (!checkUniqueSolution(children.get(x))){
+					children.remove(x);
+				}
+			}
 			adults.addAll(children);
 			updatePopulation();
 			tempBestSolution = Collections.min(adults).fitness;
@@ -122,7 +130,7 @@ public class EvolutionaryAlgorithm {
 
 			//}
 
-			if(newBestSolutionCounter == 1000){
+			if(newBestSolutionCounter == 10000){
 				ArrayList<Vehicle> bestResult = fenotype.getFenotype(bestIndividual);
 				fenotype.resetPlowingtimes();
 				Collections.sort(vehicles, new TypeComparator());
@@ -143,13 +151,60 @@ public class EvolutionaryAlgorithm {
 	}
 
 	public void getNeighbours(){
-		for (int i = 0; i < arcs.size(); i++) {
-			for (int j = 0; j < arcs.size(); j++) {
-				if(arcs.get(i).from.nr == arcs.get(j).to.nr && arcs.get(i).type == arcs.get(j).type){
-					arcs.get(i).neighbours.add(arcs.get(j));
+		for (int i = 0; i < allArcs.size(); i++) {
+			for (int j = 0; j < allArcs.size(); j++) {
+				if(allArcs.get(i).from.nr == allArcs.get(j).to.nr && allArcs.get(i).type == allArcs.get(j).type){
+					allArcs.get(i).neighbours.add(allArcs.get(j));
 				}
 			}
+
 		}
+
+	}
+
+	public void printNeighbours(){
+		for (int i = 0; i < arcs.size(); i++) {
+			System.out.println("ARC");
+			System.out.println(arcs.get(i).from.nr +" : " + arcs.get(i).to.nr);
+			System.out.println("NEIGHBORS");
+			for (int j = 0; j < arcs.get(i).neighbours.size(); j++) {
+				System.out.println(arcs.get(i).neighbours.get(j).from.nr +" : " + arcs.get(i).neighbours.get(j).to.nr);
+			}
+
+		}
+
+	}
+
+	public ArrayList<Arc> getAllArcs(){
+		ArrayList<Arc> all = new ArrayList<>();
+		for (int i = 0; i < arcs.size(); i++) {
+			 all.add(arcs.get(i));
+		}
+		for (int i = 0; i < sideWalkArcs.size(); i++) {
+			all.add(sideWalkArcs.get(i));
+		}
+		return all;
+	}
+
+	public boolean checkUniqueSolution(Genotype newSolution){
+		for(int x = 0; x < adults.size(); x++){
+			boolean unique = false;
+			for(int z = 0; z < newSolution.laneGenome.length; z++){
+				if (adults.get(x).laneGenome[z] != newSolution.laneGenome[z]){
+					unique = true;
+				}
+			}
+			for(int z = 0; z < newSolution.sidewalkGenome.length; z++){
+				if (adults.get(x).sidewalkGenome[z] != newSolution.sidewalkGenome[z]){
+					unique = true;
+				}
+			}
+			if (unique == false){
+				return false;
+			}
+
+		}
+		return true;
 	}
 
 
@@ -158,7 +213,7 @@ public class EvolutionaryAlgorithm {
 		Collections.sort(adults);
 		int remove = 1;
 		while(adults.size() > population){
-			if(rng.nextDouble() >= 0.7){
+			if(rng.nextDouble() >= 0.3){
 				if(remove >= adults.size()){
 					remove = 1;
 				}

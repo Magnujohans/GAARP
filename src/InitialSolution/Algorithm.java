@@ -10,6 +10,7 @@ import java.util.*;
 public class Algorithm {
 
     public ArrayList<Node> nodes;
+    public ArrayList<Arc> allArcs;
     public ArrayList<Arc> arcs;
     public ArrayList<Node> sideWalkNodes;
     public ArrayList<Arc> sideWalkArcs;
@@ -52,6 +53,7 @@ public class Algorithm {
         sideWalkArcs = new ArrayList<>();
         sideWalkNodes = new ArrayList<>();
         onlySideWalkArcs = new ArrayList<>();
+        allArcs = new ArrayList<>();
         arcMap = new HashMap<>();
         arcNodeMap = new HashMap<>();
         SWarcNodeMap = new HashMap<>();
@@ -104,6 +106,7 @@ public class Algorithm {
                     arcNodeMap.put(new ArcNodeIdentifier(nodes.get(x).nr, nodes.get(y).nr), tempArc);
                     counter++;
                     arcs.add(tempArc);
+                    allArcs.add(tempArc);
 
                     nodes.get(x).outGoing.add(tempArc);
                     nodes.get(y).inComing.add(tempArc);
@@ -115,6 +118,7 @@ public class Algorithm {
                         arcMap.put(counter, tempSW);
                         SWarcNodeMap.put(new SWArcNodeIdentifier(nodes.get(x).nr, nodes.get(y).nr), tempSW);
                         sideWalkArcs.add(tempSW);
+                        //allArcs.add(tempSW);
                         tempSW.addPrecedingArc(tempArc);
                         tempArc.addSuccedingArc(tempSW);
                         nodes.get(x).outGoingSW.add(tempSW);
@@ -131,6 +135,7 @@ public class Algorithm {
                     SWarcNodeMap.put(new SWArcNodeIdentifier(nodes.get(x).nr, nodes.get(y).nr), tempSW);
                     sideWalkArcs.add(tempSW);
                     onlySideWalkArcs.add(tempSW);
+                    allArcs.add(tempSW);
                     nodes.get(x).outGoingSW.add(tempSW);
                     nodes.get(y).inComingSW.add(tempSW);
                     counter++;

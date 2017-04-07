@@ -31,12 +31,19 @@ public class Education {
         return educatedChildren;
     }
 
-    public ArrayList<Genotype> educateChildren2(ArrayList<Arc> arcs, ArrayList<Genotype> children){
+    public ArrayList<Genotype> educateChildren2(ArrayList<Arc> arcs, ArrayList<Genotype> children, int iterations, double factor){
         ArrayList<Genotype> educatedChildren = new ArrayList<>();
         for (int i = 0; i < children.size(); i++) {
             ArrayList<Vehicle> tempChild = fenotype.getFenotype(children.get(i));
-            Object[] tempResult = educateOffspring(arcs, tempChild);
+            Object[] tempResult;
+            if(rng.nextDouble() > 0.5){
+                tempResult = educateOffspring(arcs, tempChild);
+            }
+            else{
+                tempResult = educate(tempChild, iterations, factor);
+            }
             ArrayList<Vehicle> tempResultFenotype = (ArrayList<Vehicle>) tempResult[0];
+            //System.out.println("Jess");
             Genotype tempResultGenotype = fenotype.createGenotype(tempResultFenotype, (Integer) tempResult[1]);
             educatedChildren.add(tempResultGenotype);
         }
@@ -321,10 +328,17 @@ public class Education {
     }
 
     public Object[] One(ArrayList<Vehicle> vehicles, Vehicle from, Vehicle to, int u, int v){
-        Arc neighbor = to.tasks.get(v);
-        Arc move = from.tasks.remove(u);
-        int newV = to.tasks.indexOf(neighbor);
-        to.tasks.add(newV, move);
+        if(from == to){
+            Arc V = to.tasks.get(v);
+            Arc move = from.tasks.get(u);
+            from.tasks.remove(move);
+            from.tasks.add(from.tasks.indexOf(V), move);
+        }
+        else{
+            Arc move = from.tasks.get(u);
+            to.tasks.add(v+1, move);
+            from.tasks.remove(move);
+        }
 
         to.route = fenotype.getTourFromTasks(to.tasks, to.id);
         from.route = fenotype.getTourFromTasks(from.tasks, from.id);
@@ -340,23 +354,25 @@ public class Education {
     }
 
     public Object[] Two(ArrayList<Vehicle> vehicles, Vehicle from, Vehicle to, int u, int v){
-        Arc neighbor = to.tasks.get(v);
-        Arc move = from.tasks.get(u);
+
+
+        Arc V = to.tasks.get(v);
+        Arc U = from.tasks.get(u);
         if(u == from.tasks.size()-1){
             Object[] returnlist = new Object[2];
             returnlist[0] = vehicles;
             returnlist[1] = -1;
             return returnlist;
         }
+        Arc X = from.tasks.get(u+1);
 
-        Arc X = from.tasks.get(from.tasks.indexOf(move)+1);
-
-        from.tasks.remove(move);
+        from.tasks.remove(U);
         from.tasks.remove(X);
+        to.tasks.add(to.tasks.indexOf(V)+1, X);
+        to.tasks.add(to.tasks.indexOf(V)+1, U);
 
-        int newV = to.tasks.indexOf(neighbor);
-        to.tasks.add(newV, move);
-        to.tasks.add(newV, X);
+
+
 
         to.route = fenotype.getTourFromTasks(to.tasks, to.id);
         from.route = fenotype.getTourFromTasks(from.tasks, from.id);
@@ -372,8 +388,8 @@ public class Education {
     }
 
     public Object[] Three(ArrayList<Vehicle> vehicles, Vehicle from, Vehicle to, int u, int v){
-        Arc neighbor = to.tasks.get(v);
-        Arc move = from.tasks.get(u);
+        Arc V = to.tasks.get(v);
+        Arc U = from.tasks.get(u);
         if(u == from.tasks.size()-1){
             Object[] returnlist = new Object[2];
             returnlist[0] = vehicles;
@@ -382,12 +398,12 @@ public class Education {
         }
         Arc X = from.tasks.get(u+1);
 
-        from.tasks.remove(move);
+        from.tasks.remove(U);
         from.tasks.remove(X);
+        to.tasks.add(to.tasks.indexOf(V)+1, U);
+        to.tasks.add(to.tasks.indexOf(V)+1, X);
 
-        int newV = to.tasks.indexOf(neighbor);
-        to.tasks.add(newV, X);
-        to.tasks.add(newV, move);
+
 
         to.route = fenotype.getTourFromTasks(to.tasks, to.id);
         from.route = fenotype.getTourFromTasks(from.tasks, from.id);
@@ -406,12 +422,10 @@ public class Education {
         Arc ArcOne = vehicleOne.tasks.get(u);
         Arc ArcTwo = vehicleTwo.tasks.get(v);
 
-        vehicleOne.tasks.add(u, ArcTwo);
-        vehicleTwo.tasks.add(v, ArcOne);
-        vehicleTwo.tasks.remove(ArcTwo);
-        vehicleOne.tasks.remove(ArcOne);
+        vehicleTwo.tasks.set(v,ArcOne);
+        vehicleOne.tasks.set(u, ArcTwo);
 
-        vehicleOne.route = fenotype.getTourFromTasks(vehicleOne.tasks, vehicleTwo.id);
+        vehicleOne.route = fenotype.getTourFromTasks(vehicleOne.tasks, vehicleOne.id);
         vehicleTwo.route = fenotype.getTourFromTasks(vehicleTwo.tasks, vehicleTwo.id);
 
         int fitness = fenotype.calculateFitness(vehicles);
@@ -426,7 +440,7 @@ public class Education {
     public Object[] Five(ArrayList<Vehicle> vehicles, Vehicle vehicleOne,Vehicle vehicleTwo, int u, int v){
         Arc ArcOne = vehicleOne.tasks.get(u);
 
-        if(u == vehicleOne.tasks.size()-1){
+        if(u == vehicleOne.tasks.size()-1 || (vehicleOne == vehicleTwo && u+1 == v)){
             Object[] returnlist = new Object[2];
             returnlist[0] = vehicles;
             returnlist[1] = -1;
@@ -436,15 +450,13 @@ public class Education {
         Arc X = vehicleOne.tasks.get(u+1);
         Arc ArcTwo = vehicleTwo.tasks.get(v);
 
-        vehicleTwo.tasks.add(v, X);
-        vehicleTwo.tasks.add(v, ArcOne);
-        vehicleOne.tasks.add(u, ArcTwo);
-        vehicleTwo.tasks.remove(ArcTwo);
-        vehicleOne.tasks.remove(ArcOne);
+        vehicleTwo.tasks.set(v, ArcOne);
+        vehicleOne.tasks.set(u, ArcTwo);
         vehicleOne.tasks.remove(X);
+        vehicleTwo.tasks.add(vehicleTwo.tasks.indexOf(ArcOne)+1, X);
 
 
-        vehicleOne.route = fenotype.getTourFromTasks(vehicleOne.tasks, vehicleTwo.id);
+        vehicleOne.route = fenotype.getTourFromTasks(vehicleOne.tasks, vehicleOne.id);
         vehicleTwo.route = fenotype.getTourFromTasks(vehicleTwo.tasks, vehicleTwo.id);
 
         int fitness = fenotype.calculateFitness(vehicles);
@@ -470,17 +482,21 @@ public class Education {
         Arc X = vehicleOne.tasks.get(u+1);
         Arc Y = vehicleTwo.tasks.get(v+1);
 
-        vehicleTwo.tasks.add(v, X);
-        vehicleTwo.tasks.add(v, ArcOne);
-        vehicleOne.tasks.add(u, Y);
-        vehicleOne.tasks.add(u, ArcTwo);
-        vehicleTwo.tasks.remove(ArcTwo);
-        vehicleTwo.tasks.remove(Y);
-        vehicleOne.tasks.remove(ArcOne);
-        vehicleOne.tasks.remove(X);
+        if(vehicleOne ==vehicleTwo){
+            Collections.swap(vehicleOne.tasks, u, v);
+            Collections.swap(vehicleOne.tasks, (u+1), (v+1));
+        }
+        else{
+            vehicleOne.tasks.set(u, ArcTwo);
+            vehicleTwo.tasks.set(v, ArcOne);
+            //vehicleOne.tasks.set(u, vehicleTwo.tasks.set(v, ArcOne));
+            vehicleTwo.tasks.set((v+1), X);
+            vehicleOne.tasks.set((u+1), Y);
+            //vehicleOne.tasks.set((u+1), vehicleTwo.tasks.set((v+1), X));
+        }
 
 
-        vehicleOne.route = fenotype.getTourFromTasks(vehicleOne.tasks, vehicleTwo.id);
+        vehicleOne.route = fenotype.getTourFromTasks(vehicleOne.tasks, vehicleOne.id);
         vehicleTwo.route = fenotype.getTourFromTasks(vehicleTwo.tasks, vehicleTwo.id);
 
         int fitness = fenotype.calculateFitness(vehicles);
@@ -506,13 +522,16 @@ public class Education {
         Arc X = vehicleOne.tasks.get(u+1);
         Arc Y = vehicleTwo.tasks.get(v+1);
 
-        vehicleTwo.tasks.add(v, X);
-        vehicleOne.tasks.add(u+1, ArcTwo);
-        vehicleTwo.tasks.remove(ArcTwo);
-        vehicleOne.tasks.remove(X);
+        if (vehicleOne == vehicleTwo){
+            Collections.swap(vehicleOne.tasks, v, u+1);
+        }
+        else{
+            vehicleOne.tasks.set(u+1, ArcTwo );
+            vehicleTwo.tasks.set(v, X);
+        }
 
 
-        vehicleOne.route = fenotype.getTourFromTasks(vehicleOne.tasks, vehicleTwo.id);
+        vehicleOne.route = fenotype.getTourFromTasks(vehicleOne.tasks, vehicleOne.id);
         vehicleTwo.route = fenotype.getTourFromTasks(vehicleTwo.tasks, vehicleTwo.id);
 
         int fitness = fenotype.calculateFitness(vehicles);
@@ -538,13 +557,12 @@ public class Education {
         Arc X = vehicleOne.tasks.get(u+1);
         Arc Y = vehicleTwo.tasks.get(v+1);
 
-        vehicleTwo.tasks.add(v, X);
-        vehicleOne.tasks.add(u+1, Y);
-        vehicleTwo.tasks.remove(Y);
-        vehicleOne.tasks.remove(X);
+        vehicleOne.tasks.set(u+1, Y );
+        vehicleTwo.tasks.set(v, X);
+        vehicleTwo.tasks.set(v+1, ArcTwo);
 
 
-        vehicleOne.route = fenotype.getTourFromTasks(vehicleOne.tasks, vehicleTwo.id);
+        vehicleOne.route = fenotype.getTourFromTasks(vehicleOne.tasks, vehicleOne.id);
         vehicleTwo.route = fenotype.getTourFromTasks(vehicleTwo.tasks, vehicleTwo.id);
 
         int fitness = fenotype.calculateFitness(vehicles);
@@ -582,21 +600,21 @@ public class Education {
     public Object[] runMove(ArrayList<Vehicle> vehicles, int nr, Vehicle one, Vehicle two, int u, int v){
         Object[] result;
         switch (nr){
-            case 1: result = One(vehicles,one,two,u,v);
+            case 0: result = One(vehicles,one,two,u,v);
                 break;
-            case 2: result = Two(vehicles,one,two,u,v);
+            case 1: result = Two(vehicles,one,two,u,v);
                 break;
-            case 3: result = Three(vehicles,one,two,u,v);
+            case 2: result = Three(vehicles,one,two,u,v);
                 break;
-            case 4: result = Four(vehicles,one,two,u,v);
+            case 3: result = Four(vehicles,one,two,u,v);
                 break;
-            case 5: result = Five(vehicles,one,two,u,v);
+            case 4: result = Five(vehicles,one,two,u,v);
                 break;
-            case 6: result = Six(vehicles,one,two,u,v);
+            case 5: result = Six(vehicles,one,two,u,v);
                 break;
-            case 7: result = Seven(vehicles,one,two,u,v);
+            case 6: result = Seven(vehicles,one,two,u,v);
                 break;
-            case 8: result = Eight(vehicles,one,two,u,v);
+            case 7: result = Eight(vehicles,one,two,u,v);
                 break;
             default: result = new Object[2];
                 result[0] = vehicles;
@@ -612,19 +630,21 @@ public class Education {
         Object[] result;
 
         ArrayList<Vehicle> tempVehicles = new ArrayList<>();
-        for (int i = 0; i < bestVehicles.size(); i++) {
-            tempVehicles.add(bestVehicles.get(i).copyVehicle());
+        for (int y = 0; y < bestVehicles.size(); y++) {
+            tempVehicles.add(bestVehicles.get(y).copyVehicle());
         }
 
         ArrayList<Integer> ArcSequence = getPermutation(arcs.size());
         for (int i = 0; i < ArcSequence.size(); i++) {
+            //System.out.println("Ny Bil");
             Arc ArcOne = arcs.get(ArcSequence.get(i));
-            Vehicle vehicleOne = getVehicleWithTask(bestVehicles, ArcOne);
+            Vehicle vehicleOne = getVehicleWithTask(tempVehicles, ArcOne);
             int u = getIndexofTask(vehicleOne, ArcOne);
             ArrayList<Integer> neighbourSequence = getPermutation(ArcOne.neighbours.size());
             for (int j = 0; j < ArcOne.neighbours.size(); j++) {
+
                 Arc ArcTwo = ArcOne.neighbours.get(neighbourSequence.get(j));
-                Vehicle vehicleTwo = getVehicleWithTask(bestVehicles, ArcTwo);
+                Vehicle vehicleTwo = getVehicleWithTask(tempVehicles, ArcTwo);
                 int v = getIndexofTask(vehicleTwo, ArcTwo);
                 ArrayList<Integer> moveSequence;
                 if(vehicleOne == vehicleTwo){
@@ -634,16 +654,36 @@ public class Education {
                     moveSequence = getPermutation(8);
                 }
                 for (int x = 0; x < moveSequence.size(); x++){
+
+                    for (int y = 0; y < tempVehicles.size(); y++) {
+                        tempVehicles.get(y).tasks = bestVehicles.get(y).copyTasks();
+                        tempVehicles.get(y).route = bestVehicles.get(y).copyRoute();
+                    }
+                    int[] vehicleTimeBefore = fenotype.calculateVehicleFitness(tempVehicles, vehicleOne, vehicleTwo);
                     result = runMove(tempVehicles, moveSequence.get(x), vehicleOne, vehicleTwo, u, v);
+                    int[] vehicleTimeAfter = fenotype.calculateVehicleFitness(tempVehicles, vehicleOne, vehicleTwo);
+
                     if(((Integer) result[1]) < 0){
+                        for (int y = 0; y < tempVehicles.size(); y++) {
+                            tempVehicles.get(y).tasks = bestVehicles.get(y).copyTasks();
+                            tempVehicles.get(y).route = bestVehicles.get(y).copyRoute();
+
+                        }
                         continue;
                     }
-                    if(((Integer) result[1]) < bestFitness){
+                    int vehicleTimeDifference = (vehicleTimeBefore[0] - vehicleTimeAfter[0]) + (vehicleTimeBefore[1] - vehicleTimeAfter[1]);
+
+                    if( (vehicleTimeDifference > 0 && ((Integer) result[1]) <= bestFitness) ||  ((Integer) result[1]) < bestFitness){
+                        //System.out.println(moveSequence.get(x));
                         return result;
                     }
                     else{
-                        tempVehicles =
+                        for (int y = 0; y < tempVehicles.size(); y++) {
+                            tempVehicles.get(y).tasks = bestVehicles.get(y).copyTasks();
+                            tempVehicles.get(y).route = bestVehicles.get(y).copyRoute();
+                        }
                     }
+
                 }
 
 

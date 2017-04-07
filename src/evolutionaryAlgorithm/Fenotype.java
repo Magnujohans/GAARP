@@ -66,7 +66,7 @@ public class Fenotype {
     public Genotype createRandomGenotype() {
         int[] tempLane = this.originalLaneGeno.clone();
         int[] tempSideWalk = this.originalSidewalkGeno.clone();
-        int bound = rng.nextInt(10);
+        int bound = rng.nextInt(1000);
         for (int i = 0; i < bound; i++) {
             int indexLane1 = rng.nextInt(tempLane.length);
             int indexLane2 = rng.nextInt(tempLane.length);
@@ -223,6 +223,24 @@ public class Fenotype {
             vehicles.get(x).reRoute();
         }
         return getMakeSpan(vehicles);
+    }
+
+    public int[] calculateVehicleFitness(ArrayList<Vehicle> vehicles, Vehicle One, Vehicle Two){
+        int[] vehicleTotalTime = new int[2];
+        resetPlowingtimes();
+        Collections.sort(vehicles, new TypeComparator());
+        for (int x = 0; x < vehicles.size(); x++) {
+            vehicles.get(x).reRoute();
+        }
+        for (int x = 0; x < vehicles.size(); x++) {
+            if (vehicles.get(x) == One){
+                vehicleTotalTime[0] = vehicles.get(x).totalLength;
+            }
+            if (vehicles.get(x) == Two){
+                vehicleTotalTime[1] = vehicles.get(x).totalLength;
+            }
+        }
+        return  vehicleTotalTime;
     }
 
     public int calculateFitness(ArrayList<Vehicle> vehicles) {

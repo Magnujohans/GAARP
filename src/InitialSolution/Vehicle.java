@@ -28,7 +28,7 @@ public class Vehicle{
         ArrayList<Integer> startTimes = new ArrayList<>();
         int cost = 0;
         for(int x = 0; x<route.size(); x++){
-            if(this.id < 0) {
+            if(this.id <0 && route.get(x).type == 2) {
                 if (route.get(x).getEarliestStartingTimeForThisArc() > 0) {
                     if (cost < route.get(x).getEarliestStartingTimeForThisArc()) {
                         //route.get(x).setWaitingTime(route.get(x).getEarliestStartingTimeForThisArc() - cost);
@@ -80,6 +80,14 @@ public class Vehicle{
     public Vehicle copyVehicle(){
         Vehicle copy = new Vehicle(this.id, (ArrayList<Arc>) this.tasks.clone(), (ArrayList<Arc>) this.route.clone());
         return copy;
+    }
+
+    public ArrayList<Arc> copyTasks(){
+        return (ArrayList<Arc>) this.tasks.clone();
+    }
+
+    public ArrayList<Arc> copyRoute(){
+        return (ArrayList<Arc>) this.route.clone();
     }
 
     //The output does not say whether the vehicle waits or not.
