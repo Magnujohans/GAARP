@@ -81,6 +81,7 @@ public class EvolutionaryAlgorithm {
 
 		int counter = 0;
 		while (adults.size() < population) {
+			Genotype temp = fenotype.createRandomGenotype();
 			adults.add(fenotype.createRandomGenotype());
 			counter++;
 			System.out.println("Creating Random offspring" + counter);

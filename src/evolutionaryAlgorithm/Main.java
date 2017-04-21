@@ -123,7 +123,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		Main main = new Main();
-		EvolutionaryAlgorithm ea = new EvolutionaryAlgorithm(main.graph15, main.sw15,0,2,2);
+		EvolutionaryAlgorithm ea = new EvolutionaryAlgorithm(main.graph15, main.sw15,0,2,3);
 		ea.run();
 		//SolutionTester st = new SolutionTester(main.graph15, main.sw15, 0,2,2);
 		//st.run();

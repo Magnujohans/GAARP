@@ -34,6 +34,19 @@ public class Genotype implements Comparable<Genotype>{
 		this.fitness = fitness;
 	}
 
+	public boolean isDelimiterRight(){
+		int counter = 0;
+		for(int x = 0; x< laneGenome.length; x++) {
+			if (laneGenome[x] == -1) {
+				counter++;
+			}
+		}
+
+		if (counter == 1){
+			return false;
+		}
+		return true;
+	}
 	
 	/**The indexes of the (required) graph-elements of the trip this genome encodes in the order they are in the tour.*/
 

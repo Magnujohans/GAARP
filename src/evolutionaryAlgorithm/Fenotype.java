@@ -159,10 +159,15 @@ public class Fenotype {
 
     public Genotype createGenotype(ArrayList<Vehicle> initialVehicles, int fitness) {
         int[] laneGenome = new int[plowtrucks - 1 + this.getLanes().size()];
+        //System.out.println("Lengde" + laneGenome.length);
+        //System.out.println("Antall Biler" + plowtrucks);
         int z = 0;
         Collections.sort(initialVehicles, new TypeComparator());
         for (int x = 0; x < plowtrucks; x++) {
             if (x > 0) {
+                if(z == 36){
+                    System.out.println("Halla");
+                }
                 laneGenome[z] = -1;
                 z++;
             }
