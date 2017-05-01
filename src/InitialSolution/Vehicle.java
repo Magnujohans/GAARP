@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 //The Vehicle class. Has a task sequence and a route. A positive ID is a plowing truck. A negative ID is a smaller vehicle.
 public class Vehicle{
+    private final boolean uTurnsAllowed;
     public int id;
     public ArrayList<Arc> route;
     public ArrayList<Integer> StartTimeForArcs;
@@ -15,11 +16,12 @@ public class Vehicle{
     public int totalLength;
 
 
-    public Vehicle(int id, ArrayList<Arc> tasks, ArrayList<Arc> route){
+    public Vehicle(int id, ArrayList<Arc> tasks, ArrayList<Arc> route, boolean uTurnsAllowed){
         this.id = id;
         this.tasks = tasks;
         this.route = route;
         this.StartTimeForArcs = new ArrayList<>();
+        this.uTurnsAllowed = uTurnsAllowed;
         //getStartTimesAndTotalCost();
     }
     //This is basically the simulating algorithm. Checks when the vehicle arrives at at arc, if it is the earliest plowing truck, the earliest time is set
@@ -38,6 +40,9 @@ public class Vehicle{
                         cost = route.get(x).getEarliestStartingTimeForThisArc();
                     }
                 }
+            }
+            if(!uTurnsAllowed && x > 0 && route.get(x).to == route.get(x-1).from ){
+                cost += 99999;
             }
             if(this.id > 0 && route.get(x).type == 1){
                 route.get(x).setStartOfService(cost);
@@ -78,7 +83,7 @@ public class Vehicle{
     }
 
     public Vehicle copyVehicle(){
-        Vehicle copy = new Vehicle(this.id, (ArrayList<Arc>) this.tasks.clone(), (ArrayList<Arc>) this.route.clone());
+        Vehicle copy = new Vehicle(this.id, (ArrayList<Arc>) this.tasks.clone(), (ArrayList<Arc>) this.route.clone(), this.uTurnsAllowed);
         return copy;
     }
 

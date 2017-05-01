@@ -4,10 +4,7 @@ import InitialSolution.*;
 import com.sun.org.apache.xpath.internal.SourceTreeManager;
 import graph.Graph;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Random;
+import java.util.*;
 
 import parameterFiles.EvolutionaryAlgorithmParams;
 import parameterFiles.EvolutionaryAlgorithmParams.AdultSelection;
@@ -30,12 +27,12 @@ public class EvolutionaryAlgorithm {
 	int population;
 
 
-	public EvolutionaryAlgorithm(int[][] inputGraph, int[][] inputSWGraph, int depot, int vehichles, int swVehicles){
+	public EvolutionaryAlgorithm(int[][] inputGraph, int[][] inputSWGraph, int depot, int vehichles, int swVehicles, boolean uTurnsAllowed){
 		initial = new Algorithm(inputGraph, inputSWGraph, depot, vehichles, swVehicles);
 		vehicles = initial.vehicles;
 		arcs = initial.arcs;
 		sideWalkArcs = initial.sideWalkArcs;
-		this.fenotype = new Fenotype(arcs, sideWalkArcs, initial.arcMap, initial.arcNodeMap, initial.SWarcNodeMap, initial.fwGraph, initial.fwPath, initial.fwGraphSW, initial.fwPathSW, initial.fwBestGraph, initial.fwBestPath, depot, vehichles, swVehicles);
+		this.fenotype = new Fenotype(arcs, sideWalkArcs, initial.arcMap, initial.arcNodeMap, initial.SWarcNodeMap, initial.fwGraph, initial.fwPath, initial.fwGraphSW, initial.fwPathSW, initial.fwBestGraph, initial.fwBestPath, depot, vehichles, swVehicles, uTurnsAllowed);
 		education = new Education(fenotype);
 
 		population = 200;
@@ -43,6 +40,10 @@ public class EvolutionaryAlgorithm {
 
 		getNeighbours();
 		//printNeighbours();
+		if(uTurnsAllowed == false){
+			//HashMap <ArcNodeIdentifier, UturnInformation> uTurnInfo = initial.getUturnMatrix();
+			fenotype.setUturnMatrix();
+		}
 	}
 
 
@@ -131,7 +132,7 @@ public class EvolutionaryAlgorithm {
 
 			//}
 
-			if(newBestSolutionCounter == 10000){
+			if(newBestSolutionCounter == 1000){
 				ArrayList<Vehicle> bestResult = fenotype.getFenotype(bestIndividual);
 				fenotype.resetPlowingtimes();
 				Collections.sort(vehicles, new TypeComparator());

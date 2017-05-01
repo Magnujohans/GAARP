@@ -178,12 +178,12 @@ public class Algorithm {
                 ArrayList<Arc> tempTasks = convertFromArraytoArc(Trips.get(x));
                 ArrayList<Arc> tempRoute = getTourFromTasks(tempTasks);
                 //We add a new vehicle with a positive ID, since it is a plowing truck.
-                Vehicle tempVehicle = new Vehicle(x + 1, tempTasks, tempRoute);
+                Vehicle tempVehicle = new Vehicle(x + 1, tempTasks, tempRoute, true);
                 vehicles.add(tempVehicle);
             }
         }
         else{
-            vehicles.add(new Vehicle(1,convertFromIDtoArc(GiantTourNoDuplicates),convertFromIDtoArc(GiantTour)));
+            vehicles.add(new Vehicle(1,convertFromIDtoArc(GiantTourNoDuplicates),convertFromIDtoArc(GiantTour), true));
         }
 
 
@@ -209,12 +209,12 @@ public class Algorithm {
             for (int x = 0; x < TripsSW.size(); x++) {
                 ArrayList<Arc> tempTasks = convertFromArraytoArc(TripsSW.get(x));
                 ArrayList<Arc> tempRoute = getTourFromTasks(tempTasks);
-                Vehicle tempVehicle = new Vehicle(-(x + 1), convertFromArraytoArc(TripsSW.get(x)), tempRoute);
+                Vehicle tempVehicle = new Vehicle(-(x + 1), convertFromArraytoArc(TripsSW.get(x)), tempRoute, true);
                 vehicles.add(tempVehicle);
             }
         }
         else{
-            vehicles.add(new Vehicle(-1,BestSequence, getTourFromTasks(BestSequence)));
+            vehicles.add(new Vehicle(-1,BestSequence, getTourFromTasks(BestSequence), true));
         }
 
         this.vehicles = vehicles;
@@ -276,6 +276,7 @@ public class Algorithm {
         }
         return onlySwNodes;
     }
+
     //This method reset all the earliest time each node is visited, so we can rerun the simulation of the vehicles.
     public void resetPlowingtimes() {
         for (int x = 0; x < arcs.size(); x++) {
@@ -499,7 +500,7 @@ public class Algorithm {
     public ArrayList<Vehicle> copyVehicles(ArrayList<Vehicle> oldVehicles){
         ArrayList<Vehicle> newVehicles = new ArrayList<>();
         for(int x = 0; x< oldVehicles.size();x++){
-            newVehicles.add(new Vehicle(oldVehicles.get(x).id,(ArrayList<Arc>) oldVehicles.get(x).tasks.clone(), (ArrayList<Arc>) oldVehicles.get(x).route.clone()) );
+            newVehicles.add(new Vehicle(oldVehicles.get(x).id,(ArrayList<Arc>) oldVehicles.get(x).tasks.clone(), (ArrayList<Arc>) oldVehicles.get(x).route.clone(), true) );
         }
         return newVehicles;
     }
@@ -546,6 +547,52 @@ public class Algorithm {
             route.addAll(getArcsFromPath(tasks.get(tasks.size()-1).to.nr, depot));
         }
         return route;
+    }
+
+    public HashMap<ArcNodeIdentifier, UturnInformation> getUturnMatrix(){
+        HashMap<ArcNodeIdentifier, UturnInformation> UturnMap = new HashMap<>();
+        for (int i = 0; i < allArcs.size(); i++) {
+            int[][] GraphCopy = originalGraphClone.clone();
+            int[][] sidewalkCopy = swMatrix.clone();
+
+            GraphCopy[allArcs.get(i).to.nr][allArcs.get(i).from.nr] = -1;
+            sidewalkCopy[allArcs.get(i).to.nr][allArcs.get(i).from.nr] = -1;
+
+            floydWarshall fw = new floydWarshall();
+            int[][] fwLane = fw.Algorithm(GraphCopy);
+            int[][] fwLanePath = fw.path;
+            int[][] fwSidewalk = fw.Algorithm(sidewalkCopy);
+            int[][] fwSidewalkPath = fw.path;
+
+            int[][] bestMatrix = new int[GraphCopy.length][GraphCopy.length];
+            for(int x = 0; x < GraphCopy.length; x++){
+                for(int y = 0; y < GraphCopy.length; y++){
+                    if (sidewalkCopy[x][y] > GraphCopy[x][y] && GraphCopy[x][y] != -1){
+                        bestMatrix[x][y] = GraphCopy[x][y];
+                    }
+                    else if(sidewalkCopy[x][y] > GraphCopy[x][y] && GraphCopy[x][y] == -1){
+                        bestMatrix[x][y] = sidewalkCopy[x][y];
+                    }
+                    else{
+                        bestMatrix[x][y] = GraphCopy[x][y];
+                    }
+                }
+            }
+            int[][] fwBestGraph = fw.Algorithm(bestMatrix);
+            int[][] fwBestPath = fw.path;
+
+            UturnInformation temp = new UturnInformation(fwLane, fwLanePath, fwSidewalk, fwSidewalkPath, fwBestGraph, fwBestPath);
+            UturnMap.put(new ArcNodeIdentifier(allArcs.get(i).from.nr, allArcs.get(i).to.nr), temp);
+        }
+
+        UturnInformation allAllowed = new UturnInformation(this.fwGraph, this.fwPath, this.fwGraphSW, this.fwPathSW,this.fwBestGraph,fwBestPath);
+        UturnMap.put(new ArcNodeIdentifier(0,0),allAllowed);
+
+        return UturnMap;
+
+
+
+
     }
 
 

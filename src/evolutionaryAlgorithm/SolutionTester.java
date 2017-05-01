@@ -29,14 +29,14 @@ public class SolutionTester {
         vehicles = initial.vehicles;
         arcs = initial.arcs;
         sideWalkArcs = initial.sideWalkArcs;
-        this.fenotype = new Fenotype(arcs, sideWalkArcs, initial.arcMap, initial.arcNodeMap, initial.SWarcNodeMap, initial.fwGraph, initial.fwPath, initial.fwGraphSW, initial.fwPathSW, initial.fwBestGraph, initial.fwBestPath, depot, vehichles, swVehicles);
+        this.fenotype = new Fenotype(arcs, sideWalkArcs, initial.arcMap, initial.arcNodeMap, initial.SWarcNodeMap, initial.fwGraph, initial.fwPath, initial.fwGraphSW, initial.fwPathSW, initial.fwBestGraph, initial.fwBestPath, depot, vehichles, swVehicles, true);
         education = new Education(fenotype);
 
         population = 200;
     }
 
     public void run() {
-        Vehicle plowtruck1 = new Vehicle(1, new ArrayList<>(), new ArrayList<>());
+        Vehicle plowtruck1 = new Vehicle(1, new ArrayList<>(), new ArrayList<>(), true);
         plowtruck1.tasks.add(fenotype.arcNodeMap.get(new ArcNodeIdentifier(0,1)));
         plowtruck1.tasks.add(fenotype.arcNodeMap.get(new ArcNodeIdentifier(1,0)));
         plowtruck1.tasks.add(fenotype.arcNodeMap.get(new ArcNodeIdentifier(4,5)));
@@ -54,7 +54,7 @@ public class SolutionTester {
         plowtruck1.tasks.add(fenotype.arcNodeMap.get(new ArcNodeIdentifier(3,4)));
         plowtruck1.tasks.add(fenotype.arcNodeMap.get(new ArcNodeIdentifier(0,8)));
         plowtruck1.tasks.add(fenotype.arcNodeMap.get(new ArcNodeIdentifier(8,0)));
-        Vehicle plowtruck2 = new Vehicle(2, new ArrayList<>(), new ArrayList<>());
+        Vehicle plowtruck2 = new Vehicle(2, new ArrayList<>(), new ArrayList<>(), true);
 
         plowtruck2.tasks.add(fenotype.arcNodeMap.get(new ArcNodeIdentifier(0,4)));
         plowtruck2.tasks.add(fenotype.arcNodeMap.get(new ArcNodeIdentifier(4,3)));
@@ -75,7 +75,7 @@ public class SolutionTester {
         plowtruck2.tasks.add(fenotype.arcNodeMap.get(new ArcNodeIdentifier(4,0)));
 
 
-        Vehicle smallvehicle1 = new Vehicle(-1, new ArrayList<>(), new ArrayList<>());
+        Vehicle smallvehicle1 = new Vehicle(-1, new ArrayList<>(), new ArrayList<>(),true);
         smallvehicle1.tasks.add(fenotype.SWarcNodeMap.get(new SWArcNodeIdentifier(0,1)));
         smallvehicle1.tasks.add(fenotype.SWarcNodeMap.get(new SWArcNodeIdentifier(1,2)));
         smallvehicle1.tasks.add(fenotype.SWarcNodeMap.get(new SWArcNodeIdentifier(2,1)));
@@ -91,7 +91,7 @@ public class SolutionTester {
         smallvehicle1.tasks.add(fenotype.SWarcNodeMap.get(new SWArcNodeIdentifier(9,3)));
         smallvehicle1.tasks.add(fenotype.SWarcNodeMap.get(new SWArcNodeIdentifier(3,4)));
 
-        Vehicle smallvehicle2 = new Vehicle(-2, new ArrayList<>(), new ArrayList<>());
+        Vehicle smallvehicle2 = new Vehicle(-2, new ArrayList<>(), new ArrayList<>(),true);
         smallvehicle2.tasks.add(fenotype.SWarcNodeMap.get(new SWArcNodeIdentifier(3,9)));
         smallvehicle2.tasks.add(fenotype.SWarcNodeMap.get(new SWArcNodeIdentifier(9,5)));
         smallvehicle2.tasks.add(fenotype.SWarcNodeMap.get(new SWArcNodeIdentifier(5,11)));

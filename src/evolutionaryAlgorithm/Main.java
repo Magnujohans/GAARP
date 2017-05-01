@@ -1,6 +1,8 @@
 package evolutionaryAlgorithm;
 
 
+import jdk.internal.util.xml.impl.Input;
+
 public class Main {
 	int[][] graph30 = {{0,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
 		{-1,0,4,-1,-1,3,-1,-1,-1,6,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0},
@@ -122,8 +124,15 @@ public class Main {
 
 
 	public static void main(String[] args) {
+		InputReader input = new InputReader("D:\\Backup\\IdeaProjects\\GAARP\\src\\TestSet\\Example9.txt");
+		int[][] lanes = input.plowingtimeLane;
+		int[][] sidewalks = input.plowingtimeSidewalk;
+		int plowTrucks= input.numberOfVehiclesLane;
+		int smallerVehicles = input.numberOfVehiclesSidewalk;
 		Main main = new Main();
-		EvolutionaryAlgorithm ea = new EvolutionaryAlgorithm(main.graph15, main.sw15,0,2,3);
+
+		//EvolutionaryAlgorithm ea = new EvolutionaryAlgorithm(main.graph15, main.sw15,0,2,3, false);
+		EvolutionaryAlgorithm ea = new EvolutionaryAlgorithm(lanes, sidewalks,0,plowTrucks,smallerVehicles, false);
 		ea.run();
 		//SolutionTester st = new SolutionTester(main.graph15, main.sw15, 0,2,2);
 		//st.run();
