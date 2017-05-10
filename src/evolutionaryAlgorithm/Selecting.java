@@ -13,6 +13,8 @@ public class Selecting {
     public static final int tournamentSize = 5;
     public static final double selectionProb = 0.5;
     public static final double offSpringPerEpoch = 20;
+    public static final int nElite = 80;
+    public static final int nPopulation = 200;
 
     public static Genotype tournamentSelection(ArrayList<Genotype> population){
         ArrayList<Integer> chosenIndices = new ArrayList<>();
@@ -27,7 +29,7 @@ public class Selecting {
 
         }
 
-        Collections.sort(chosenChromosomes);
+        Collections.sort(chosenChromosomes, new BFComparator(nElite, nPopulation));
         prob = rng.nextDouble();
         for(int i = 0; i < tournamentSize; i++){
             if (prob > selectionProb){

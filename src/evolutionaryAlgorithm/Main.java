@@ -124,15 +124,17 @@ public class Main {
 
 
 	public static void main(String[] args) {
-		InputReader input = new InputReader("D:\\Backup\\IdeaProjects\\GAARP\\src\\TestSet\\Example9.txt");
+		InputReader input = new InputReader("D:\\Backup\\IdeaProjects\\GAARP\\src\\TestSet\\test10N31A.txt");
 		int[][] lanes = input.plowingtimeLane;
 		int[][] sidewalks = input.plowingtimeSidewalk;
+		int[][] DHlanes = input.deadheadingtimeLane;
+		int[][] DHsidewalks = input.deadheadingtimeSidewalk;
 		int plowTrucks= input.numberOfVehiclesLane;
 		int smallerVehicles = input.numberOfVehiclesSidewalk;
 		Main main = new Main();
 
-		//EvolutionaryAlgorithm ea = new EvolutionaryAlgorithm(main.graph15, main.sw15,0,2,3, false);
-		EvolutionaryAlgorithm ea = new EvolutionaryAlgorithm(lanes, sidewalks,0,plowTrucks,smallerVehicles, false);
+		//EvolutionaryAlgorithm ea = new EvolutionaryAlgorithm(main.graph15, main.sw15,0,2,2, true);
+		EvolutionaryAlgorithm ea = new EvolutionaryAlgorithm(lanes, sidewalks,DHlanes,DHsidewalks,0, plowTrucks,smallerVehicles, true);
 		ea.run();
 		//SolutionTester st = new SolutionTester(main.graph15, main.sw15, 0,2,2);
 		//st.run();

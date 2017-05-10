@@ -113,7 +113,6 @@ public class InputReader {
                 list1 = line.split("\\t+");
                 for (int j = 0; j < antallNoder; j++) {
                     plowingtimeLane[i][j] = Integer.parseInt(list1[j].trim());
-                    deadheadingtimeLane[i][j] = Integer.parseInt(list1[j].trim());
                 }
             }
 
@@ -156,6 +155,20 @@ public class InputReader {
                 //System.out.println(line);
                 list1 = line.split("\\t+");
                 for (int j = 0; j < antallNoder; j++) {
+                    deadheadingtimeLane[i][j] = Integer.parseInt(list1[j].trim());
+                }
+            }
+
+            fr.readLine();
+            fr.readLine();
+            fr.readLine();
+            for (int i = 0; i < antallNoder; i++) {
+                line = fr.readLine();
+                //System.out.println(line);
+                line = line.trim();
+                //System.out.println(line);
+                list1 = line.split("\\t+");
+                for (int j = 0; j < antallNoder; j++) {
                     deadheadingtimeSidewalk[i][j] = Integer.parseInt(list1[j].trim());
                 }
             }
@@ -166,5 +179,6 @@ public class InputReader {
             e.printStackTrace();
         }
 
+        System.out.println("Fetched input");
     }
 }

@@ -252,8 +252,8 @@ public class FMXCrossover
      * If you still don't understand it, You can see it here
      */
     public static void main(String[] args){
-        int[] parent1 = {1,2,3,-1,4,5,-1,6,7,8};
-        int[] parent2 = {8,7,-1,6,5,4,3,2,-1,1};
+        int[] parent1 = {1,3,5,6,4,2,7,8};
+        int[] parent2 = {5,6,2,1,3,4,8,7};
 
         FMXCrossover cross = new FMXCrossover(parent1,parent2);
         for(int x = 0; x<parent1.length;x++){

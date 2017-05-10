@@ -8,6 +8,7 @@ public class Main {
     public long startTime;
 
     public Main(String testSet){
+        /*
         if(testSet.equals("testcase11")){
             startTime = System.currentTimeMillis();
             algorithm = new Algorithm(graph7,sw7,0,1,1);
@@ -115,7 +116,9 @@ public class Main {
             startTime = System.currentTimeMillis();
             algorithm = new Algorithm(Nodes60.graph60,Nodes60.sw60,0,5,4);
             System.out.println("Hele algoritmen tar: " + ((System.currentTimeMillis()-startTime)/1000) + " sekunder");
+
         }
+        */
     }
 
     int[][] graph7 ={{-1,	0,	-1,	-1,	-1,	-1,	-1},

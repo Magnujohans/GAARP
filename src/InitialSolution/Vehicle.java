@@ -41,7 +41,7 @@ public class Vehicle{
                     }
                 }
             }
-            if(!uTurnsAllowed && x > 0 && route.get(x).to == route.get(x-1).from ){
+            if(!uTurnsAllowed && this.id > 0 && x > 0 && route.get(x).to == route.get(x-1).from ){
                 cost += 99999;
             }
             if(this.id > 0 && route.get(x).type == 1){

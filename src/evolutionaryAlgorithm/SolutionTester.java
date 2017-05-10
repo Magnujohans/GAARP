@@ -25,11 +25,11 @@ public class SolutionTester {
 
 
     public SolutionTester(int[][] inputGraph, int[][] inputSWGraph, int depot, int vehichles, int swVehicles){
-        initial = new Algorithm(inputGraph, inputSWGraph, depot, vehichles, swVehicles);
+        initial = new Algorithm(inputGraph, inputSWGraph, inputGraph, inputSWGraph, depot, vehichles, swVehicles);
         vehicles = initial.vehicles;
         arcs = initial.arcs;
         sideWalkArcs = initial.sideWalkArcs;
-        this.fenotype = new Fenotype(arcs, sideWalkArcs, initial.arcMap, initial.arcNodeMap, initial.SWarcNodeMap, initial.fwGraph, initial.fwPath, initial.fwGraphSW, initial.fwPathSW, initial.fwBestGraph, initial.fwBestPath, depot, vehichles, swVehicles, true);
+        this.fenotype = new Fenotype(arcs, sideWalkArcs, initial.arcMap, initial.arcNodeMap, initial.SWarcNodeMap,initial.arcNodeMap,initial.arcNodeMap,  initial.fwGraph, initial.fwPath, initial.fwGraphSW, initial.fwPathSW,  depot, vehichles, swVehicles, true);
         education = new Education(fenotype);
 
         population = 200;

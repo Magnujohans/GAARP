@@ -31,19 +31,18 @@ public class Education {
         return educatedChildren;
     }
 
-    public ArrayList<Genotype> educateChildren2(ArrayList<Arc> arcs, ArrayList<Genotype> children, int iterations, double factor){
+    public ArrayList<Genotype> educateChildren2(ArrayList<Arc> arcs, ArrayList<Arc> lanes, ArrayList<Arc> sidewalks, ArrayList<Genotype> children, int iterations, double factor){
         ArrayList<Genotype> educatedChildren = new ArrayList<>();
         for (int i = 0; i < children.size(); i++) {
             ArrayList<Vehicle> tempChild = fenotype.getFenotype(children.get(i));
             Object[] tempResult;
-            if(rng.nextDouble() > 0.5){
-                tempResult = educateOffspring(arcs, tempChild);
+            if(rng.nextDouble() > 0.0){
+                tempResult = educateOffspring(arcs, lanes, sidewalks, tempChild);
             }
             else{
                 tempResult = educate(tempChild, iterations, factor);
             }
             ArrayList<Vehicle> tempResultFenotype = (ArrayList<Vehicle>) tempResult[0];
-            //System.out.println("Jess");
             Genotype tempResultGenotype = fenotype.createGenotype(tempResultFenotype, (Integer) tempResult[1]);
             educatedChildren.add(tempResultGenotype);
         }
@@ -575,14 +574,24 @@ public class Education {
     }
 
     public Object[] Nine(ArrayList<Vehicle> vehicles, Arc one, Arc two){
+        if(one == two){
+            Object[] returnlist = new Object[2];
+            returnlist[0] = vehicles;
+            returnlist[1] = -1;
+
+            return returnlist;
+        }
+
+
         Vehicle One = getVehicleWithTask(vehicles, one);
         Vehicle Two = getVehicleWithTask(vehicles, two);
         int i = getIndexofTask(One, one);
         int j = getIndexofTask(Two, two);
 
+
         if(Two == One){
             One.tasks.remove(one);
-            One.tasks.add(One.tasks.indexOf(one),two);
+            One.tasks.add(One.tasks.indexOf(two),one);
         }
         else{
             Two.tasks.add(j+1, one);
@@ -603,6 +612,14 @@ public class Education {
     }
 
     public Object[] Ten(ArrayList<Vehicle> vehicles, Arc one, Arc two, Arc three, Arc four){
+        if(one == two || three == four){
+            Object[] returnlist = new Object[2];
+            returnlist[0] = vehicles;
+            returnlist[1] = -1;
+
+            return returnlist;
+        }
+
         Vehicle One = getVehicleWithTask(vehicles, one);
         Vehicle Two = getVehicleWithTask(vehicles, two);
         Vehicle Three = getVehicleWithTask(vehicles, three);
@@ -614,7 +631,7 @@ public class Education {
 
         if(Two == One){
             One.tasks.remove(one);
-            One.tasks.add(One.tasks.indexOf(one),two);
+            One.tasks.add(One.tasks.indexOf(two),one);
         }
         else{
             Two.tasks.add(j+1, one);
@@ -622,7 +639,7 @@ public class Education {
         }
         if(Three == Four){
             Three.tasks.remove(three);
-            Three.tasks.add(Three.tasks.indexOf(three),four);
+            Three.tasks.add(Three.tasks.indexOf(four),three);
         }
         else{
             Four.tasks.add(l+1, three);
@@ -753,7 +770,7 @@ public class Education {
         switch (nr){
             case 0: result = Nine(vehicles,one,two);
                 break;
-            case 2: result = Eleven(vehicles,one,two);
+            case 1: result = Eleven(vehicles,one,two);
                 break;
             default: result = new Object[2];
                 result[0] = vehicles;
@@ -766,9 +783,9 @@ public class Education {
     public Object[] runRandomDoubleMove(ArrayList<Vehicle> vehicles, int nr, Arc one, Arc two, Arc three, Arc four ){
         Object[] result;
         switch (nr){
-            case 0: result = Ten(vehicles,one,two,three,four);
+            case 2: result = Ten(vehicles,one,two,three,four);
                 break;
-            case 1: result = Twelve(vehicles,one,two,three,four);
+            case 3: result = Twelve(vehicles,one,two,three,four);
                 break;
             default: result = new Object[2];
                 result[0] = vehicles;
@@ -778,7 +795,7 @@ public class Education {
         return result;
     }
 
-    public Object[] educateOffspring(ArrayList<Arc> arcs, ArrayList<Vehicle> initial){
+    public Object[] educateOffspring(ArrayList<Arc> arcs, ArrayList<Arc> lanes, ArrayList<Arc> sidewalks, ArrayList<Vehicle> initial){
         ArrayList<Vehicle> bestVehicles = initial;
         int bestFitness = fenotype.calculateFitness(bestVehicles);
         Object[] result;
@@ -844,58 +861,67 @@ public class Education {
             }
 
         }
-        ArrayList<Arc> = 
-        for (int i = 0; i < ArcSequence.size(); i++) {
-            //System.out.println("Ny Bil");
-            Arc ArcOne = arcs.get(ArcSequence.get(i));
-            Vehicle vehicleOne = getVehicleWithTask(tempVehicles, ArcOne);
-            int u = getIndexofTask(vehicleOne, ArcOne);
-            ArrayList<Integer> neighbourSequence = getPermutation(ArcOne.neighbours.size());
-            for (int j = 0; j < ArcOne.neighbours.size(); j++) {
 
-                Arc ArcTwo = ArcOne.neighbours.get(neighbourSequence.get(j));
-                Vehicle vehicleTwo = getVehicleWithTask(tempVehicles, ArcTwo);
-                int v = getIndexofTask(vehicleTwo, ArcTwo);
-                ArrayList<Integer> moveSequence;
-                if(vehicleOne == vehicleTwo){
-                    moveSequence = getPermutation(7);
+        ArcSequence = getPermutation(arcs.size());
+        System.out.println("Her da?");
+        ArrayList<Arc> possible;
+        for (int i = 0; i < ArcSequence.size(); i++) {
+            System.out.println("Her da");
+            Arc ArcOne = arcs.get(ArcSequence.get(i));
+            if (ArcOne.type == 1){
+                possible = lanes;
+            }
+            else{
+                possible = sidewalks;
+            }
+            Vehicle vehicleOne = getVehicleWithTask(tempVehicles, ArcOne);
+
+            Arc ArcTwo = possible.get(rng.nextInt(possible.size()));
+            Arc ArcThree = possible.get(rng.nextInt(possible.size()));
+            Arc ArcFour = possible.get(rng.nextInt(possible.size()));
+
+            Vehicle vehicleTwo = getVehicleWithTask(tempVehicles, ArcTwo);
+            Vehicle vehicleThree = getVehicleWithTask(tempVehicles, ArcThree);
+            Vehicle vehicleFour = getVehicleWithTask(tempVehicles, ArcFour);
+
+            ArrayList<Integer> moveSequence;
+            moveSequence = getPermutation(4);
+            for (int x = 0; x < moveSequence.size(); x++){
+                for (int y = 0; y < tempVehicles.size(); y++) {
+                    tempVehicles.get(y).tasks = bestVehicles.get(y).copyTasks();
+                    tempVehicles.get(y).route = bestVehicles.get(y).copyRoute();
+                }
+
+                int[] vehicleTimeBefore = fenotype.calculateVehicleFitness(tempVehicles, vehicleOne, vehicleTwo, vehicleThree,vehicleFour);
+                if(moveSequence.get(x) < 3){
+                    result = runRandomSingleMove(tempVehicles,moveSequence.get(x),ArcOne,ArcTwo);
                 }
                 else{
-                    moveSequence = getPermutation(8);
+                    result = runRandomDoubleMove(tempVehicles,moveSequence.get(x),ArcOne,ArcTwo,ArcThree,ArcFour);
                 }
-                for (int x = 0; x < moveSequence.size(); x++){
+                int[] vehicleTimeAfter = fenotype.calculateVehicleFitness(tempVehicles, vehicleOne, vehicleTwo,vehicleThree,vehicleFour);
 
+                if(((Integer) result[1]) < 0){
+                    for (int y = 0; y < tempVehicles.size(); y++) {
+                        tempVehicles.get(y).tasks = bestVehicles.get(y).copyTasks();
+                        tempVehicles.get(y).route = bestVehicles.get(y).copyRoute();
+
+                    }
+                    continue;
+                }
+                int vehicleTimeDifference = (vehicleTimeBefore[0] - vehicleTimeAfter[0]) + (vehicleTimeBefore[1] - vehicleTimeAfter[1]);
+                vehicleTimeDifference += (vehicleTimeBefore[2] - vehicleTimeAfter[2]) + (vehicleTimeBefore[3] - vehicleTimeAfter[3]);
+
+                if( (vehicleTimeDifference > 0 && ((Integer) result[1]) <= bestFitness) ||  ((Integer) result[1]) < bestFitness){
+                    //System.out.println(moveSequence.get(x));
+                    return result;
+                }
+                else{
                     for (int y = 0; y < tempVehicles.size(); y++) {
                         tempVehicles.get(y).tasks = bestVehicles.get(y).copyTasks();
                         tempVehicles.get(y).route = bestVehicles.get(y).copyRoute();
                     }
-                    int[] vehicleTimeBefore = fenotype.calculateVehicleFitness(tempVehicles, vehicleOne, vehicleTwo);
-                    result = runNeighborMove(tempVehicles, moveSequence.get(x), vehicleOne, vehicleTwo, u, v);
-                    int[] vehicleTimeAfter = fenotype.calculateVehicleFitness(tempVehicles, vehicleOne, vehicleTwo);
-
-                    if(((Integer) result[1]) < 0){
-                        for (int y = 0; y < tempVehicles.size(); y++) {
-                            tempVehicles.get(y).tasks = bestVehicles.get(y).copyTasks();
-                            tempVehicles.get(y).route = bestVehicles.get(y).copyRoute();
-
-                        }
-                        continue;
-                    }
-                    int vehicleTimeDifference = (vehicleTimeBefore[0] - vehicleTimeAfter[0]) + (vehicleTimeBefore[1] - vehicleTimeAfter[1]);
-
-                    if( (vehicleTimeDifference > 0 && ((Integer) result[1]) <= bestFitness) ||  ((Integer) result[1]) < bestFitness){
-                        //System.out.println(moveSequence.get(x));
-                        return result;
-                    }
-                    else{
-                        for (int y = 0; y < tempVehicles.size(); y++) {
-                            tempVehicles.get(y).tasks = bestVehicles.get(y).copyTasks();
-                            tempVehicles.get(y).route = bestVehicles.get(y).copyRoute();
-                        }
-                    }
-
                 }
-
 
             }
 

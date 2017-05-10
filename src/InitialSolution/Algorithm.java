@@ -19,18 +19,24 @@ public class Algorithm {
     public HashMap<Integer, Arc> SWarcMap;
     public HashMap<ArcNodeIdentifier, Arc> arcNodeMap;
     public HashMap<SWArcNodeIdentifier, Arc> SWarcNodeMap;
+    public HashMap<ArcNodeIdentifier, Arc> arcNodeMapLaneDH;
+    public HashMap<ArcNodeIdentifier, Arc> arcNodeMapSidewalkDH;
+
 
     public int[][] graph;
     public int[][] swMatrix;
     public int[][] originalGraphClone;
-    public int[][] bestMatrix;
+    //public int[][] bestMatrix;
+    public int[][] deadheadLane;
+    public int[][] deadheadSW;
+
 
     public int[][] fwGraph;
     public int[][] fwPath;
     public int[][] fwGraphSW;
     public int[][] fwPathSW;
-    public int[][] fwBestGraph;
-    public int[][] fwBestPath;
+    //public int[][] fwBestGraph;
+    //public int[][] fwBestPath;
 
     public ArrayList<Integer> GiantTour;
     public ArrayList<Integer> GiantTourNoDuplicates;
@@ -46,7 +52,7 @@ public class Algorithm {
 
 
     //The entire algorithm is placed in the constructor.
-    public Algorithm(int[][] inputGraph, int[][] inputSWMatrix, int depot, int nrVehicles, int nrSWVehicles) {
+    public Algorithm(int[][] inputGraph, int[][] inputSWMatrix, int[][] deadHeadingLane, int[][] deadHeadingSidewalk, int depot, int nrVehicles, int nrSWVehicles) {
         long startConstruction = System.currentTimeMillis();
         nodes = new ArrayList<>();
         arcs = new ArrayList<>();
@@ -56,7 +62,10 @@ public class Algorithm {
         allArcs = new ArrayList<>();
         arcMap = new HashMap<>();
         arcNodeMap = new HashMap<>();
+        arcNodeMapLaneDH = new HashMap<>();
+        arcNodeMapSidewalkDH = new HashMap<>();
         SWarcNodeMap = new HashMap<>();
+
 
         this.depot = depot;
         this.nrVehicles = nrVehicles;
@@ -64,15 +73,18 @@ public class Algorithm {
 
         graph = RemoveDepot(inputGraph);
         swMatrix = RemoveDepot(inputSWMatrix);
+        deadheadLane = RemoveDepot(deadHeadingLane);
+        deadheadSW = RemoveDepot(deadHeadingSidewalk);
         originalGraphClone = graph.clone();
         floydWarshall fw1 = new floydWarshall();
         floydWarshall fw2 = new floydWarshall();
         floydWarshall fw3 = new floydWarshall();
-        fwGraph = fw1.Algorithm(originalGraphClone);
+        fwGraph = fw1.Algorithm(deadheadLane);
         fwPath = fw1.path;
-        fwGraphSW = fw2.Algorithm(swMatrix);
+        fwGraphSW = fw2.Algorithm(deadheadSW);
         fwPathSW = fw2.path;
 
+        /*
         bestMatrix = new int[originalGraphClone.length][originalGraphClone.length];
         for(int x = 0; x < originalGraphClone.length; x++){
             for(int y = 0; y < originalGraphClone.length; y++){
@@ -89,6 +101,8 @@ public class Algorithm {
         }
         fwBestGraph = fw2.Algorithm(bestMatrix);
         fwBestPath = fw2.path;
+
+        */
 
 
         for (int x = 0; x < graph.length; x++) {
@@ -139,6 +153,18 @@ public class Algorithm {
                     nodes.get(x).outGoingSW.add(tempSW);
                     nodes.get(y).inComingSW.add(tempSW);
                     counter++;
+                }
+                if(deadheadLane[x][y] >= 0 && x!=y){
+                    Arc tempDH = new Arc(nodes.get(x), nodes.get(y), deadheadLane[x][y],3, counter);
+                    arcNodeMapLaneDH.put(new ArcNodeIdentifier(nodes.get(x).nr, nodes.get(y).nr), tempDH);
+                    counter++;
+
+                }
+                if(deadheadSW[x][y] >= 0 && x!=y){
+                    Arc tempSWDH = new Arc(nodes.get(x), nodes.get(y), deadheadSW[x][y],4, counter);
+                    arcNodeMapSidewalkDH.put(new ArcNodeIdentifier(nodes.get(x).nr, nodes.get(y).nr), tempSWDH);
+                    counter++;
+
                 }
             }
         }
@@ -549,51 +575,7 @@ public class Algorithm {
         return route;
     }
 
-    public HashMap<ArcNodeIdentifier, UturnInformation> getUturnMatrix(){
-        HashMap<ArcNodeIdentifier, UturnInformation> UturnMap = new HashMap<>();
-        for (int i = 0; i < allArcs.size(); i++) {
-            int[][] GraphCopy = originalGraphClone.clone();
-            int[][] sidewalkCopy = swMatrix.clone();
 
-            GraphCopy[allArcs.get(i).to.nr][allArcs.get(i).from.nr] = -1;
-            sidewalkCopy[allArcs.get(i).to.nr][allArcs.get(i).from.nr] = -1;
-
-            floydWarshall fw = new floydWarshall();
-            int[][] fwLane = fw.Algorithm(GraphCopy);
-            int[][] fwLanePath = fw.path;
-            int[][] fwSidewalk = fw.Algorithm(sidewalkCopy);
-            int[][] fwSidewalkPath = fw.path;
-
-            int[][] bestMatrix = new int[GraphCopy.length][GraphCopy.length];
-            for(int x = 0; x < GraphCopy.length; x++){
-                for(int y = 0; y < GraphCopy.length; y++){
-                    if (sidewalkCopy[x][y] > GraphCopy[x][y] && GraphCopy[x][y] != -1){
-                        bestMatrix[x][y] = GraphCopy[x][y];
-                    }
-                    else if(sidewalkCopy[x][y] > GraphCopy[x][y] && GraphCopy[x][y] == -1){
-                        bestMatrix[x][y] = sidewalkCopy[x][y];
-                    }
-                    else{
-                        bestMatrix[x][y] = GraphCopy[x][y];
-                    }
-                }
-            }
-            int[][] fwBestGraph = fw.Algorithm(bestMatrix);
-            int[][] fwBestPath = fw.path;
-
-            UturnInformation temp = new UturnInformation(fwLane, fwLanePath, fwSidewalk, fwSidewalkPath, fwBestGraph, fwBestPath);
-            UturnMap.put(new ArcNodeIdentifier(allArcs.get(i).from.nr, allArcs.get(i).to.nr), temp);
-        }
-
-        UturnInformation allAllowed = new UturnInformation(this.fwGraph, this.fwPath, this.fwGraphSW, this.fwPathSW,this.fwBestGraph,fwBestPath);
-        UturnMap.put(new ArcNodeIdentifier(0,0),allAllowed);
-
-        return UturnMap;
-
-
-
-
-    }
 
 
 

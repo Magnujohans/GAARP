@@ -19,6 +19,10 @@ public class Genotype implements Comparable<Genotype>{
 	int[] sidewalkGenome;
 	Fenotype fenotype;
 	double fitness = -1.0;
+	double diversity = -1.0;
+
+	public int fitnessRank = -1;
+	public int diversityRank = -1;
 
 
 	public Genotype(ArrayList<Arc> arcs, ArrayList<Arc> sidewalks){
@@ -76,6 +80,18 @@ public class Genotype implements Comparable<Genotype>{
 		calculateFitness();
 	}
 	*/
+
+	public void setDiversity(int diversity){
+		this.diversity = diversity;
+	}
+
+	public void setFitnessRank(int rank){
+		this.fitnessRank = rank;
+	}
+
+	public void setDiversityRank(int rank){
+		this.diversityRank = rank;
+	}
 	
 	public int[] getLaneGenome(){
 		return this.laneGenome.clone();
