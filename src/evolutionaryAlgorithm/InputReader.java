@@ -179,6 +179,6 @@ public class InputReader {
             e.printStackTrace();
         }
 
-        System.out.println("Fetched input");
+//        System.out.println("Fetched input");
     }
 }

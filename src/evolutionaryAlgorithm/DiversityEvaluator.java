@@ -10,7 +10,7 @@ public class DiversityEvaluator {
 
     public static double BiasedFitness(ArrayList<Genotype> population, Genotype genotype, int Nclose){
         ArrayList<Double> Distance = new ArrayList<>();
-        double factor = 1/(genotype.laneGenome.length + genotype.sidewalkGenome.length);
+        double factor = (genotype.laneGenome.length + genotype.sidewalkGenome.length);
         for (int i = 0; i < population.size(); i++) {
             int temp = 0;
             for(int j = 0; j < population.get(i).laneGenome.length; j++){
@@ -23,7 +23,8 @@ public class DiversityEvaluator {
                     temp++;
                 }
             }
-            Distance.add(temp*factor);
+            //Distance.add(temp/factor);
+            Distance.add(0.0);
         }
         Collections.sort(Distance);
         double distanceNclose = 0;

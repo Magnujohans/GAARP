@@ -9,14 +9,20 @@ import java.util.Random;
  */
 public class Selecting {
 
-    public static Random rng = new Random();
-    public static final int tournamentSize = 5;
-    public static final double selectionProb = 0.5;
-    public static final double offSpringPerEpoch = 20;
-    public static final int nElite = 80;
-    public static final int nPopulation = 200;
+    public Random rng = new Random();
+    public int tournamentSize = 5;
+    public double selectionProb = 0.5;
+    public double offSpringPerEpoch;
+    public int nElite;
+    public int nPopulation;
 
-    public static Genotype tournamentSelection(ArrayList<Genotype> population){
+    public Selecting(double offSpringPerEpoch, int nElite, int nPopulation){
+        this.offSpringPerEpoch = offSpringPerEpoch;
+        this.nElite = nElite;
+        this.nPopulation = nPopulation;
+    }
+
+    public Genotype tournamentSelection(ArrayList<Genotype> population){
         ArrayList<Integer> chosenIndices = new ArrayList<>();
         ArrayList<Genotype> chosenChromosomes = new ArrayList<>();
         double prob;
@@ -45,15 +51,17 @@ public class Selecting {
 
     }
 
-    public static ArrayList<Genotype> holdTournament(ArrayList<Genotype> population){
+    public ArrayList<Genotype> holdTournament(ArrayList<Genotype> population){
         ArrayList<Genotype> chromosomes = new ArrayList<>();
         ArrayList<Integer> indices = new ArrayList<>();
         Genotype selected;
         while (indices.size() < offSpringPerEpoch){
             selected = tournamentSelection(population);
-            if(!indices.contains(population.indexOf(selected))) {
+            indices.add(population.indexOf(selected));
+
+            /*if(!indices.contains(population.indexOf(selected))) {
                 indices.add(population.indexOf(selected));
-            }
+            }*/
         }
         for(int i = 0; i < indices.size(); i++){
             chromosomes.add(population.get(indices.get(i)));
@@ -62,8 +70,8 @@ public class Selecting {
 
     }
 
-    public static ArrayList<Genotype> Mating(ArrayList<Genotype> population, Fenotype fenotype){
-        ArrayList<Genotype> parents = Selecting.holdTournament(population);
+    public ArrayList<Genotype> Mating(ArrayList<Genotype> population, Fenotype fenotype){
+        ArrayList<Genotype> parents = holdTournament(population);
         ArrayList<Genotype> offspring = new ArrayList<>();
         FMXCrossover tempLane;
         FMXCrossover tempSidewalk;

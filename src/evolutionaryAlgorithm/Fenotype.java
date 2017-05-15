@@ -70,11 +70,11 @@ public class Fenotype {
     public void RankGenotypes(ArrayList<Genotype> population){
         Collections.sort(population, new FitnessComparator());
         for (int x = 0; x <population.size(); x++){
-            population.get(x).setFitnessRank(x);
+            population.get(x).setFitnessRank(x+1);
         }
         Collections.sort(population, new DiversityComparator());
         for (int x = 0; x <population.size(); x++){
-            population.get(x).setDiversityRank(x);
+            population.get(x).setDiversityRank(x+1);
         }
         Collections.sort(population, new BFComparator(nElite,nPopulation));
     }

@@ -1,7 +1,11 @@
 package evolutionaryAlgorithm;
 
 
+import InitialSolution.Vehicle;
+import jdk.internal.org.objectweb.asm.tree.ParameterNode;
 import jdk.internal.util.xml.impl.Input;
+
+import java.util.ArrayList;
 
 public class Main {
 	int[][] graph30 = {{0,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
@@ -124,19 +128,120 @@ public class Main {
 
 
 	public static void main(String[] args) {
-		InputReader input = new InputReader("D:\\Backup\\IdeaProjects\\GAARP\\src\\TestSet\\test10N31A.txt");
+		/*InputReader input = new InputReader("D:\\Backup\\IdeaProjects\\GAARP\\src\\TestSet\\TestSet3\\testData10N34A.txt");
 		int[][] lanes = input.plowingtimeLane;
 		int[][] sidewalks = input.plowingtimeSidewalk;
 		int[][] DHlanes = input.deadheadingtimeLane;
 		int[][] DHsidewalks = input.deadheadingtimeSidewalk;
 		int plowTrucks= input.numberOfVehiclesLane;
 		int smallerVehicles = input.numberOfVehiclesSidewalk;
-		Main main = new Main();
+		Main main = new Main();*/
 
 		//EvolutionaryAlgorithm ea = new EvolutionaryAlgorithm(main.graph15, main.sw15,0,2,2, true);
-		EvolutionaryAlgorithm ea = new EvolutionaryAlgorithm(lanes, sidewalks,DHlanes,DHsidewalks,0, plowTrucks,smallerVehicles, true);
-		ea.run();
+		/*int[] parameters = new int[]{100,70, 4, 2 };
+		EvolutionaryAlgorithm ea = new EvolutionaryAlgorithm(lanes, sidewalks,DHlanes,DHsidewalks,0, plowTrucks,smallerVehicles, true, parameters);
+		ArrayList<Vehicle> result = ea.run();
+		for (Vehicle vehicle : result) {
+			System.out.println(vehicle);
+		}*/
 		//SolutionTester st = new SolutionTester(main.graph15, main.sw15, 0,2,2);
 		//st.run();
+		ParameterTest();
+	}
+
+	public static void ParameterTest(){
+		ArrayList<ArrayList<Integer>> parameterValues= new ArrayList<>();
+		ArrayList<Integer> nPop = new ArrayList<>();
+		nPop.add(80);
+		nPop.add(90);
+		nPop.add(100);
+		nPop.add(110);
+		nPop.add(120);
+		parameterValues.add(nPop);
+		ArrayList<Integer> nGen = new ArrayList<>();
+		nGen.add(60);
+		nGen.add(70);
+		nGen.add(80);
+		nGen.add(90);
+		nGen.add(100);
+		parameterValues.add(nGen);
+		ArrayList<Integer> nElite = new ArrayList<>();
+		nElite.add(2);
+		nElite.add(3);
+		nElite.add(4);
+		nElite.add(5);
+		nElite.add(6);
+		parameterValues.add(nElite);
+		ArrayList<Integer> nClose = new ArrayList<>();
+		nClose.add(1);
+		nClose.add(2);
+		nClose.add(3);
+		nClose.add(4);
+		nClose.add(5);
+		parameterValues.add(nClose);
+
+		ArrayList<String> CaseList = new ArrayList<>();
+		String Case1 = "D:\\Backup\\IdeaProjects\\GAARP\\src\\TestSet\\ParameterTest\\testData11N41A.txt";
+		String Case2 = "D:\\Backup\\IdeaProjects\\GAARP\\src\\TestSet\\ParameterTest\\testData11N44A.txt";;
+		String Case3 = "D:\\Backup\\IdeaProjects\\GAARP\\src\\TestSet\\ParameterTest\\testData11N49A.txt";;
+		String Case4 = "D:\\Backup\\IdeaProjects\\GAARP\\src\\TestSet\\ParameterTest\\testData27N135A.txt";;
+		String Case5 = "D:\\Backup\\IdeaProjects\\GAARP\\src\\TestSet\\ParameterTest\\testData27N137A.txt";;
+		String Case6 = "D:\\Backup\\IdeaProjects\\GAARP\\src\\TestSet\\ParameterTest\\testData27N138A.txt";;
+		String Case7 = "D:\\Backup\\IdeaProjects\\GAARP\\src\\TestSet\\ParameterTest\\testData51N291A.txt";;
+		String Case8 = "D:\\Backup\\IdeaProjects\\GAARP\\src\\TestSet\\ParameterTest\\testData51N294A.txt";;
+		String Case9 = "D:\\Backup\\IdeaProjects\\GAARP\\src\\TestSet\\ParameterTest\\testData51N304A.txt";;
+		CaseList.add(Case1);
+		CaseList.add(Case2);
+		CaseList.add(Case3);
+		CaseList.add(Case4);
+		CaseList.add(Case5);
+		CaseList.add(Case6);
+		CaseList.add(Case7);
+		CaseList.add(Case8);
+		CaseList.add(Case9);
+
+		int[] defaultValues = new int[]{80,80,4,1};
+		for(int value = 0; value < parameterValues.get(0).size(); value++){
+			defaultValues[0] = parameterValues.get(0).get(value);
+			for(int Case = 0; Case < CaseList.size();Case++){
+				int[] resultList = new int[5];
+				int[] timeList = new int[5];
+
+				InputReader ir = new InputReader(CaseList.get(Case));
+				int[][] lanes = ir.plowingtimeLane;
+				int[][] sidewalks = ir.plowingtimeSidewalk;
+				int[][] DHlanes = ir.deadheadingtimeLane;
+				int[][] DHsidewalks = ir.deadheadingtimeSidewalk;
+				int plowTrucks= ir.numberOfVehiclesLane;
+				int smallerVehicles = ir.numberOfVehiclesSidewalk;
+
+				for(int nr = 0; nr < 5; nr++){
+					int nr1Index = nr+1;
+					long startTime = System.currentTimeMillis();
+					EvolutionaryAlgorithm ea = new EvolutionaryAlgorithm(lanes, sidewalks, DHlanes, DHsidewalks, 0, plowTrucks, smallerVehicles, true, defaultValues);
+					ArrayList<Vehicle> result = ea.run();
+					long endTime = System.currentTimeMillis();
+					int makespan = ea.fenotype.getMakeSpan(result);
+					String resultString = "The " + nr1Index + " trial of parameter " + parameterValues.get(0).get(value) + " On case " + Case +  " Got the result of " + makespan + " And was done in " +
+							(endTime-startTime)/1000 + " Seconds";
+					System.out.println(resultString);
+					resultList[nr] = makespan;
+					timeList[nr] = (int) (endTime-startTime)/1000;
+				}
+				String resultStringAV = "AVERAGE OF PARAMETER " + parameterValues.get(0).get(value) + " ON CASE " + Case +  " GOT THE RESULT OF " + calculateMean(resultList) + " AND AVERAGE TIME WAS " +
+						calculateMean(timeList) + " SECONDS";
+				System.out.println(resultStringAV);
+			}
+
+		}
+
+	}
+
+	public static int calculateMean(int[] list){
+		int sum = 0;
+		for (int i = 0; i < list.length; i++) {
+			sum += list[i];
+		}
+		return sum/list.length;
 	}
 }

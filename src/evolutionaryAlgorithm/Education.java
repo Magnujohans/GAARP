@@ -603,6 +603,8 @@ public class Education {
         Two.route = fenotype.getTourFromTasks(Two.tasks, Two.id);
 
         int fitness = fenotype.calculateFitness(vehicles);
+        int sum = calculateSum(vehicles);
+
         Object[] returnlist = new Object[2];
 
         returnlist[0] = vehicles;
@@ -612,13 +614,13 @@ public class Education {
     }
 
     public Object[] Ten(ArrayList<Vehicle> vehicles, Arc one, Arc two, Arc three, Arc four){
-        if(one == two || three == four){
+        /*if(one == two || three == four || three == two || one == four || one == three || two == four){
             Object[] returnlist = new Object[2];
             returnlist[0] = vehicles;
             returnlist[1] = -1;
 
             return returnlist;
-        }
+        }*/
 
         Vehicle One = getVehicleWithTask(vehicles, one);
         Vehicle Two = getVehicleWithTask(vehicles, two);
@@ -633,15 +635,16 @@ public class Education {
             One.tasks.remove(one);
             One.tasks.add(One.tasks.indexOf(two),one);
         }
-        else{
+        else if (Two != One){
             Two.tasks.add(j+1, one);
             One.tasks.remove(one);
         }
+
         if(Three == Four){
             Three.tasks.remove(three);
             Three.tasks.add(Three.tasks.indexOf(four),three);
         }
-        else{
+        else if(Three != Four){
             Four.tasks.add(l+1, three);
             Three.tasks.remove(three);
         }
@@ -653,6 +656,8 @@ public class Education {
         Four.route = fenotype.getTourFromTasks(Four.tasks, Four.id);
 
         int fitness = fenotype.calculateFitness(vehicles);
+        int sum = calculateSum(vehicles);
+
         Object[] returnlist = new Object[2];
 
         returnlist[0] = vehicles;
@@ -674,6 +679,7 @@ public class Education {
         Two.route = fenotype.getTourFromTasks(Two.tasks, Two.id);
 
         int fitness = fenotype.calculateFitness(vehicles);
+        int sum = calculateSum(vehicles);
         Object[] returnlist = new Object[2];
 
         returnlist[0] = vehicles;
@@ -685,16 +691,19 @@ public class Education {
     public Object[] Twelve(ArrayList<Vehicle> vehicles, Arc one, Arc two, Arc three, Arc four){
         Vehicle One = getVehicleWithTask(vehicles, one);
         Vehicle Two = getVehicleWithTask(vehicles, two);
-        Vehicle Three = getVehicleWithTask(vehicles, three);
-        Vehicle Four = getVehicleWithTask(vehicles, four);
+
         int i = getIndexofTask(One, one);
         int j = getIndexofTask(Two, two);
-        int k = getIndexofTask(Three, three);
-        int l = getIndexofTask(Four, four);
 
 
         Two.tasks.set(j,one);
         One.tasks.set(i,two);
+
+        Vehicle Three = getVehicleWithTask(vehicles, three);
+        Vehicle Four = getVehicleWithTask(vehicles, four);
+
+        int k = getIndexofTask(Three, three);
+        int l = getIndexofTask(Four, four);
 
         Four.tasks.set(l,three);
         Three.tasks.set(k,four);
@@ -706,6 +715,8 @@ public class Education {
         Four.route = fenotype.getTourFromTasks(Four.tasks, Four.id);
 
         int fitness = fenotype.calculateFitness(vehicles);
+        int sum = calculateSum(vehicles);
+
         Object[] returnlist = new Object[2];
 
         returnlist[0] = vehicles;
@@ -863,10 +874,8 @@ public class Education {
         }
 
         ArcSequence = getPermutation(arcs.size());
-        System.out.println("Her da?");
         ArrayList<Arc> possible;
         for (int i = 0; i < ArcSequence.size(); i++) {
-            System.out.println("Her da");
             Arc ArcOne = arcs.get(ArcSequence.get(i));
             if (ArcOne.type == 1){
                 possible = lanes;
@@ -970,9 +979,21 @@ public class Education {
             }
 
         }
+
         Object[] returnList = new Object[2];
         returnList[0] = vehicles;
         returnList[1] = fenotype.getMakeSpan(vehicles);
         return returnList;
     }
+
+    public int calculateSum(ArrayList<Vehicle> vehicles){
+        int sum = 0;
+        for (int i = 0; i < vehicles.size(); i++) {
+            for (int x = 0; x<vehicles.get(i).tasks.size(); x++){
+                sum += vehicles.get(i).tasks.get(x).identifier;
+            }
+        }
+        return sum;
+    }
+
 }

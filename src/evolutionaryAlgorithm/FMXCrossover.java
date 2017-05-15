@@ -23,6 +23,15 @@ public class FMXCrossover
      * This is my implementation of the PMX used for Mating in Genetic Algorithm
      */
     public FMXCrossover(int[] parent1, int[] parent2){
+        int sum1 = 0;
+        int sum2 = 0;
+        for(int x = 0; x < parent1.length; x++){
+            sum1 += parent1[x];
+            sum2 += parent2[x];
+        }
+        if (sum1 != sum2){
+            System.out.println("Nå er noe galt");
+        }
         int depotCounter = 0;
         for(int x = 0; x< parent1.length; x++){
             if(parent1[x] == -1){
@@ -186,7 +195,6 @@ public class FMXCrossover
             z++;
         }
 
-
         //swap(offspring1);
 
         return offspring1;
@@ -206,7 +214,6 @@ public class FMXCrossover
             z++;
         }
         //swap(offspring2);
-
         return offspring2;
     }
 

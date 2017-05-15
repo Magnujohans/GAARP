@@ -244,13 +244,13 @@ public class Algorithm {
         }
 
         this.vehicles = vehicles;
-        System.out.println("Konstruksjonen tar: " + ((System.currentTimeMillis()-startConstruction)) + " tusendelssekunder");
+        //System.out.println("Konstruksjonen tar: " + ((System.currentTimeMillis()-startConstruction)) + " tusendelssekunder");
         resetPlowingtimes();
         for (int x = 0; x < vehicles.size(); x++) {
             vehicles.get(x).reRoute();
         }
 
-        System.out.println("Løsningsverdien fra Konstruksjonen er: " + getMakeSpan(vehicles));
+        //System.out.println("Løsningsverdien fra Konstruksjonen er: " + getMakeSpan(vehicles));
         //Here, we do the localSearch from the paper. the arguments are the vehicles, alpha, beta and theta.
 
         //vehicles = localWaitSearch(vehicles, 100, 100, 10);
