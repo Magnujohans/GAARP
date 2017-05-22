@@ -127,7 +127,7 @@ public class Algorithm {
 
                     //If the Sidewalk matrix has a higher value, we have a sidewalk that needs to be serviced, with
                     //Precedence constraints.
-                    if (swMatrix[x][y] > graph[x][y]) {
+                    if (swMatrix[x][y] > 0) {
                         Arc tempSW = new Arc(nodes.get(x), nodes.get(y), swMatrix[x][y], 2, counter);
                         arcMap.put(counter, tempSW);
                         SWarcNodeMap.put(new SWArcNodeIdentifier(nodes.get(x).nr, nodes.get(y).nr), tempSW);

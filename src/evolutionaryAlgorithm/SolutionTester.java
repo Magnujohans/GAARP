@@ -30,7 +30,7 @@ public class SolutionTester {
         arcs = initial.arcs;
         sideWalkArcs = initial.sideWalkArcs;
         this.fenotype = new Fenotype(arcs, sideWalkArcs, initial.arcMap, initial.arcNodeMap, initial.SWarcNodeMap,initial.arcNodeMap,initial.arcNodeMap,  initial.fwGraph, initial.fwPath, initial.fwGraphSW, initial.fwPathSW,  depot, vehichles, swVehicles, true);
-        education = new Education(fenotype);
+        education = new Education(fenotype, 1);
 
         population = 200;
     }

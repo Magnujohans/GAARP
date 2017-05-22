@@ -29,6 +29,9 @@ public class EvolutionaryAlgorithm {
 	int diversitySurvivalFraction;
 	int nElite;
 	int nClose;
+	int iNI;
+	int iDIV;
+	double nEduFactor;
 
 
 	public EvolutionaryAlgorithm(int[][] inputGraph, int[][] inputSWGraph, int[][] deadheadingTimeLane, int[][] deadheadingTimeSidewalk, int depot, int vehichles, int swVehicles, boolean uTurnsAllowed, int[] params){
@@ -37,7 +40,8 @@ public class EvolutionaryAlgorithm {
 		arcs = initial.arcs;
 		sideWalkArcs = initial.sideWalkArcs;
 		this.fenotype = new Fenotype(arcs, sideWalkArcs, initial.arcMap, initial.arcNodeMap, initial.SWarcNodeMap, initial.arcNodeMapLaneDH, initial.arcNodeMapSidewalkDH, initial.fwGraph, initial.fwPath, initial.fwGraphSW, initial.fwPathSW, depot, vehichles, swVehicles, uTurnsAllowed);
-		education = new Education(fenotype);
+		nEduFactor = 0.1*params[4];
+		education = new Education(fenotype, nEduFactor);
 
 		//population = 200;
 		//offspringPerEpoch = 100;
@@ -46,6 +50,9 @@ public class EvolutionaryAlgorithm {
 
 		population = params[0];
 		offspringPerEpoch = params[1];
+		iNI = params[5];
+		double iDIVfactor = 0.1*params[5]*params[6];
+		iDIV = (int) iDIVfactor;
 
 		double nEliteFactor = 0.1*params[2]*population;
 		double nCloseFactor = 0.1*params[3]*population;
@@ -53,7 +60,7 @@ public class EvolutionaryAlgorithm {
 		nClose = (int) nCloseFactor;
 
 
-		diversitySurvivalFraction = 3;
+		diversitySurvivalFraction = 5;
 
 		allArcs = getAllArcs();
 		fenotype.setParameters(nElite, population);
@@ -114,6 +121,18 @@ public class EvolutionaryAlgorithm {
 		double bestSolution = Collections.min(adults).fitness;
 		double tempBestSolution = 0;
 		while (true) {
+			if (newBestSolutionCounter % iDIV == 0 && newBestSolutionCounter >1) {
+				System.out.println("Diversify");
+				for (int x = adults.size()-1; x > population / diversitySurvivalFraction; x--) {
+					adults.remove(x);
+				}
+				while (adults.size() < population) {
+					Genotype temp = fenotype.createRandomGenotype();
+					adults.add(fenotype.createRandomGenotype());
+				}
+				fenotype.RankGenotypes(adults);
+			}
+
 			//System.out.println("Starting EA main loop");
 			ArrayList<Genotype> offspring = selecting.Mating(adults, fenotype);
 			//children = education.educateChildren(offspring, newBestSolutionCounter, 0.0000);
@@ -131,12 +150,12 @@ public class EvolutionaryAlgorithm {
 			if (tempBestSolution < bestSolution) {
 				bestIndividual = new Genotype(Collections.min(adults));
 				bestSolution = tempBestSolution;
-				//System.out.println(bestSolution);
+				System.out.println(bestSolution);
 				newBestSolutionCounter = 0;
 			}
 
 
-			if (newBestSolutionCounter == 1000) {
+			if (newBestSolutionCounter == iNI) {
 				ArrayList<Vehicle> bestResult = fenotype.getFenotype(bestIndividual);
 				fenotype.resetPlowingtimes();
 				Collections.sort(vehicles, new TypeComparator());
@@ -156,17 +175,7 @@ public class EvolutionaryAlgorithm {
 
 			}
 
-			if (newBestSolutionCounter % 200 == 0 && newBestSolutionCounter >1) {
-				//System.out.println("Diversify");
-				for (int x = adults.size()-1; x > population / diversitySurvivalFraction; x--) {
-					adults.remove(x);
-				}
-				while (adults.size() < population) {
-					Genotype temp = fenotype.createRandomGenotype();
-					adults.add(fenotype.createRandomGenotype());
-				}
-				fenotype.RankGenotypes(adults);
-			}
+
 			generationNumber++;
 		}
 	}
@@ -249,6 +258,10 @@ public class EvolutionaryAlgorithm {
 			}
 			remove++;
 		}
+		for (Genotype solution : adults) {
+			solution.diversity = DiversityEvaluator.BiasedFitness(adults,solution,nClose);
+		}
+		fenotype.RankGenotypes(adults);
 	}
 
 

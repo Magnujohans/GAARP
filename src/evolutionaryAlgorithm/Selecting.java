@@ -10,8 +10,8 @@ import java.util.Random;
 public class Selecting {
 
     public Random rng = new Random();
-    public int tournamentSize = 5;
-    public double selectionProb = 0.5;
+    public int tournamentSize = 2;
+    public double selectionProb = 1;
     public double offSpringPerEpoch;
     public int nElite;
     public int nPopulation;

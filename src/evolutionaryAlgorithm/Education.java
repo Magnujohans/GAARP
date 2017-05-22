@@ -13,9 +13,11 @@ import java.util.*;
 public class Education {
     Fenotype fenotype;
     Random rng;
+    double educationRate;
 
-    public Education(Fenotype fenotype){
+    public Education(Fenotype fenotype, double educationRate){
         this.fenotype = fenotype;
+        this.educationRate = educationRate;
         rng = new Random();
     }
 
@@ -36,11 +38,16 @@ public class Education {
         for (int i = 0; i < children.size(); i++) {
             ArrayList<Vehicle> tempChild = fenotype.getFenotype(children.get(i));
             Object[] tempResult;
-            if(rng.nextDouble() > 0.0){
+            if(rng.nextDouble() < educationRate){
                 tempResult = educateOffspring(arcs, lanes, sidewalks, tempChild);
             }
             else{
-                tempResult = educate(tempChild, iterations, factor);
+                int fitness = fenotype.calculateFitness(tempChild);
+                Object[] returnlist = new Object[2];
+                returnlist[0] = tempChild;
+                returnlist[1] = fitness;
+
+                tempResult = returnlist;
             }
             ArrayList<Vehicle> tempResultFenotype = (ArrayList<Vehicle>) tempResult[0];
             Genotype tempResultGenotype = fenotype.createGenotype(tempResultFenotype, (Integer) tempResult[1]);
