@@ -5,6 +5,7 @@ import InitialSolution.Vehicle;
 import jdk.internal.org.objectweb.asm.tree.ParameterNode;
 import jdk.internal.util.xml.impl.Input;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class Main {
@@ -128,7 +129,7 @@ public class Main {
 
 
 	public static void main(String[] args) {
-		InputReader input = new InputReader("D:\\Backup\\IdeaProjects\\GAARP\\src\\TestSet\\ParameterTest\\testData11N41A.txt");
+		InputReader input = new InputReader(".\\src\\TestSet\\ParameterTest\\testData11N41A.txt");
 		int[][] lanes = input.plowingtimeLane;
 		int[][] sidewalks = input.plowingtimeSidewalk;
 		int[][] DHlanes = input.deadheadingtimeLane;
