@@ -41,9 +41,12 @@ public class Vehicle{
                     }
                 }
             }
+            //This check adds a high penalty if there are U-turns in the solution, when U-turns are not allowed.
             if(!uTurnsAllowed && this.id > 0 && x > 0 && route.get(x).to == route.get(x-1).from ){
-                cost += 99999;
+                cost += 10000;
             }
+
+            //Implementation specific check. type 1 and 2 are arcs that should be serviced, while 3 and 4 are deadheading arcs.
             if(this.id > 0 && route.get(x).type == 1){
                 route.get(x).setStartOfService(cost);
                 route.get(x).serveArc();
@@ -58,7 +61,6 @@ public class Vehicle{
         }
         totalLength = cost;
         StartTimeForArcs = startTimes;
-        //System.out.println("Halla");
     }
 
     //Simulates the plowing of the vehicles.
@@ -70,17 +72,6 @@ public class Vehicle{
         this.route = route;
     }
 
-    public Arc getArcWithHighestInverseWaitingTime(){
-        int min = 0;
-        Arc temp = tasks.get(tasks.size()-1);
-        for(int x = 0; x < tasks.size(); x++){
-            if(tasks.get(x).waitingTime < min){
-                min = tasks.get(x).waitingTime;
-                temp = tasks.get(x);
-            }
-        }
-        return temp;
-    }
 
     public Vehicle copyVehicle(){
         Vehicle copy = new Vehicle(this.id, (ArrayList<Arc>) this.tasks.clone(), (ArrayList<Arc>) this.route.clone(), this.uTurnsAllowed);
@@ -95,7 +86,7 @@ public class Vehicle{
         return (ArrayList<Arc>) this.route.clone();
     }
 
-    //The output does not say whether the vehicle waits or not.
+    //The output adds 2 to each node, this is so that the nodes will correspond to Arc-Flow model(1-indexed, and with artificial depot)
     @Override
     public String toString(){
         String s = "";
@@ -105,7 +96,7 @@ public class Vehicle{
         }
 
 
-        for(int x = 0; x<route.size()-1; x++){
+        for(int x = 0; x<route.size(); x++){
             if(route.get(x).startOfService == StartTimeForArcs.get(x)){
                 s += "Vehicle " + id + " plows arc " + route.get(x).identifier + " from " + (route.get(x).from.nr+2) + " to " + (route.get(x).to.nr+2)
                         + ". This takes " + route.get(x).length + " time units";
@@ -114,17 +105,19 @@ public class Vehicle{
                 s += "Vehicle " + id + " takes arc " + route.get(x).identifier + " from " + (route.get(x).from.nr+2) + " to " + (route.get(x).to.nr+2)
                         + ". This takes " + route.get(x).length + " time units";
             }
-            if(route.get(x).type == 2){
-                s += ". This is a Sidewalk";
-            }
-            if(x> 0 && (StartTimeForArcs.get(x+1) -  (StartTimeForArcs.get(x) + route.get(x).length) > 0)){
-                s += " And it has to wait for " + (StartTimeForArcs.get(x+1) -  (StartTimeForArcs.get(x) + route.get(x).length)) + " time units";
+
+            if(x> 0 && x < route.size()-1 &&(StartTimeForArcs.get(x) -  (StartTimeForArcs.get(x-1) + route.get(x-1).length) > 0)){
+                s += ", but it has to wait for " + (StartTimeForArcs.get(x) -  (StartTimeForArcs.get(x-1) + route.get(x-1).length)) + " time units first";
             }
             //s +=". It starts plowing the arc at time " + StartTimeForArcs.get(x)+ "\n";
-            s +=". It is done at time " + StartTimeForArcs.get(x+1)+ "\n";
+            if(x < route.size()){
+                s +=". It starts at time " + StartTimeForArcs.get(x);
+                s +=", and arrives at time " + (StartTimeForArcs.get(x)+route.get(x).length) + "\n";
+            }
+
         }
-        s += ". Total time of route is " + (StartTimeForArcs.get(StartTimeForArcs.size()-1) + route.get(route.size()-1).length);
-        s += " Total time is " + totalLength;
+
+        s += "Total time is " + totalLength;
         return s;
     }
 

@@ -2,8 +2,108 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="24646202-a84a-47bd-ae41-835db1a7ee66" name="Default" comment="Testing">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/TestCase17.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/TestCase18.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/GAARP/Chessboard.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/GAARP/Chessboard2.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/GAARP/Chromosome.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/GAARP/CrossOver.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/GAARP/GenAlg.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/GAARP/InitialSolution/Nodes60.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/GAARP/Move.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/GAARP/SimAnn.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/GAARP/Tabu.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/GAARP/TestSet/ParameterTest/testData11N41A.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/GAARP/TestSet/ParameterTest/testData11N44A.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/GAARP/TestSet/ParameterTest/testData11N49A.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/GAARP/TestSet/ParameterTest/testData27N137A.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/GAARP/TestSet/ParameterTest/testData51N291A.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/GAARP/TestSet/ParameterTest/testData51N294A.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/GAARP/TestSet/TestSet3/testData10N34A.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/GAARP/TestSet/TestSet3/testData11N35A.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/GAARP/TestSet/TestSet3/testData11N39A.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/GAARP/TestSet/TestSet3/testData14N41A.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/GAARP/TestSet/TestSet3/testData44N217A.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/GAARP/TestSet/TestSet3/testData83N454A.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/GAARP/graph/Arc.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/GAARP/graph/Cost.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/GAARP/graph/Edge.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/GAARP/graph/ElementProperties.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/GAARP/graph/FloydWarshall.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/GAARP/graph/Graph.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/GAARP/graph/Node.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/GAARP/parameterFiles/EvolutionaryAlgorithmParams$AdultSelection.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/GAARP/parameterFiles/EvolutionaryAlgorithmParams$ParentSelection.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/GAARP/parameterFiles/EvolutionaryAlgorithmParams$fitnessType.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/GAARP/parameterFiles/EvolutionaryAlgorithmParams.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/GAARP/parameterFiles/GraphParams.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/Chessboard.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/Chessboard2.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/Chromosome.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/CrossOver.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/GenAlg.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/InitialSolution/Main.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/InitialSolution/Nodes60.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/Move.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/SimAnn.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/Tabu.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/TestSet/Example.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/TestSet/Example2.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/TestSet/Example5.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/TestSet/Example9.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/TestSet/ParameterTest/testData11N41A.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/TestSet/ParameterTest/testData11N44A.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/TestSet/ParameterTest/testData11N49A.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/TestSet/ParameterTest/testData27N137A.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/TestSet/ParameterTest/testData51N291A.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/TestSet/ParameterTest/testData51N294A.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/TestSet/TestCase18.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/TestSet/TestSet3/testData10N34A.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/TestSet/TestSet3/testData11N35A.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/TestSet/TestSet3/testData11N39A.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/TestSet/TestSet3/testData14N41A.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/TestSet/TestSet3/testData44N217A.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/TestSet/TestSet3/testData83N454A.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/TestSet/test10N31A.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/TestSet/test10N36A.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/evolutionaryAlgorithm/Permutations.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/evolutionaryAlgorithm/SolutionTester.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/evolutionaryAlgorithm/Utilities.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/graph/Arc.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/graph/Cost.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/graph/Edge.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/graph/ElementProperties.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/graph/FloydWarshall.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/graph/Graph.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/graph/Node.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/parameterFiles/EvolutionaryAlgorithmParams.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/parameterFiles/GraphParams.java" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/GAARP/InitialSolution/Arc.class" afterPath="$PROJECT_DIR$/out/production/GAARP/InitialSolution/Arc.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/GAARP/TestSet/Resultatsett/testData12N37A.txt" afterPath="$PROJECT_DIR$/out/production/GAARP/TestSet/Resultatsett/testData12N37A.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/GAARP/TestSet/Resultatsett/testData13N46A.txt" afterPath="$PROJECT_DIR$/out/production/GAARP/TestSet/Resultatsett/testData13N46A.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/GAARP/TestSet/Resultatsett/testData14N46A.txt" afterPath="$PROJECT_DIR$/out/production/GAARP/TestSet/Resultatsett/testData14N46A.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/GAARP/TestSet/Resultatsett/testData15N44A.txt" afterPath="$PROJECT_DIR$/out/production/GAARP/TestSet/Resultatsett/testData15N44A.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/GAARP/TestSet/Resultatsett/testData16N52A.txt" afterPath="$PROJECT_DIR$/out/production/GAARP/TestSet/Resultatsett/testData16N52A.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/InitialSolution/Algorithm.java" afterPath="$PROJECT_DIR$/src/InitialSolution/Algorithm.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/InitialSolution/Arc.java" afterPath="$PROJECT_DIR$/src/InitialSolution/Arc.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/InitialSolution/Vehicle.java" afterPath="$PROJECT_DIR$/src/InitialSolution/Vehicle.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/TestSet/Resultatsett/testData12N37A.txt" afterPath="$PROJECT_DIR$/src/TestSet/Resultatsett/testData12N37A.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/TestSet/Resultatsett/testData13N46A.txt" afterPath="$PROJECT_DIR$/src/TestSet/Resultatsett/testData13N46A.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/TestSet/Resultatsett/testData14N46A.txt" afterPath="$PROJECT_DIR$/src/TestSet/Resultatsett/testData14N46A.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/TestSet/Resultatsett/testData15N44A.txt" afterPath="$PROJECT_DIR$/src/TestSet/Resultatsett/testData15N44A.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/TestSet/Resultatsett/testData16N52A.txt" afterPath="$PROJECT_DIR$/src/TestSet/Resultatsett/testData16N52A.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/evolutionaryAlgorithm/BFComparator.java" afterPath="$PROJECT_DIR$/src/evolutionaryAlgorithm/BFComparator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/evolutionaryAlgorithm/DiversityComparator.java" afterPath="$PROJECT_DIR$/src/evolutionaryAlgorithm/DiversityComparator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/evolutionaryAlgorithm/DiversityEvaluator.java" afterPath="$PROJECT_DIR$/src/evolutionaryAlgorithm/DiversityEvaluator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/evolutionaryAlgorithm/Education.java" afterPath="$PROJECT_DIR$/src/evolutionaryAlgorithm/Education.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/evolutionaryAlgorithm/EvolutionaryAlgorithm.java" afterPath="$PROJECT_DIR$/src/evolutionaryAlgorithm/EvolutionaryAlgorithm.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/evolutionaryAlgorithm/FMXCrossover.java" afterPath="$PROJECT_DIR$/src/evolutionaryAlgorithm/FMXCrossover.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/evolutionaryAlgorithm/Fenotype.java" afterPath="$PROJECT_DIR$/src/evolutionaryAlgorithm/Fenotype.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/evolutionaryAlgorithm/Genotype.java" afterPath="$PROJECT_DIR$/src/evolutionaryAlgorithm/Genotype.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/evolutionaryAlgorithm/InputReader.java" afterPath="$PROJECT_DIR$/src/evolutionaryAlgorithm/InputReader.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/evolutionaryAlgorithm/Main.java" afterPath="$PROJECT_DIR$/src/evolutionaryAlgorithm/Main.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/evolutionaryAlgorithm/Selecting.java" afterPath="$PROJECT_DIR$/src/evolutionaryAlgorithm/Selecting.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -30,20 +130,70 @@
       <file leaf-file-name="Education.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/evolutionaryAlgorithm/Education.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="26" column="1" selection-start-line="26" selection-start-column="1" selection-end-line="26" selection-end-column="1" />
+            <state relative-caret-position="51">
+              <caret line="3" column="27" selection-start-line="3" selection-start-column="27" selection-end-line="3" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Vehicle.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/InitialSolution/Vehicle.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="208">
+              <caret line="106" column="13" selection-start-line="106" selection-start-column="13" selection-end-line="106" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Algorithm.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/InitialSolution/Algorithm.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="613">
+              <caret line="111" column="45" selection-start-line="111" selection-start-column="45" selection-end-line="111" selection-end-column="45" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Genotype.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/evolutionaryAlgorithm/Genotype.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Fenotype.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/evolutionaryAlgorithm/Fenotype.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3043">
+              <caret line="381" column="78" selection-start-line="381" selection-start-column="78" selection-end-line="381" selection-end-column="78" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#19780#19789#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="InputReader.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/evolutionaryAlgorithm/InputReader.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1445">
+              <caret line="88" column="43" selection-start-line="88" selection-start-column="43" selection-end-line="88" selection-end-column="43" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/evolutionaryAlgorithm/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="125">
-              <caret line="130" column="44" selection-start-line="130" selection-start-column="44" selection-end-line="130" selection-end-column="44" />
+            <state relative-caret-position="111">
+              <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -51,44 +201,36 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="testData11N33A.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/TestSet/Resultatsett/testData11N33A.txt">
+      <file leaf-file-name="DiversityEvaluator.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/evolutionaryAlgorithm/DiversityEvaluator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="19" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
-              <folding />
+            <state relative-caret-position="254">
+              <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SolutionTester.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/evolutionaryAlgorithm/SolutionTester.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="126">
-              <caret line="32" column="45" selection-start-line="32" selection-start-column="45" selection-end-line="32" selection-end-column="45" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Selecting.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/evolutionaryAlgorithm/Selecting.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="343">
-              <caret line="24" column="30" selection-start-line="24" selection-start-column="30" selection-end-line="24" selection-end-column="30" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EvolutionaryAlgorithm.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="EvolutionaryAlgorithm.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/evolutionaryAlgorithm/EvolutionaryAlgorithm.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="54" column="32" selection-start-line="54" selection-start-column="32" selection-end-line="54" selection-end-column="32" />
+            <state relative-caret-position="153">
+              <caret line="33" column="56" selection-start-line="33" selection-start-column="56" selection-end-line="33" selection-end-column="56" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ArrayList.java" pinned="false" current-in-tab="false">
+        <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_101/src.zip!/java/util/ArrayList.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="138">
+              <caret line="428" column="0" selection-start-line="428" selection-start-column="0" selection-end-line="428" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -124,31 +266,36 @@
         <option value="$PROJECT_DIR$/src/evolutionaryAlgorithm/Utilities.java" />
         <option value="$PROJECT_DIR$/src/InitialSolution/TypeComparator.java" />
         <option value="$PROJECT_DIR$/src/InitialSolution/SWArcNodeIdentifier.java" />
-        <option value="$PROJECT_DIR$/src/InitialSolution/Arc.java" />
         <option value="$PROJECT_DIR$/src/InitialSolution/UturnInformation.java" />
         <option value="$PROJECT_DIR$/src/evolutionaryAlgorithm/FitnessEvaluator.java" />
         <option value="$PROJECT_DIR$/src/evolutionaryAlgorithm/FitnessComparator.java" />
-        <option value="$PROJECT_DIR$/src/evolutionaryAlgorithm/DiversityComparator.java" />
-        <option value="$PROJECT_DIR$/src/evolutionaryAlgorithm/BFComparator.java" />
-        <option value="$PROJECT_DIR$/src/evolutionaryAlgorithm/Genotype.java" />
         <option value="$PROJECT_DIR$/src/InitialSolution/Main.java" />
-        <option value="$PROJECT_DIR$/src/InitialSolution/Vehicle.java" />
-        <option value="$PROJECT_DIR$/src/evolutionaryAlgorithm/FMXCrossover.java" />
-        <option value="$PROJECT_DIR$/src/evolutionaryAlgorithm/Fenotype.java" />
-        <option value="$PROJECT_DIR$/src/evolutionaryAlgorithm/DiversityEvaluator.java" />
-        <option value="$PROJECT_DIR$/src/evolutionaryAlgorithm/InputReader.java" />
-        <option value="$PROJECT_DIR$/src/InitialSolution/Algorithm.java" />
         <option value="$PROJECT_DIR$/src/TestSet/ParameterTest/testData11N41A.txt" />
-        <option value="$PROJECT_DIR$/src/evolutionaryAlgorithm/Selecting.java" />
-        <option value="$PROJECT_DIR$/src/evolutionaryAlgorithm/Education.java" />
         <option value="$PROJECT_DIR$/src/evolutionaryAlgorithm/SolutionTester.java" />
         <option value="$PROJECT_DIR$/src/TestSet/Resultatsett/testData8N21A.txt" />
         <option value="$PROJECT_DIR$/src/TestSet/Resultatsett/testData8N28A.txt" />
         <option value="$PROJECT_DIR$/src/TestSet/Resultatsett/testData9N27A.txt" />
         <option value="$PROJECT_DIR$/src/TestSet/Resultatsett/testData10N38A.txt" />
         <option value="$PROJECT_DIR$/src/TestSet/Resultatsett/testData11N33A.txt" />
-        <option value="$PROJECT_DIR$/src/evolutionaryAlgorithm/EvolutionaryAlgorithm.java" />
+        <option value="$PROJECT_DIR$/src/TestSet/Resultatsett/testData12N37A.txt" />
+        <option value="$PROJECT_DIR$/src/TestSet/Resultatsett/testData13N46A.txt" />
+        <option value="$PROJECT_DIR$/src/TestSet/Resultatsett/testData14N46A.txt" />
+        <option value="$PROJECT_DIR$/src/TestSet/Resultatsett/testData15N44A.txt" />
+        <option value="$PROJECT_DIR$/src/TestSet/Resultatsett/testData16N52A.txt" />
+        <option value="$PROJECT_DIR$/src/evolutionaryAlgorithm/BFComparator.java" />
+        <option value="$PROJECT_DIR$/src/evolutionaryAlgorithm/DiversityComparator.java" />
+        <option value="$PROJECT_DIR$/src/evolutionaryAlgorithm/DiversityEvaluator.java" />
+        <option value="$PROJECT_DIR$/src/evolutionaryAlgorithm/FMXCrossover.java" />
+        <option value="$PROJECT_DIR$/src/evolutionaryAlgorithm/InputReader.java" />
+        <option value="$PROJECT_DIR$/src/InitialSolution/Arc.java" />
+        <option value="$PROJECT_DIR$/src/evolutionaryAlgorithm/Selecting.java" />
+        <option value="$PROJECT_DIR$/src/evolutionaryAlgorithm/Fenotype.java" />
+        <option value="$PROJECT_DIR$/src/evolutionaryAlgorithm/Education.java" />
+        <option value="$PROJECT_DIR$/src/evolutionaryAlgorithm/Genotype.java" />
+        <option value="$PROJECT_DIR$/src/InitialSolution/Algorithm.java" />
+        <option value="$PROJECT_DIR$/src/InitialSolution/Vehicle.java" />
         <option value="$PROJECT_DIR$/src/evolutionaryAlgorithm/Main.java" />
+        <option value="$PROJECT_DIR$/src/evolutionaryAlgorithm/EvolutionaryAlgorithm.java" />
       </list>
     </option>
   </component>
@@ -199,38 +346,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="GAARP" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GAARP" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GAARP" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GAARP" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GAARP" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TestSet" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -736,12 +851,13 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329653" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27332243" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27332243" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20574887" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289689" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -756,7 +872,6 @@
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289689" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -785,60 +900,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/InitialSolution/Vehicle.java</url>
-          <line>107</line>
+          <line>109</line>
           <properties />
-          <option name="timeStamp" value="127" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/InitialSolution/Vehicle.java</url>
-          <line>124</line>
-          <properties />
-          <option name="timeStamp" value="130" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/InitialSolution/Vehicle.java</url>
-          <line>125</line>
-          <properties />
-          <option name="timeStamp" value="131" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/InitialSolution/Vehicle.java</url>
-          <line>100</line>
-          <properties />
-          <option name="timeStamp" value="135" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/InitialSolution/Vehicle.java</url>
-          <line>101</line>
-          <properties />
-          <option name="timeStamp" value="136" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/InitialSolution/Vehicle.java</url>
-          <line>102</line>
-          <properties />
-          <option name="timeStamp" value="137" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/InitialSolution/Vehicle.java</url>
-          <line>103</line>
-          <properties />
-          <option name="timeStamp" value="138" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/evolutionaryAlgorithm/DiversityEvaluator.java</url>
-          <line>30</line>
-          <properties />
-          <option name="timeStamp" value="371" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/evolutionaryAlgorithm/DiversityEvaluator.java</url>
-          <line>31</line>
-          <properties />
-          <option name="timeStamp" value="372" />
+          <option name="timeStamp" value="373" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="373" />
+      <option name="time" value="374" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
@@ -851,75 +918,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/InitialSolution/Nodes60.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="24" selection-start-line="0" selection-start-column="24" selection-end-line="0" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/InitialSolution/GiantTourGenerator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="24" selection-start-line="0" selection-start-column="24" selection-end-line="0" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/graph/Cost.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/graph/Edge.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/graph/ElementProperties.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/generalUtilities/FileSaving.java" />
-    <entry file="file://$PROJECT_DIR$/src/graph/FloydWarshall.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/InitialSolution/Node.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/evolutionaryAlgorithm/FitnessModule.java" />
-    <entry file="file://$PROJECT_DIR$/src/evolutionaryAlgorithm/Selection.java" />
-    <entry file="file://$PROJECT_DIR$/src/evolutionaryAlgorithm/Utilities.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1887">
-          <caret line="117" column="6" selection-start-line="117" selection-start-column="6" selection-end-line="117" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/graph/Arc.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/InitialSolution/TypeComparator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
@@ -938,14 +936,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="193">
           <caret line="27" column="13" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/InitialSolution/Arc.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="35" column="39" selection-start-line="35" selection-start-column="39" selection-end-line="35" selection-end-column="39" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1001,39 +991,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/InitialSolution/UturnInformation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="19" column="32" selection-start-line="19" selection-start-column="32" selection-end-line="19" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/InitialSolution/MakeSpanComparator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/evolutionaryAlgorithm/FitnessComparator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="259">
-          <caret line="17" column="22" selection-start-line="17" selection-start-column="22" selection-end-line="17" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/evolutionaryAlgorithm/Genotype.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="24" column="34" selection-start-line="24" selection-start-column="34" selection-end-line="24" selection-end-column="34" />
-          <folding>
-            <element signature="e#2361#2362#0" expanded="false" />
-            <element signature="e#2394#2395#0" expanded="false" />
-            <element signature="e#2434#2435#0" expanded="false" />
-            <element signature="e#2464#2465#0" expanded="false" />
-            <element signature="e#2506#2507#0" expanded="false" />
-            <element signature="e#2538#2539#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1041,66 +1003,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-7119">
           <caret line="387" column="0" selection-start-line="387" selection-start-column="0" selection-end-line="387" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_101/src.zip!/java/util/ArrayList.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="123">
-          <caret line="660" column="0" selection-start-line="660" selection-start-column="0" selection-end-line="660" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/InitialSolution/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4362">
-          <caret line="120" column="10" selection-start-line="120" selection-start-column="10" selection-end-line="120" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/InitialSolution/Vehicle.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1564">
-          <caret line="100" column="0" selection-start-line="100" selection-start-column="0" selection-end-line="100" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/evolutionaryAlgorithm/FMXCrossover.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="27" column="41" selection-start-line="27" selection-start-column="40" selection-end-line="27" selection-end-column="41" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/evolutionaryAlgorithm/DiversityComparator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="12" column="34" selection-start-line="12" selection-start-column="34" selection-end-line="12" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/evolutionaryAlgorithm/BFComparator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="28" selection-start-line="0" selection-start-column="27" selection-end-line="0" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/evolutionaryAlgorithm/DiversityEvaluator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="166">
-          <caret line="25" column="14" selection-start-line="25" selection-start-column="14" selection-end-line="25" selection-end-column="14" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1116,32 +1018,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="9" column="19" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/evolutionaryAlgorithm/Fenotype.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1274">
-          <caret line="412" column="15" selection-start-line="412" selection-start-column="15" selection-end-line="412" selection-end-column="15" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/evolutionaryAlgorithm/InputReader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="181" column="2" selection-start-line="181" selection-start-column="2" selection-end-line="181" selection-end-column="2" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/InitialSolution/Algorithm.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="356">
-          <caret line="331" column="19" selection-start-line="331" selection-start-column="19" selection-end-line="331" selection-end-column="19" />
           <folding />
         </state>
       </provider>
@@ -1186,10 +1062,42 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/TestSet/Resultatsett/testData10N38A.txt">
+    <entry file="file://$PROJECT_DIR$/src/TestSet/Resultatsett/testData15N44A.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="3" column="19" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/TestSet/Resultatsett/testData16N52A.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="19" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/TestSet/ParameterTest/testData27N135A.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/TestSet/ParameterTest/testData27N138A.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/TestSet/ParameterTest/testData51N304A.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1202,38 +1110,221 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/evolutionaryAlgorithm/Education.java">
+    <entry file="file://$PROJECT_DIR$/src/TestSet/Resultatsett/testData10N38A.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="26" column="1" selection-start-line="26" selection-start-column="1" selection-end-line="26" selection-end-column="1" />
+        <state relative-caret-position="0">
+          <caret line="0" column="11" selection-start-line="0" selection-start-column="11" selection-end-line="0" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/TestSet/Resultatsett/testData14N46A.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="19" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/TestSet/Resultatsett/testData13N46A.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="19" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/TestSet/Resultatsett/testData12N37A.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="19" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/InitialSolution/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-102">
+          <caret line="120" column="10" selection-start-line="120" selection-start-column="10" selection-end-line="120" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_101/src.zip!/java/util/Collections.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="174" column="0" selection-start-line="174" selection-start-column="0" selection-end-line="174" selection-end-column="0" />
+          <folding>
+            <element signature="e#7312#7313#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/evolutionaryAlgorithm/BFComparator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="578">
+          <caret line="34" column="5" selection-start-line="34" selection-start-column="5" selection-end-line="34" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/evolutionaryAlgorithm/DiversityComparator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="9" column="94" selection-start-line="9" selection-start-column="94" selection-end-line="9" selection-end-column="94" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/evolutionaryAlgorithm/FitnessComparator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="259">
+          <caret line="17" column="22" selection-start-line="17" selection-start-column="22" selection-end-line="17" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/evolutionaryAlgorithm/FMXCrossover.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="224" column="23" selection-start-line="224" selection-start-column="23" selection-end-line="224" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/evolutionaryAlgorithm/Permutations.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/InitialSolution/Arc.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="16" selection-start-line="9" selection-start-column="16" selection-end-line="9" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/InitialSolution/UturnInformation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="32" selection-start-line="19" selection-start-column="32" selection-end-line="19" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/InitialSolution/Nodes60.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/evolutionaryAlgorithm/Selecting.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1717">
+          <caret line="103" column="0" selection-start-line="103" selection-start-column="0" selection-end-line="103" selection-end-column="0" />
+          <folding>
+            <element signature="e#806#807#0" expanded="true" />
+            <element signature="e#842#843#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/TestSet/Resultatsett/testData51N373A.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/evolutionaryAlgorithm/Genotype.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/evolutionaryAlgorithm/Fenotype.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3043">
+          <caret line="381" column="78" selection-start-line="381" selection-start-column="78" selection-end-line="381" selection-end-column="78" />
+          <folding>
+            <element signature="e#19780#19789#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/evolutionaryAlgorithm/InputReader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1445">
+          <caret line="88" column="43" selection-start-line="88" selection-start-column="43" selection-end-line="88" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_101/src.zip!/java/util/ArrayList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="428" column="0" selection-start-line="428" selection-start-column="0" selection-end-line="428" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/evolutionaryAlgorithm/DiversityEvaluator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="254">
+          <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/evolutionaryAlgorithm/Selecting.java">
+    <entry file="file://$PROJECT_DIR$/src/InitialSolution/Vehicle.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="343">
-          <caret line="24" column="30" selection-start-line="24" selection-start-column="30" selection-end-line="24" selection-end-column="30" />
+        <state relative-caret-position="208">
+          <caret line="106" column="13" selection-start-line="106" selection-start-column="13" selection-end-line="106" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/evolutionaryAlgorithm/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="111">
+          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/InitialSolution/Algorithm.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="613">
+          <caret line="111" column="45" selection-start-line="111" selection-start-column="45" selection-end-line="111" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/evolutionaryAlgorithm/Education.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="27" selection-start-line="3" selection-start-column="27" selection-end-line="3" selection-end-column="27" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/evolutionaryAlgorithm/EvolutionaryAlgorithm.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="54" column="32" selection-start-line="54" selection-start-column="32" selection-end-line="54" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/evolutionaryAlgorithm/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="130" column="44" selection-start-line="130" selection-start-column="44" selection-end-line="130" selection-end-column="44" />
+        <state relative-caret-position="153">
+          <caret line="33" column="56" selection-start-line="33" selection-start-column="56" selection-end-line="33" selection-end-column="56" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

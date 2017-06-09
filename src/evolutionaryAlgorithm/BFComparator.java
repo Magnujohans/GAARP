@@ -17,16 +17,15 @@ public class BFComparator implements Comparator<Genotype> {
         this.population = population;
     }
 
+    //The formula for ranking individuals in the population by biased fitness.
     @Override
     public int compare(Genotype a, Genotype b) {
         double rankA = a.fitnessRank + (1-(nElite/population))*a.diversityRank;
         double rankB = b.fitnessRank + (1-(nElite/population))*b.diversityRank;
 
-
         if (rankA > rankB){
             return 1;
         }
-
         if(rankA < rankB){
             return -1;
         }

@@ -2,14 +2,15 @@ package evolutionaryAlgorithm;
 
 import InitialSolution.Vehicle;
 import InitialSolution.Arc;
-import javafx.beans.binding.ObjectExpression;
-import javafx.scene.shape.ArcTo;
 
 import java.util.*;
 
 /**
  * Created by Magnu on 01.03.2017.
  */
+
+
+//This is class represents the Education phase from the paper.
 public class Education {
     Fenotype fenotype;
     Random rng;
@@ -21,19 +22,10 @@ public class Education {
         rng = new Random();
     }
 
-    public ArrayList<Genotype> educateChildren(ArrayList<Genotype> children, int iterations, double factor){
-        ArrayList<Genotype> educatedChildren = new ArrayList<>();
-        for (int i = 0; i < children.size(); i++) {
-            ArrayList<Vehicle> tempChild = fenotype.getFenotype(children.get(i));
-            Object[] tempResult = educate(tempChild, iterations, factor);
-            ArrayList<Vehicle> tempResultFenotype = (ArrayList<Vehicle>) tempResult[0];
-            Genotype tempResultGenotype = fenotype.createGenotype(tempResultFenotype, (Integer) tempResult[1]);
-            educatedChildren.add(tempResultGenotype);
-        }
-        return educatedChildren;
-    }
 
-    public ArrayList<Genotype> educateChildren2(ArrayList<Arc> arcs, ArrayList<Arc> lanes, ArrayList<Arc> sidewalks, ArrayList<Genotype> children, int iterations, double factor){
+    //This goes through each of the Offspring created and educates them given a probability(Parameter test showed that
+    //to always educate was the best choice.
+    public ArrayList<Genotype> educateChildren(ArrayList<Arc> arcs, ArrayList<Arc> lanes, ArrayList<Arc> sidewalks, ArrayList<Genotype> children){
         ArrayList<Genotype> educatedChildren = new ArrayList<>();
         for (int i = 0; i < children.size(); i++) {
             ArrayList<Vehicle> tempChild = fenotype.getFenotype(children.get(i));
@@ -55,284 +47,10 @@ public class Education {
         }
         return educatedChildren;
     }
-/*
-    public Object[] educate(ArrayList<Vehicle> vehicles){
-        int counter = 0;
-        ArrayList<Vehicle> bestVehicles = vehicles;
-        int bestFitness = fenotype.calculateFitness(bestVehicles);
-
-        Object[] result;
-        while(counter < 10){
-
-            ArrayList<Vehicle> tempVehicles = new ArrayList<>();
-            for (int i = 0; i < bestVehicles.size(); i++) {
-                tempVehicles.add(bestVehicles.get(i).copyVehicle());
-            }
-            //int vehiclesFitness = fenotype.calculateFitness(bestVehicles);
-
-            int[] makeSpanParameters = fenotype.calculateFitnessParameters(bestVehicles);
-            if(makeSpanParameters[1] > 0){
-                Vehicle tempOne = tempVehicles.get(makeSpanParameters[2]);
-                int two = rng.nextInt(fenotype.plowtrucks);
-                Vehicle tempTwo = tempVehicles.get(two);
-                result = Insert(tempVehicles,tempOne,tempOne.tasks.get(rng.nextInt(tempOne.tasks.size())),tempTwo, rng.nextInt(tempTwo.tasks.size()) );
-            }
-            else{
-                if(rng.nextDouble() > 0.5){
-                    Vehicle tempOne = tempVehicles.get(makeSpanParameters[2]);
-                    int two = fenotype.plowtrucks + rng.nextInt(fenotype.smallervehicles);
-                    Vehicle tempTwo = tempVehicles.get(two);
-                    result = Insert(tempVehicles,tempOne,tempOne.tasks.get(rng.nextInt(tempOne.tasks.size())),tempTwo, rng.nextInt(tempTwo.tasks.size()) );
-                }
-                else{
-                    int one = rng.nextInt(fenotype.plowtrucks);
-                    int two = rng.nextInt(fenotype.plowtrucks);
-                    Vehicle tempOne = tempVehicles.get(one);
-                    Vehicle tempTwo = tempVehicles.get(two);
-                    result = Insert(tempVehicles,tempOne,tempOne.tasks.get(rng.nextInt(tempOne.tasks.size())),tempTwo, rng.nextInt(tempTwo.tasks.size()) );
-                }
-            }
-            if(((Integer) result[1]) < bestFitness){
-                bestVehicles = (ArrayList<Vehicle>) result[0];
-                bestFitness = (Integer) result[1];
-                counter = 0;
-            }
-            else {
-                counter++;
-            }
-        }
-        Object[] best = new Object[2];
-        best[0] = bestVehicles;
-        best[1] = bestFitness;
-        return best;
-    }*/
 
 
-    public Object[] educate(ArrayList<Vehicle> vehicles, int generation, double factor){
-        int counter = 0;
-        ArrayList<Vehicle> bestVehicles = vehicles;
-        int bestFitness = fenotype.calculateFitness(bestVehicles);
 
-        Object[] result;
-        while(counter < 10){
-            double educate = rng.nextDouble();
-            if (educate > 0.5){
-                //break;
-            }
-
-            ArrayList<Vehicle> tempVehicles = new ArrayList<>();
-            for (int i = 0; i < bestVehicles.size(); i++) {
-                tempVehicles.add(bestVehicles.get(i).copyVehicle());
-            }
-
-            int[] makeSpanParameters = fenotype.calculateFitnessParameters(bestVehicles);
-            int random = rng.nextInt(4);
-            if(makeSpanParameters[1] > 0){
-                Vehicle tempOne = tempVehicles.get(makeSpanParameters[2]);
-                int two = rng.nextInt(fenotype.plowtrucks);
-                Vehicle tempTwo = tempVehicles.get(two);
-
-                while (tempOne.tasks.size() == 0){
-                    tempOne = tempVehicles.get(rng.nextInt(fenotype.plowtrucks));
-                }
-                if (tempTwo.tasks.size() ==0){
-                    Insert(tempVehicles,tempOne,tempOne.tasks.get(rng.nextInt(tempOne.tasks.size())),tempTwo, 0 );
-                }
-                if(random == 0){
-                    result = Swap(tempVehicles,tempOne,tempOne.tasks.get(rng.nextInt(tempOne.tasks.size())),tempTwo,tempTwo.tasks.get(rng.nextInt(tempTwo.tasks.size())));
-                }
-                else if (random == 1){
-                    if (tempOne.tasks.size() < 2 || tempTwo.tasks.size() < 2) {
-                        continue;
-                    }
-                    result = DoubleSwap(tempVehicles,tempOne,tempOne.tasks.get(rng.nextInt(tempOne.tasks.size())),tempTwo,tempTwo.tasks.get(rng.nextInt(tempTwo.tasks.size())));
-                }
-                else if (random == 2){
-                    result = Insert(tempVehicles,tempOne,tempOne.tasks.get(rng.nextInt(tempOne.tasks.size())),tempTwo, rng.nextInt(tempTwo.tasks.size()) );
-                }
-                else{
-                    if (tempOne.tasks.size() < 2 || tempTwo.tasks.size() < 2) {
-                        continue;
-                    }
-                    result = DoubleInsert(tempVehicles,tempOne,tempOne.tasks.get(rng.nextInt(tempOne.tasks.size())),tempTwo, rng.nextInt(tempTwo.tasks.size()));
-                }
-            }
-            else{
-                if(rng.nextDouble() > 0.5){
-                    Vehicle tempOne = tempVehicles.get(makeSpanParameters[2]);
-                    int two = fenotype.plowtrucks + rng.nextInt(fenotype.smallervehicles);
-                    Vehicle tempTwo = tempVehicles.get(two);
-                    while (tempOne.tasks.size() == 0){
-                        tempOne = tempVehicles.get(rng.nextInt(fenotype.plowtrucks));
-                    }
-                    if (tempTwo.tasks.size() ==0){
-                        Insert(tempVehicles,tempOne,tempOne.tasks.get(rng.nextInt(tempOne.tasks.size())),tempTwo, 0 );
-                    }
-
-                    if(random == 0){
-                        result = Swap(tempVehicles,tempOne,tempOne.tasks.get(rng.nextInt(tempOne.tasks.size())),tempTwo,tempTwo.tasks.get(rng.nextInt(tempTwo.tasks.size())));
-                    }
-                    else if (random == 1){
-                        if (tempOne.tasks.size() < 2 || tempTwo.tasks.size() < 2) {
-                            continue;
-                        }
-                        result = DoubleSwap(tempVehicles,tempOne,tempOne.tasks.get(rng.nextInt(tempOne.tasks.size())),tempTwo,tempTwo.tasks.get(rng.nextInt(tempTwo.tasks.size())));
-                    }
-                    else if (random == 2){
-                        result = Insert(tempVehicles,tempOne,tempOne.tasks.get(rng.nextInt(tempOne.tasks.size())),tempTwo, rng.nextInt(tempTwo.tasks.size()) );
-                    }
-                    else{
-                        if (tempOne.tasks.size() < 2 || tempTwo.tasks.size() < 2) {
-                            continue;
-                        }
-                        result = DoubleInsert(tempVehicles,tempOne,tempOne.tasks.get(rng.nextInt(tempOne.tasks.size())),tempTwo, rng.nextInt(tempTwo.tasks.size()));
-                    }
-                }
-                else{
-                    int one = rng.nextInt(fenotype.plowtrucks);
-                    int two = rng.nextInt(fenotype.plowtrucks);
-                    Vehicle tempOne = tempVehicles.get(one);
-                    Vehicle tempTwo = tempVehicles.get(two);
-                    while (tempOne.tasks.size() == 0){
-                        tempOne = tempVehicles.get(rng.nextInt(fenotype.plowtrucks));
-                    }
-                    if (tempTwo.tasks.size() ==0){
-                        Insert(tempVehicles,tempOne,tempOne.tasks.get(rng.nextInt(tempOne.tasks.size())),tempTwo, 0 );
-                    }
-
-
-                    if(random == 0){
-                        result = Swap(tempVehicles,tempOne,tempOne.tasks.get(rng.nextInt(tempOne.tasks.size())),tempTwo,tempTwo.tasks.get(rng.nextInt(tempTwo.tasks.size())));
-                    }
-                    else if (random == 1){
-                        if (tempOne.tasks.size() < 2 || tempTwo.tasks.size() < 2) {
-                            continue;
-                        }
-                        result = DoubleSwap(tempVehicles,tempOne,tempOne.tasks.get(rng.nextInt(tempOne.tasks.size())),tempTwo,tempTwo.tasks.get(rng.nextInt(tempTwo.tasks.size())));
-                    }
-                    else if (random == 2){
-                        result = Insert(tempVehicles,tempOne,tempOne.tasks.get(rng.nextInt(tempOne.tasks.size())),tempTwo, rng.nextInt(tempTwo.tasks.size()) );
-                    }
-                    else{
-                        if (tempOne.tasks.size() < 2 || tempTwo.tasks.size() < 2) {
-                            continue;
-                        }
-                        result = DoubleInsert(tempVehicles,tempOne,tempOne.tasks.get(rng.nextInt(tempOne.tasks.size())),tempTwo, rng.nextInt(tempTwo.tasks.size()));
-                    }
-                }
-            }
-            if(((Integer) result[1]) < bestFitness){
-                bestVehicles = (ArrayList<Vehicle>) result[0];
-                bestFitness = (Integer) result[1];
-                counter = 0;
-            }
-            else {
-                counter++;
-            }
-        }
-        //if(rng.nextDouble() < generation*factor){
-        //    return mutate(bestVehicles);
-        //}
-        Object[] best = new Object[2];
-        best[0] = bestVehicles;
-        best[1] = bestFitness;
-        return best;
-    }
-
-    public Object[] Insert(ArrayList<Vehicle> vehicles, Vehicle from, Arc arc, Vehicle to, int index){
-        from.tasks.remove(arc);
-        to.tasks.add(index, arc);
-
-        from.route = fenotype.getTourFromTasks(from.tasks, from.id);
-        to.route = fenotype.getTourFromTasks(to.tasks, to.id);
-
-        int fitness = fenotype.calculateFitness(vehicles);
-        Object[] returnlist = new Object[2];
-
-        returnlist[0] = vehicles;
-        returnlist[1] = fitness;
-
-        return returnlist;
-
-    }
-
-    public Object[] DoubleInsert(ArrayList<Vehicle> vehicles, Vehicle from, Arc arcOne, Vehicle to, int index1){
-        Insert(vehicles, from, arcOne, to, index1);
-        Arc arcTwo = from.tasks.get(rng.nextInt(from.tasks.size()));
-        int index2 = rng.nextInt(to.tasks.size());
-
-        return Insert(vehicles, from, arcTwo, to, index2);
-    }
-
-    public Object[] DoubleSwap(ArrayList<Vehicle> vehicles, Vehicle vehicleOne, Arc arcOneOne, Vehicle vehicleTwo, Arc arcTwoOne){
-        Swap(vehicles, vehicleOne, arcOneOne, vehicleTwo, arcTwoOne);
-        Arc arcOneTwo = vehicleOne.tasks.get(rng.nextInt(vehicleOne.tasks.size()));
-        Arc arcTwoTwo = vehicleTwo.tasks.get(rng.nextInt(vehicleTwo.tasks.size()));
-
-        return Swap(vehicles, vehicleOne, arcOneTwo, vehicleTwo, arcTwoTwo);
-    }
-
-    public Object[] Swap(ArrayList<Vehicle> vehicles, Vehicle vehicleOne, Arc arcOne, Vehicle vehicleTwo, Arc arcTwo){
-        int index1 = vehicleOne.tasks.indexOf(arcOne);
-        int index2 = vehicleTwo.tasks.indexOf(arcTwo);
-
-        vehicleTwo.tasks.remove(arcTwo);
-        vehicleTwo.tasks.add(index2, arcOne);
-        vehicleOne.tasks.remove(arcOne);
-        vehicleOne.tasks.add(index1, arcTwo);
-
-        vehicleOne.route = fenotype.getTourFromTasks(vehicleOne.tasks, vehicleTwo.id);
-        vehicleTwo.route = fenotype.getTourFromTasks(vehicleTwo.tasks, vehicleTwo.id);
-
-        int fitness = fenotype.calculateFitness(vehicles);
-        Object[] returnlist = new Object[2];
-
-        returnlist[0] = vehicles;
-        returnlist[1] = fitness;
-
-        return returnlist;
-    }
-
-    public void mutate(ArrayList<Genotype> adults, int index){
-        Object[] result;
-        ArrayList<Vehicle> vehicles = fenotype.getFenotype(adults.get(index));
-        for (int i = 0; i < 20; i++) {
-            int random = rng.nextInt(2);
-            double vehicleType = rng.nextDouble();
-
-            Vehicle tempOne;
-            Vehicle tempTwo;
-            if (vehicleType > 0.5){
-                int one = rng.nextInt(fenotype.plowtrucks);
-                tempOne = vehicles.get(one);
-                int two = rng.nextInt(fenotype.plowtrucks);
-                tempTwo = vehicles.get(two);
-            }
-
-            else{
-                int one = fenotype.plowtrucks + rng.nextInt(fenotype.smallervehicles);
-                tempOne = vehicles.get(one);
-                int two = fenotype.plowtrucks + rng.nextInt(fenotype.smallervehicles);
-                tempTwo = vehicles.get(two);
-            }
-
-            if(random == 0){
-                Swap(vehicles,tempOne,tempOne.tasks.get(rng.nextInt(tempOne.tasks.size())),tempTwo,tempTwo.tasks.get(rng.nextInt(tempTwo.tasks.size())));
-            }
-            else if (random == 2){
-                DoubleSwap(vehicles,tempOne,tempOne.tasks.get(rng.nextInt(tempOne.tasks.size())),tempTwo,tempTwo.tasks.get(rng.nextInt(tempTwo.tasks.size())));
-            }
-            else if (random == 1){
-                Insert(vehicles,tempOne,tempOne.tasks.get(rng.nextInt(tempOne.tasks.size())),tempTwo, rng.nextInt(tempTwo.tasks.size()) );
-            }
-            else{
-                DoubleInsert(vehicles,tempOne,tempOne.tasks.get(rng.nextInt(tempOne.tasks.size())),tempTwo, rng.nextInt(tempTwo.tasks.size()));
-            }
-
-        }
-        adults.add(fenotype.InitialGenotype(vehicles));
-    }
-
+    //All numbers here refer to a "move" in the paper, for description, please consult the description there
     public Object[] One(ArrayList<Vehicle> vehicles, Vehicle from, Vehicle to, int u, int v){
         if(from == to){
             Arc V = to.tasks.get(v);
@@ -732,6 +450,7 @@ public class Education {
         return returnlist;
     }
 
+    //This returns the current vehicle which has a given task in this solution.
     public Vehicle getVehicleWithTask(ArrayList<Vehicle> vehicles, Arc task){
         for (Vehicle vehicle : vehicles) {
             if(vehicle.tasks.indexOf(task) > -1){
@@ -741,12 +460,13 @@ public class Education {
         return null;
     }
 
-
+    //This returns the given index of a task in the vehicle in which it resides.
     public int getIndexofTask(Vehicle vehicle, Arc task){
         return vehicle.tasks.indexOf(task);
     }
 
 
+    //Helping function, used to generate a random ArrayList of integers. This is used to generate random arc sequences, and move sequences.
     public ArrayList<Integer> getPermutation(int bound){
         ArrayList<Integer> permutation = new ArrayList<Integer>();
         for(int x = 0; x<bound; x++){
@@ -756,6 +476,7 @@ public class Education {
         return permutation;
     }
 
+    //Using the function above, this function is used to randomly iterate over the 7 neighbourhood moves.
     public Object[] runNeighborMove(ArrayList<Vehicle> vehicles, int nr, Vehicle one, Vehicle two, int u, int v){
         Object[] result;
         switch (nr){
@@ -783,6 +504,7 @@ public class Education {
         return result;
     }
 
+    //This is the same as the above, but adapted to the random moves where maximum two arcs are involved.
     public Object[] runRandomSingleMove(ArrayList<Vehicle> vehicles, int nr, Arc one, Arc two){
         Object[] result;
         switch (nr){
@@ -798,6 +520,7 @@ public class Education {
         return result;
     }
 
+    //This is the same as the above, but adapted to the random moves where four arcs are involved.
     public Object[] runRandomDoubleMove(ArrayList<Vehicle> vehicles, int nr, Arc one, Arc two, Arc three, Arc four ){
         Object[] result;
         switch (nr){
@@ -813,6 +536,9 @@ public class Education {
         return result;
     }
 
+    //This is the whole educate process for a solution. Iterates randomly over the arcs and its neighbours, and randomly over the
+    //different neighbourhood moves. If this is unsuccesful, it iterates randomly over the last four random moves as well.
+    //A more detailed instruction can be found in the paper.
     public Object[] educateOffspring(ArrayList<Arc> arcs, ArrayList<Arc> lanes, ArrayList<Arc> sidewalks, ArrayList<Vehicle> initial){
         ArrayList<Vehicle> bestVehicles = initial;
         int bestFitness = fenotype.calculateFitness(bestVehicles);
@@ -950,49 +676,7 @@ public class Education {
         return best;
     }
 
-    public Object[] mutate(ArrayList<Vehicle> vehicles){
-        Object[] result;
-        for (int i = 0; i < 20; i++) {
-            int random = rng.nextInt(2);
-            double vehicleType = rng.nextDouble();
-
-            Vehicle tempOne;
-            Vehicle tempTwo;
-            if (vehicleType > 0.5){
-                int one = rng.nextInt(fenotype.plowtrucks);
-                tempOne = vehicles.get(one);
-                int two = rng.nextInt(fenotype.plowtrucks);
-                tempTwo = vehicles.get(two);
-            }
-
-            else{
-                int one = fenotype.plowtrucks + rng.nextInt(fenotype.smallervehicles);
-                tempOne = vehicles.get(one);
-                int two = fenotype.plowtrucks + rng.nextInt(fenotype.smallervehicles);
-                tempTwo = vehicles.get(two);
-            }
-
-            if(random == 0){
-                Swap(vehicles,tempOne,tempOne.tasks.get(rng.nextInt(tempOne.tasks.size())),tempTwo,tempTwo.tasks.get(rng.nextInt(tempTwo.tasks.size())));
-            }
-            else if (random == 2){
-                DoubleSwap(vehicles,tempOne,tempOne.tasks.get(rng.nextInt(tempOne.tasks.size())),tempTwo,tempTwo.tasks.get(rng.nextInt(tempTwo.tasks.size())));
-            }
-            else if (random == 1){
-                Insert(vehicles,tempOne,tempOne.tasks.get(rng.nextInt(tempOne.tasks.size())),tempTwo, rng.nextInt(tempTwo.tasks.size()) );
-            }
-            else{
-                DoubleInsert(vehicles,tempOne,tempOne.tasks.get(rng.nextInt(tempOne.tasks.size())),tempTwo, rng.nextInt(tempTwo.tasks.size()));
-            }
-
-        }
-
-        Object[] returnList = new Object[2];
-        returnList[0] = vehicles;
-        returnList[1] = fenotype.getMakeSpan(vehicles);
-        return returnList;
-    }
-
+    //Calculates the cumulative time used by all vehicles in the solution. Used for debugging.
     public int calculateSum(ArrayList<Vehicle> vehicles){
         int sum = 0;
         for (int i = 0; i < vehicles.size(); i++) {

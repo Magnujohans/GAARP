@@ -20,7 +20,8 @@ public class FMXCrossover
     private int   cutPoint2;
 
     /**
-     * This is my implementation of the PMX used for Mating in Genetic Algorithm
+     * This is my implementation of the PMX used for Mating in Genetic Algorithm. It does the parent swap as described in the paper,
+     * returning two offspring instead of one.
      */
     public FMXCrossover(int[] parent1, int[] parent2){
         int sum1 = 0;
@@ -29,9 +30,7 @@ public class FMXCrossover
             sum1 += parent1[x];
             sum2 += parent2[x];
         }
-        if (sum1 != sum2){
-            System.out.println("Nå er noe galt");
-        }
+
         int depotCounter = 0;
         for(int x = 0; x< parent1.length; x++){
             if(parent1[x] == -1){
@@ -48,6 +47,8 @@ public class FMXCrossover
         int taskCounter2 = 0;
         int depotCounter1 = 0;
         int depotCounter2 = 0;
+
+        //Remove all trip delimiters, and remember where it was.
         for(int x = 0; x< parent1.length; x++){
             if(parent1[x] == -1){
                 depots[depotCounter1] = x;
@@ -75,7 +76,7 @@ public class FMXCrossover
 
 
         /**
-         * Here we define the cutpoints for the Swath
+         * Here we define the cutpoints for the Swath, deciding the index range as in the paper.
          */
 
         int randomNo_Boundary = (parent1nd.length) - 1;
@@ -100,7 +101,7 @@ public class FMXCrossover
 
 
     /**
-     * For an Element given by its index check that it doesn't appear twice
+     * For an Element given by its index check that it doesn't appear twice, all values should be unique.
      */
     private boolean check_forDuplicates(int [] offspring, int indexOfElement){
         for(int index = 0; index < offspring.length; index++){
@@ -126,6 +127,7 @@ public class FMXCrossover
         }
     }
 
+    //Create the swath
     private void create_Segments(int cutPoint1, int cutPoint2){
         int capacity_ofSegments = (cutPoint2 - cutPoint1) + 1;
         segment1 = new int[capacity_ofSegments];
@@ -141,6 +143,7 @@ public class FMXCrossover
         }
     }
 
+    //Helping function for the the functions lower down
     private void insert_Segments(int[] offspring, int[] segment){
         int segmentIndex = 0;
         for(int index = 0; index < offspring.length; index++){
@@ -152,7 +155,7 @@ public class FMXCrossover
     }
 
     /**
-     *offspring2 gets segment 1, offspring1 gets segment2. For an explanation, check the report
+     *offspring2 gets segment 1, offspring1 gets segment2. For an explanation, check the paper
      */
     public void crossOver(int [] offspring, int[] parentX, int[] parentY){
         if(offspring == offspring1nd){
@@ -180,6 +183,7 @@ public class FMXCrossover
         }
     }
 
+    //Inserts the trip delimiter back into the offspring, and returns it.
     public int[] getOffspring1()
     {
         int[] offspring1 = new int[offspring1nd.length + depots.length];
@@ -195,10 +199,10 @@ public class FMXCrossover
             z++;
         }
 
-        //swap(offspring1);
 
         return offspring1;
     }
+    //Same here
     public int[] getOffspring2()
     {
         int[] offspring2 = new int[offspring2nd.length + depots.length];
@@ -213,20 +217,12 @@ public class FMXCrossover
             offspring2[x] = offspring2nd[z];
             z++;
         }
-        //swap(offspring2);
+
         return offspring2;
     }
 
-    private void swap(int[] arr) {
-        Random rng = new Random();
-        int i = rng.nextInt(arr.length);
-        int j = rng.nextInt(arr.length);
 
-        int t = arr[i];
-        arr[i] = arr[j];
-        arr[j] = t;
-    }
-
+    //Printing function
     public void printOffspring(int [] offspring1, int [] offspring2){
         System.out.println(" ");
         System.out.println("Parents");
@@ -254,22 +250,4 @@ public class FMXCrossover
         System.out.println("");
     }
 
-    /**
-     *
-     * If you still don't understand it, You can see it here
-     */
-    public static void main(String[] args){
-        int[] parent1 = {1,3,5,6,4,2,7,8};
-        int[] parent2 = {5,6,2,1,3,4,8,7};
-
-        FMXCrossover cross = new FMXCrossover(parent1,parent2);
-        for(int x = 0; x<parent1.length;x++){
-            System.out.print(cross.getOffspring1()[x] + " ");
-        }
-        System.out.println(" - - - - - - - -");
-        for(int x = 0; x<parent1.length;x++){
-            System.out.print(cross.getOffspring2()[x] + " ");
-        }
-
-    }
 }

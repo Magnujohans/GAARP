@@ -37,6 +37,9 @@ public class Fenotype {
     public int nPopulation;
 
 
+    //The Fenotype class contains everything related to conversion from chromosomes to solution(Fenotype)
+
+
     public Fenotype(ArrayList<Arc> lanes, ArrayList<Arc> sidewalks, HashMap<Integer, Arc> arcMap, HashMap<ArcNodeIdentifier, Arc> arcNodeMap, HashMap<SWArcNodeIdentifier, Arc> SWarcNodeMap,
                     HashMap<ArcNodeIdentifier, Arc> arcNodeMapLaneDH, HashMap<ArcNodeIdentifier, Arc> arcNodeMapSidewalkDH,
                     int[][] FWlaneGraphDH, int[][] FWlanePathDH,
@@ -62,11 +65,16 @@ public class Fenotype {
 
     }
 
+    //Update Parameters for the adaptive n^Elite
     public void setParameters(int nElite, int population){
         this.nElite = nElite;
         this.nPopulation = population;
     }
+    public void updateNElite(int nElite){
+        this.nElite = nElite;
+    }
 
+    //This is the Biased Fitness sorting algorithm from the paper.
     public void RankGenotypes(ArrayList<Genotype> population){
         Collections.sort(population, new FitnessComparator());
         for (int x = 0; x <population.size(); x++){
@@ -87,25 +95,25 @@ public class Fenotype {
         return this.sidewalks;
     }
 
-    public Genotype createRandomGenotype() {
-        int[] tempLane = this.originalLaneGeno.clone();
-        int[] tempSideWalk = this.originalSidewalkGeno.clone();
-        int bound = rng.nextInt(1000);
-        for (int i = 0; i < bound; i++) {
-            int indexLane1 = rng.nextInt(tempLane.length);
-            int indexLane2 = rng.nextInt(tempLane.length);
-            int indexSW1 = rng.nextInt(tempSideWalk.length);
-            int indexSW2 = rng.nextInt(tempSideWalk.length);
-
-
-            swap(tempLane, indexLane1, indexLane2);
-            swap(tempSideWalk, indexSW1, indexSW2);
+    // This is the proposed algorithm for generating random genotypes.
+    //It works by iterativly choose one random task, and place it in a random index using a random permutation
+    public Genotype createRandomGenotype(){
+        int[] tempLane = new int[originalLaneGeno.length];
+        int[] tempSideWalk = new int[originalSidewalkGeno.length];
+        ArrayList<Integer> lanePermutation = getPermutation(originalLaneGeno.length);
+        for(int x = 0; x < originalLaneGeno.length; x++){
+            tempLane[x] = originalLaneGeno[lanePermutation.get(x)];
+        }
+        ArrayList<Integer> sidewalkPermutation = getPermutation(originalSidewalkGeno.length);
+        for(int x = 0; x < originalSidewalkGeno.length; x++){
+            tempSideWalk[x] = originalSidewalkGeno[sidewalkPermutation.get(x)];
         }
 
         return new Genotype(tempLane, tempSideWalk, calculateFitness(tempLane, tempSideWalk));
     }
 
 
+    //Convert the genotype to a Fenotype
     public ArrayList<Vehicle> getFenotype(Genotype genotype) {
         ArrayList<Vehicle> vehicles = new ArrayList<>();
         Vehicle temp = new Vehicle(1, new ArrayList<Arc>(), new ArrayList<Arc>(), this.uTurnsAllowed);
@@ -141,6 +149,7 @@ public class Fenotype {
         return vehicles;
     }
 
+    //Creates a solution from a lane genome, and a sidewalk genome.
     public ArrayList<Vehicle> getFenotypefromGenome(int[] laneGenome, int[] sideWalkGenome) {
         ArrayList<Vehicle> vehicles = new ArrayList<>();
         Vehicle temp = new Vehicle(1, new ArrayList<Arc>(), new ArrayList<Arc>(), this.uTurnsAllowed);
@@ -168,11 +177,9 @@ public class Fenotype {
                 continue;
             }
             vehicles.get(vehicles.size() - 1).tasks.add(arcMap.get(sidewalkGenotype[x]));
-            //System.out.println(arcNodeMap.get(sidewalkGenotype[x]));
         }
 
         for (int i = 0; i < vehicles.size(); i++) {
-            //System.out.println(vehicles.get(i).tasks.size());
             vehicles.get(i).setRoute(getTourFromTasks(vehicles.get(i).tasks, vehicles.get(i).id));
 
         }
@@ -181,10 +188,9 @@ public class Fenotype {
         return vehicles;
     }
 
+    //This function creates a chromosome, based on a solution.
     public Genotype createGenotype(ArrayList<Vehicle> initialVehicles, int fitness) {
         int[] laneGenome = new int[plowtrucks - 1 + this.getLanes().size()];
-        //System.out.println("Lengde" + laneGenome.length);
-        //System.out.println("Antall Biler" + plowtrucks);
         int z = 0;
         Collections.sort(initialVehicles, new TypeComparator());
         for (int x = 0; x < plowtrucks; x++) {
@@ -212,6 +218,7 @@ public class Fenotype {
         return new Genotype(laneGenome, sidewalkGenome, fitness);
     }
 
+    //Creates a genotype from a solution, and also calculates the fitness value(in contrast to the function above)
     public Genotype InitialGenotype(ArrayList<Vehicle> initialVehicles) {
         int[] laneGenome = new int[plowtrucks - 1 + this.getLanes().size()];
         int z = 0;
@@ -241,16 +248,9 @@ public class Fenotype {
         return new Genotype(laneGenome, sidewalkGenome, calculateFitness(laneGenome, sidewalkGenome));
     }
 
-    public int calculateFitness(Genotype genotype) {
-        ArrayList<Vehicle> vehicles = getFenotype(genotype);
-        resetPlowingtimes();
-        Collections.sort(vehicles, new TypeComparator());
-        for (int x = 0; x < vehicles.size(); x++) {
-            vehicles.get(x).reRoute();
-        }
-        return getMakeSpan(vehicles);
-    }
 
+    //A function that calculates the vehicles cumulative fitness. This number is used for accepting or rejecting a
+    // move in the education phase. This function is used when there are at the most two vehicles.
     public int[] calculateVehicleFitness(ArrayList<Vehicle> vehicles, Vehicle One, Vehicle Two){
         int[] vehicleTotalTime = new int[2];
         resetPlowingtimes();
@@ -269,6 +269,8 @@ public class Fenotype {
         return  vehicleTotalTime;
     }
 
+    //A function that calculates the vehicles cumulative fitness. This number is used for accepting or rejecting a
+    // move in the education phase. This function is used when there are at the most four vehicles.
     public int[] calculateVehicleFitness(ArrayList<Vehicle> vehicles, Vehicle One, Vehicle Two, Vehicle Three, Vehicle Four){
         int[] vehicleTotalTime = new int[4];
         resetPlowingtimes();
@@ -293,6 +295,7 @@ public class Fenotype {
         return  vehicleTotalTime;
     }
 
+    //calculates the objective value fitness for a solution. In this case, the makespan value.
     public int calculateFitness(ArrayList<Vehicle> vehicles) {
         resetPlowingtimes();
         Collections.sort(vehicles, new TypeComparator());
@@ -302,6 +305,9 @@ public class Fenotype {
         return getMakeSpan(vehicles);
     }
 
+
+    //Calucates a set of values generated by the solution in question, in this case the makespan, the type of the vehicle that
+    // defines the makespan, and which index the this vehicle has in the solution.
     public int[] calculateFitnessParameters(ArrayList<Vehicle> vehicles) {
         resetPlowingtimes();
         Collections.sort(vehicles, new TypeComparator());
@@ -311,6 +317,7 @@ public class Fenotype {
         return getMakeSpanParameters(vehicles);
     }
 
+    //Calculates makespan only based on a lane and sidewalk chromosome.
     public int calculateFitness(int[] laneGenome, int[] sidewalkGenome) {
         ArrayList<Vehicle> vehicles = getFenotypefromGenome(laneGenome, sidewalkGenome);
         resetPlowingtimes();
@@ -322,6 +329,9 @@ public class Fenotype {
     }
 
 
+    //This function maps a task sequence to a complete route, using the floyd warshall paths that has already been created.
+    //The function adds the route from the depot to the first task, the route between consecutive tasks, and the route
+    // from the last task and back to the depot.
     public ArrayList<Arc> getTourFromTasks(ArrayList<Arc> tasks, int vehicleID) {
         ArrayList<Arc> route = new ArrayList<>();
         if (tasks.size() == 0) {
@@ -349,6 +359,8 @@ public class Fenotype {
      */
 
 
+    //This is a helping function, creating a route of tasks based on the startnodeId, endNodeID, and the vehicle type
+    //It needs the vehicle type to make sure that the vehicle deadheads the an allowed path.
     public ArrayList<Arc> getArcsFromPath(int startNodeId, int endNodeId, int vehicleID) {
         ArrayList<Integer> path = getPath(startNodeId, endNodeId, vehicleID);
         ArrayList<Arc> arcPath = new ArrayList<>();
@@ -356,40 +368,18 @@ public class Fenotype {
         if(vehicleID > 0){
             for (int x = 0; x < path.size() - 1; x++) {
                 arcPath.add(arcNodeMapLaneDH.get(new ArcNodeIdentifier(path.get(x), path.get(x + 1))));
-                //System.out.println(arcPath.get(x));
             }
         }
         else {
             for (int x = 0; x < path.size() - 1; x++) {
                 arcPath.add(arcNodeMapSidewalkDH.get(new ArcNodeIdentifier(path.get(x), path.get(x + 1))));
-                //System.out.println(arcPath.get(x));
             }
         }
         return arcPath;
     }
 
-    /**
-     * Deprecated
-     */
-
-    /*public ArrayList<Integer> getPath(int startID, int endID, int vehicleId) {
-        ArrayList<Integer> path = new ArrayList<>();
-        path.add(startID);
-        int nextID = startID;
-        while (nextID != endID) {
-            int oldId = nextID;
-            if (vehicleId > 0) {
-                nextID = FWLanePath[oldId][endID];
-            } else {
-                nextID = FWBestPath[oldId][endID];
-            }
-
-            path.add(nextID);
-        }
-        return path;
-    }
-    */
-
+    //returns a path of arc identifiers using floyd warshall, when given a start node id and end node id.
+    //It also needs the vehicle type, so that there is no illegal deadheading.
     public ArrayList<Integer> getPath(int startID, int endID, int vehicleId) {
         ArrayList<Integer> path = new ArrayList<>();
         path.add(startID);
@@ -401,15 +391,13 @@ public class Fenotype {
             } else {
                 nextID = FWSidewalkPath[oldId][endID];
             }
-            /*if (nextID == -1) {
-                nextID = FWSidewalkPath[oldId][endID];
-            }*/
             path.add(nextID);
         }
         return path;
     }
 
 
+    //Returns the makespan from a solution
     public int getMakeSpan(ArrayList<Vehicle> vehicles) {
         int max = 0;
         for (int x = 0; x < vehicles.size(); x++) {
@@ -420,6 +408,8 @@ public class Fenotype {
         return max;
     }
 
+    //Resets the plowingtimes of all arcs, so waiting time and makespan would be correct when calculating the makespan of
+    //a solution
     public void resetPlowingtimes() {
         for (int x = 0; x < lanes.size(); x++) {
             lanes.get(x).startOfService = -1;
@@ -433,6 +423,29 @@ public class Fenotype {
         }
     }
 
+
+
+    //This is a helping function for the getFitnessParameters above, this function needs to have the arcs reset in terms of when they
+    // are serviced. This to make sure that the makespan is calculated correctly.
+    public int[] getMakeSpanParameters(ArrayList<Vehicle> vehicles) {
+        int[] makespanParam = new int[3];
+        int max = 0;
+        int type = 0;
+        int index = 0;
+        for (int x = 0; x < vehicles.size(); x++) {
+            if (vehicles.get(x).totalLength > max) {
+                max = vehicles.get(x).totalLength;
+                type = vehicles.get(x).id;
+                index = x;
+            }
+        }
+        makespanParam[0] = max;
+        makespanParam[1] = type;
+        makespanParam[2] = index;
+        return makespanParam;
+    }
+    //Returns all lane arc identifiers and trip delimiters in an ascending id number. Helping function used
+    //for generating random offspring
     public int[] getAscendingLanes() {
         int[] ascendingLanes = new int[lanes.size() + plowtrucks - 1];
         int counter = 0;
@@ -451,25 +464,8 @@ public class Fenotype {
         }
         return ascendingLanes;
     }
-
-    public int[] getMakeSpanParameters(ArrayList<Vehicle> vehicles) {
-        int[] makespanParam = new int[3];
-        int max = 0;
-        int type = 0;
-        int index = 0;
-        for (int x = 0; x < vehicles.size(); x++) {
-            if (vehicles.get(x).totalLength > max) {
-                max = vehicles.get(x).totalLength;
-                type = vehicles.get(x).id;
-                index = x;
-            }
-        }
-        makespanParam[0] = max;
-        makespanParam[1] = type;
-        makespanParam[2] = index;
-        return makespanParam;
-    }
-
+    //Returns all sidewalk arc identifiers and trip delimiters in an ascending id number. Helping function used
+    //for generating random offspring
     public int[] getAscendingSidewalks() {
         int[] ascendingSidewalks = new int[sidewalks.size() + smallervehicles - 1];
         int counter = 0;
@@ -489,13 +485,20 @@ public class Fenotype {
         return ascendingSidewalks;
     }
 
-    private void swap(int[] arr, int i, int j) {
-        int t = arr[i];
-        arr[i] = arr[j];
-        arr[j] = t;
+    //A function returning a random permutation of the number up to and excluding the bound.
+    public ArrayList<Integer> getPermutation(int bound){
+        ArrayList<Integer> permutation = new ArrayList<Integer>();
+        for(int x = 0; x<bound; x++){
+            permutation.add(x);
+        }
+        Collections.shuffle(permutation);
+        return permutation;
     }
 
-    public void setUturnMatrix() {
+
+
+    //This function disallows U-Turns.
+    public void disallowUturn() {
         this.uTurnsAllowed = false;
     }
 }

@@ -8,6 +8,7 @@ import java.util.Collections;
  */
 public class DiversityEvaluator {
 
+    //This evaluates the Biased fitness, following the algorithm found in the paper.
     public static double BiasedFitness(ArrayList<Genotype> population, Genotype genotype, int Nclose){
         ArrayList<Double> Distance = new ArrayList<>();
         double factor = (genotype.laneGenome.length + genotype.sidewalkGenome.length);
@@ -23,7 +24,6 @@ public class DiversityEvaluator {
                     temp++;
                 }
             }
-            //Distance.add(temp/factor);
             Distance.add(0.0);
         }
         Collections.sort(Distance);

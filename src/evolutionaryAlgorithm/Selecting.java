@@ -16,12 +16,19 @@ public class Selecting {
     public int nElite;
     public int nPopulation;
 
+
+    //This is the class holding selecting parents, and binary tournament
     public Selecting(double offSpringPerEpoch, int nElite, int nPopulation){
         this.offSpringPerEpoch = offSpringPerEpoch;
         this.nElite = nElite;
         this.nPopulation = nPopulation;
     }
+    //Updates the Elite factor, increasing the importance of makespan. This is for the adaptive version
+    public void updateElite(int nElite){
+        this.nElite = nElite;
+    }
 
+    //Selects the parents by using the functions further down
     public Genotype tournamentSelection(ArrayList<Genotype> population){
         ArrayList<Integer> chosenIndices = new ArrayList<>();
         ArrayList<Genotype> chosenChromosomes = new ArrayList<>();
@@ -51,6 +58,7 @@ public class Selecting {
 
     }
 
+    //Holds one tournament to return one parent
     public ArrayList<Genotype> holdTournament(ArrayList<Genotype> population){
         ArrayList<Genotype> chromosomes = new ArrayList<>();
         ArrayList<Integer> indices = new ArrayList<>();
@@ -70,6 +78,7 @@ public class Selecting {
 
     }
 
+    //Uses the PMX to create two offspring
     public ArrayList<Genotype> Mating(ArrayList<Genotype> population, Fenotype fenotype){
         ArrayList<Genotype> parents = holdTournament(population);
         ArrayList<Genotype> offspring = new ArrayList<>();
@@ -92,12 +101,3 @@ public class Selecting {
     }
 
 }
-/*
-for (int i = 0; i < selectedParents.size(); i += 2) {
-        FMXCrossover tempLaneX = new FMXCrossover(selectedParents.get(i).getLaneGenome(),selectedParents.get(i+1).getLaneGenome());
-        FMXCrossover tempSidewalkX = new FMXCrossover(selectedParents.get(i).getSidewalkGenome(),selectedParents.get(i+1).getSidewalkGenome());
-        Genotype offspring1 = new Genotype(tempLaneX.getOffspring1(), tempSidewalkX.getOffspring1(), fenotype.calculateFitness(tempLaneX.getOffspring1(), tempSidewalkX.getOffspring1()));
-        Genotype offspring2 = new Genotype(tempLaneX.getOffspring2(), tempSidewalkX.getOffspring2(), fenotype.calculateFitness(tempLaneX.getOffspring2(), tempSidewalkX.getOffspring2()));
-        children.add(offspring1);
-        children.add(offspring2);
-        }*/

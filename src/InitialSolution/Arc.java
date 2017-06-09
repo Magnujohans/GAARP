@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 
 //The arc class
-public class Arc implements Comparable<Arc>{
+public class Arc{
     public Node from;
     public Node to;
     public int length;
@@ -40,12 +40,7 @@ public class Arc implements Comparable<Arc>{
             startOfService = time;
         }
     }
-    //This is used to sort the the sidewalks for the giant sidewalk tour
-    public void setStartOfServiceGT(int time){
-        if(startOfServiceGT < 0){
-            startOfServiceGT = time;
-        }
-    }
+
 
     public void serveArc(){
         this.serviced = true;
@@ -69,24 +64,11 @@ public class Arc implements Comparable<Arc>{
         }
         return max;
     }
-    //The same as above, for the giant tour.
-    public int getEarliestStartingTimeForThisArcGT(){
-        int max = 0;
-        for(int x = 0; x < haveToPreceed.size();x++){
-            if(haveToPreceed.get(x).startOfServiceGT >= max){
-                max = haveToPreceed.get(x).startOfServiceGT;
-            }
-        }
-        return max;
-    }
+
 
     public void setWaitingTime(int time){
         this.waitingTime = time;
     }
 
-    @Override
-    //Used to sort the arclist, from which is serviced first to last. Used for generation of the Giant Sidewalk tour.
-    public int compareTo(Arc o) {
-        return this.getEarliestStartingTimeForThisArcGT()- o.getEarliestStartingTimeForThisArcGT();
-    }
+
 }

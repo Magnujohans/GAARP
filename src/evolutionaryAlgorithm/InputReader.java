@@ -9,6 +9,8 @@ import java.io.FileReader;
 import java.util.ArrayList;
 
 
+
+//A Input reader class, takes in the numeric values following the files made.
 public class InputReader {
 
     int numberOfVehiclesLane;
@@ -30,15 +32,11 @@ public class InputReader {
             FileReader reader = new FileReader(file);
             BufferedReader fr = new BufferedReader(reader);
 
-            //Legg inn hvor mange av de øverste linjene man skal fjerne
-            /*for(int i = 0; i < 7; i++){
-                fr.readLine();
-            }*/
+
             String line = fr.readLine();
-            //System.out.println(line);
+
             String[] list1 = line.split(":");
             int antallNoder = Integer.parseInt(list1[1].trim());
-            //System.out.println(inputdata.antallNoder);
 
             int[][] tempArray1 = new int[antallNoder][antallNoder];
             int[][] tempArray2 = new int[antallNoder][antallNoder];
@@ -64,6 +62,7 @@ public class InputReader {
             numberOfVehiclesLane = Integer.parseInt(list1[1].trim());
             // System.out.println(numberOfVehiclesLane);
 
+
             line = fr.readLine();
             list1 = line.split(":");
             numberOfVehiclesSidewalk = Integer.parseInt(list1[1].trim());
@@ -73,12 +72,8 @@ public class InputReader {
             fr.readLine();
             line = fr.readLine();
             list1 = line.split(":");
-            int startNode = Integer.parseInt(list1[1].trim()) - 1;
             line = fr.readLine();
             list1 = line.split(":");
-            int endNode = Integer.parseInt(list1[1].trim()) - 1;
-            //System.out.println(inputdata.startNode);
-            //System.out.println(inputdata.endNode);
 
             fr.readLine();
             fr.readLine();
@@ -90,11 +85,8 @@ public class InputReader {
             fr.readLine();
             for (int i = 0; i < antallNoder; i++) {
                 line = fr.readLine();
-                //System.out.println(line);
                 line = line.trim();
-                //System.out.println(line);
                 list1 = line.split("\\t+");
-                //System.out.println("Plow jobs lane: "+line);
                 for (int j = 0; j < antallNoder; j++) {
                     numberOfLanesOnArc[i][j] = Integer.parseInt(list1[j].trim());
                     numberOfPlowJobsLane[i][j] = Integer.parseInt(list1[j].trim());

@@ -1,19 +1,15 @@
 package evolutionaryAlgorithm;
 
 import InitialSolution.*;
-import com.sun.org.apache.xpath.internal.SourceTreeManager;
-import graph.Graph;
 
 import java.util.*;
 
-import parameterFiles.EvolutionaryAlgorithmParams;
-import parameterFiles.EvolutionaryAlgorithmParams.AdultSelection;
-
+//This is the main evolutionary algorithm
 public class EvolutionaryAlgorithm {
 
 	Fenotype fenotype;
 	Education education;
-	Random rng = new Random();
+
 	public Algorithm initial;
 	public ArrayList<Vehicle> vehicles;
 	public ArrayList<Arc> arcs;
@@ -21,7 +17,6 @@ public class EvolutionaryAlgorithm {
 	public ArrayList<Arc> allArcs;
 
 	ArrayList<Genotype> adults;
-	ArrayList<Genotype> selectedParents;
 	ArrayList<Genotype> children;
 
 	int population;
@@ -32,21 +27,23 @@ public class EvolutionaryAlgorithm {
 	int iNI;
 	int iDIV;
 	double nEduFactor;
+	boolean adaptive;
+	int maxTime;
 
 
-	public EvolutionaryAlgorithm(int[][] inputGraph, int[][] inputSWGraph, int[][] deadheadingTimeLane, int[][] deadheadingTimeSidewalk, int depot, int vehichles, int swVehicles, boolean uTurnsAllowed, int[] params){
-		initial = new Algorithm(inputGraph, inputSWGraph, deadheadingTimeLane, deadheadingTimeSidewalk, depot, vehichles, swVehicles);
+	//The parameters in "params" are the number \mu, \lambda, \eta^Elite, \eta^Close, \eta^Edu,I^n, eta^div. All parameters are multiplied with 10,
+	//so that they all fit into a int[]. This means that one would need to multiply them with 0.1 to make them work.
+	public EvolutionaryAlgorithm(int[][] inputGraph, int[][] nrPlowjobs, int[][] inputSWGraph, int[][] deadheadingTimeLane, int[][] deadheadingTimeSidewalk, int depot, int vehichles, int swVehicles, boolean uTurnsAllowed, boolean adaptive, int[] params){
+		initial = new Algorithm(inputGraph, nrPlowjobs, inputSWGraph, deadheadingTimeLane, deadheadingTimeSidewalk, depot, vehichles, swVehicles);
 		vehicles = initial.vehicles;
 		arcs = initial.arcs;
 		sideWalkArcs = initial.sideWalkArcs;
 		this.fenotype = new Fenotype(arcs, sideWalkArcs, initial.arcMap, initial.arcNodeMap, initial.SWarcNodeMap, initial.arcNodeMapLaneDH, initial.arcNodeMapSidewalkDH, initial.fwGraph, initial.fwPath, initial.fwGraphSW, initial.fwPathSW, depot, vehichles, swVehicles, uTurnsAllowed);
+
+		this.adaptive = adaptive;
+
 		nEduFactor = 0.1*params[4];
 		education = new Education(fenotype, nEduFactor);
-
-		//population = 200;
-		//offspringPerEpoch = 100;
-		//nElite = 30;
-		//nClose = 30;
 
 		population = params[0];
 		offspringPerEpoch = params[1];
@@ -54,65 +51,49 @@ public class EvolutionaryAlgorithm {
 		double iDIVfactor = 0.1*params[5]*params[6];
 		iDIV = (int) iDIVfactor;
 
+
 		double nEliteFactor = 0.1*params[2]*population;
 		double nCloseFactor = 0.1*params[3]*population;
 		nElite = (int) nEliteFactor;
 		nClose = (int) nCloseFactor;
 
 
-		diversitySurvivalFraction = 5;
+		if(this.adaptive){
+			nElite = 0;
+		}
+
+		diversitySurvivalFraction = 3;
 
 		allArcs = getAllArcs();
 		fenotype.setParameters(nElite, population);
 
+		//Set all neighbours for the arcs.
 		getNeighbours();
-		//printNeighbours();
 		if(uTurnsAllowed == false){
-			//HashMap <ArcNodeIdentifier, UturnInformation> uTurnInfo = initial.getUturnMatrix();
-			fenotype.setUturnMatrix();
+			fenotype.disallowUturn();
 		}
+		maxTime = params[7];
 	}
 
 
-	/*TODO:
-	 * initialize population
-	 * 
-	 * while some condition(s):
-	 * 	make pairs
-	 * 	do crossovers (two point, as described)
-	 * 	calculate fitnesses
-	 * 	do mutations with fitness checking
-	 * 	update population
-	 * 		find best inidvidual
-	 * 		kill some at random
-	 * 		make new population and all that stuff
-	 * 	output logging data*/
-	@SuppressWarnings("unused")
+
 	public ArrayList<Vehicle> run() {
-		/*if(EvolutionaryAlgorithmParams.ADULT_SELECTION == AdultSelection.FULL_REPLACEMENT && (EvolutionaryAlgorithmParams.NUMBER_OF_CROSSOVER_PAIRS + 0.0) != (EvolutionaryAlgorithmParams.POPULATION_SIZE + 0.0) / 2.0){
-			System.out.println("Full generational replacement requires that there are exactly as many new children as there are spots in the population. " +
-					"Aborting because number of crossoverpair is not equal to half the population size.");
-			return;
-		}*/
 
 		long generationNumber = 0;
 		long startTime = System.currentTimeMillis();
 		long timeTaken;
-		long lastGenerationFitnessWasUpdated = 0;
 		Genotype bestIndividual;
-		Genotype copyOfBestIndividual;
-		Genotype currentGenerationsCandidate;
 
 		adults = new ArrayList<>();
-		selectedParents = new ArrayList<>();
 		children = new ArrayList<>();
 
+
+		//Fills the population with random chromosomes.
 		int counter = 0;
 		while (adults.size() < population) {
 			Genotype temp = fenotype.createRandomGenotype();
 			adults.add(fenotype.createRandomGenotype());
 			counter++;
-			//System.out.println("Creating Random offspring" + counter);
 		}
 		fenotype.RankGenotypes(adults);
 		Selecting selecting = new Selecting(offspringPerEpoch,nElite,population);
@@ -121,8 +102,11 @@ public class EvolutionaryAlgorithm {
 		double bestSolution = Collections.min(adults).fitness;
 		double tempBestSolution = 0;
 		while (true) {
+
+			//This checks whether the algorithm has needs to be diversified.
+			// If so, it removes 2/3's of the population, and add random ones instead.
 			if (newBestSolutionCounter % iDIV == 0 && newBestSolutionCounter >1) {
-				System.out.println("Diversify");
+				//System.out.println("Diversify");
 				for (int x = adults.size()-1; x > population / diversitySurvivalFraction; x--) {
 					adults.remove(x);
 				}
@@ -133,20 +117,25 @@ public class EvolutionaryAlgorithm {
 				fenotype.RankGenotypes(adults);
 			}
 
-			//System.out.println("Starting EA main loop");
+			//Select parents, and perform the Mating(FMX)
 			ArrayList<Genotype> offspring = selecting.Mating(adults, fenotype);
-			//children = education.educateChildren(offspring, newBestSolutionCounter, 0.0000);
-			children = education.educateChildren2(allArcs, arcs, sideWalkArcs, offspring, 10000, 0);
+
+			//Educate the offspring
+			children = education.educateChildren(allArcs, arcs, sideWalkArcs, offspring);
+			//Remove clones
 			for (int x = 0; x < children.size(); x++) {
 				if (!checkUniqueSolution(children.get(x))) {
 					children.remove(x);
 				}
 			}
+			//Add all offspring, and update each individuals biased fitness
 			adults.addAll(children);
 			updatePopulation();
+			//Check the solution in the population which has the best makespan
 			tempBestSolution = Collections.min(adults).fitness;
 			newBestSolutionCounter++;
 
+			//Update the current best found solution in the search.
 			if (tempBestSolution < bestSolution) {
 				bestIndividual = new Genotype(Collections.min(adults));
 				bestSolution = tempBestSolution;
@@ -155,31 +144,32 @@ public class EvolutionaryAlgorithm {
 			}
 
 
-			if (newBestSolutionCounter == iNI) {
+			//If we have reached the maximum number of non-improving solutions, or we have reached the MaxTime, return the best solution.
+			long endTime = System.currentTimeMillis();
+			if (newBestSolutionCounter == iNI || (endTime-startTime)/1000 > maxTime) {
 				ArrayList<Vehicle> bestResult = fenotype.getFenotype(bestIndividual);
 				fenotype.resetPlowingtimes();
-				Collections.sort(vehicles, new TypeComparator());
+				Collections.sort(bestResult, new TypeComparator());
 				for (Vehicle vehicle : bestResult) {
 					vehicle.reRoute();
-					/*for (int x = 0; x < vehicle.tasks.size(); x++) {
-						System.out.println(vehicle.tasks.get(x).identifier + "  " + vehicle.tasks.get(x).type);
-					}
-					System.out.println("NESTE KJØRETØY");*/
 				}
-				/*
-				for (Vehicle vehicle : bestResult) {
-					System.out.println(vehicle);
-				}
-				break;*/
 				return bestResult;
 
 			}
 
 
 			generationNumber++;
+			//If the we run the adaptive n^Elite, update this with the generation number. This formula is found in the paper.
+			if(adaptive){
+				double nEliteFactor = newBestSolutionCounter*population/iNI;
+				nElite = (int) nEliteFactor;
+				selecting.updateElite(nElite);
+				fenotype.updateNElite(nElite);
+			}
+
 		}
 	}
-
+	//Find all neighbours for an arc. An arc is defined as in the paper
 	public void getNeighbours(){
 		for (int i = 0; i < allArcs.size(); i++) {
 			for (int j = 0; j < allArcs.size(); j++) {
@@ -192,19 +182,7 @@ public class EvolutionaryAlgorithm {
 
 	}
 
-	public void printNeighbours(){
-		for (int i = 0; i < arcs.size(); i++) {
-			System.out.println("ARC");
-			System.out.println(arcs.get(i).from.nr +" : " + arcs.get(i).to.nr);
-			System.out.println("NEIGHBORS");
-			for (int j = 0; j < arcs.get(i).neighbours.size(); j++) {
-				System.out.println(arcs.get(i).neighbours.get(j).from.nr +" : " + arcs.get(i).neighbours.get(j).to.nr);
-			}
-
-		}
-
-	}
-
+	//Get all Arcs, both lanes and sidewalks
 	public ArrayList<Arc> getAllArcs(){
 		ArrayList<Arc> all = new ArrayList<>();
 		for (int i = 0; i < arcs.size(); i++) {
@@ -216,6 +194,7 @@ public class EvolutionaryAlgorithm {
 		return all;
 	}
 
+	//Checks whether or not a solution is unique or a clone
 	public boolean checkUniqueSolution(Genotype newSolution){
 		for(int x = 0; x < adults.size(); x++){
 			boolean unique = false;
@@ -238,30 +217,15 @@ public class EvolutionaryAlgorithm {
 	}
 
 
-
+	//This function follows the formula from the paper, when removing the members of the population with the worst fitness.
 	public void updatePopulation() {
-		for (Genotype solution : adults) {
-			solution.diversity = DiversityEvaluator.BiasedFitness(adults,solution,nClose);
-		}
-		fenotype.RankGenotypes(adults);
-		/*System.out.println("GENERATION");
-		for(int x = 0; x< adults.size(); x++){
-			System.out.println(adults.get(x).fitness + " " + adults.get(x).diversity);
-		}*/
-		int remove = 1;
 		while(adults.size() > population){
-			if(rng.nextDouble() >= 0.0){
-				if(remove >= adults.size()-nElite){
-					remove = 1;
-				}
-				adults.remove(adults.size()-remove);
+			for (Genotype solution : adults) {
+				solution.diversity = DiversityEvaluator.BiasedFitness(adults,solution,nClose);
 			}
-			remove++;
+			fenotype.RankGenotypes(adults);
+			adults.remove(adults.size()-1);
 		}
-		for (Genotype solution : adults) {
-			solution.diversity = DiversityEvaluator.BiasedFitness(adults,solution,nClose);
-		}
-		fenotype.RankGenotypes(adults);
 	}
 
 
